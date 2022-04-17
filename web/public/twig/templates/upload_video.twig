@@ -1,0 +1,31 @@
+{% extends "base.twig" %}
+
+{% block page %}
+    {# page metadata #}
+
+    {% set page = page | merge({
+        "title"       : "YouTube - Upload Video",
+        "description" : "Broadcast yourself"
+    }) %}    
+
+    {{ parent() }}
+{% endblock %}
+
+{%- block site_content -%}
+    <div class="clearfix">
+        <div class="section bold sign-up">
+            Upload Video to YouTube
+        </div>
+        <div class="outer-box" style="width: 500px;">
+            <div class="inner-box">
+                <form action="/request/upload_video" method="POST" enctype="multipart/form-data" autocorrect="off">
+                    video title>::::: <input class="" name="youtube-title" placeholder="Title" type="text"><br>
+                    description>::::: <textarea name="youtube-description" placeholder="Description"></textarea><br>
+                    category>::::: <input class="" name="youtube-category" placeholder="title" type="text"><br>
+                    tags>::::: <input class="" name="youtube-tags" placeholder="tags" type="text"><br>
+                    <input class="submit" type="submit" value="Upload">
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

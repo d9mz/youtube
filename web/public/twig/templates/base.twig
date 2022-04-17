@@ -1,0 +1,38 @@
+{# base.twig #}
+
+{# default page settings - do not mess with #}
+{% set page = page | default({}) | merge({
+    "title"       : "YouTube",
+    "description" : "Broadcast Yourself",
+    "image"       : "/img/logo.png",
+    "url"         : "localhost"
+}) %}
+
+{% block page %}
+    <!DOCTYPE html>
+    <html>
+        <head>
+            {% block head %}
+                <title>{{ page.title }}</title>
+                <meta property="og:title" content="{{ page.title }}" />
+                <meta property="og:description" content="{{ page.description }}" />
+                <meta property="og:url" content="{{ metadata.og_context.url|escape }}" />
+                <meta property="og:image" content="{{ metadata.og_context.picture|escape }}" />
+                <link href="/css/base.css" rel="stylesheet">
+            {% endblock %}
+        </head>
+        <body>
+            <div class="site padding">
+                {% block site_container %}
+                    <div class="header padding">
+                        {% include 'header.twig' %}
+                    </div>
+                    {% block site_content %}{% endblock %}
+                    <div class="footer">
+                        {% include 'footer.twig' %}
+                    </div>
+                {% endblock %}
+            </div>
+        </body>
+    </html>
+{% endblock %}

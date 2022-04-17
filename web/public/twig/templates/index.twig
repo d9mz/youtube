@@ -1,0 +1,263 @@
+{% extends "base.twig" %}
+
+{% block page %}
+    {# page metadata #}
+
+    {% set page = page | merge({
+        "title"       : "YouTube - Homepage",
+        "description" : "Broadcast yourself"
+    }) %}    
+
+    {{ parent() }}
+{% endblock %}
+
+{%- block site_content -%}
+    <div class="clearfix">
+        <div class="top-left">
+            <div class="promo-grey-big ut-alert rounded">
+                <h1>Join the worst worldwide video-sharing community!</h1><br>
+                <button class="ut-blue-button">Create Account ›</button>
+                <span class="black">
+                    Already have an account? <a href="/sign_in">Sign In</a>
+                </span>
+            </div><br>
+            <div class="section">
+                Recommended for You <span class="vertical-middle dotted-under small">Learn More</span>
+            </div>
+            <p class="padding" style="padding-top: 0px;">
+                <b class="black">Personalized video recommendations</b><br>
+                Getting personalized recommendations is really easy, all you have to do is watch some videos then come back to this page to see what videos YouTube has recommended just for you!
+            </p>
+            <div class="section">
+                Most Popular
+            </div>
+            <div class="videos-list">
+                <div class="video-item inline-block w-310">
+                    <div class="section no-border">
+                        Entertainment
+                    </div>
+                    <div class="thumb-128 inline-block">
+                        <span class="timestamp">3:44</span>
+                    </div>
+                    <div class="video-meta">
+                        <a href="/watch?v=test">example video</a><br>
+                        <span class="small">3,541,329 views</span><br>
+                        <a href="/user/test" class="video-author">drakeandjosh</a>
+                    </div>
+                </div>
+                <div class="video-item inline-block w-310">
+                    <div class="section no-border">
+                        Music
+                    </div>
+                    <div class="thumb-128 inline-block">
+                        <span class="timestamp">3:44</span>
+                    </div>
+                    <div class="video-meta">
+                        <a href="/watch?v=test">example video</a><br>
+                        <span class="small">3,541,329 views</span><br>
+                        <a href="/user/test" class="video-author">drakeandjosh</a>
+                    </div>
+                </div><br><br>
+                <div class="video-item inline-block w-310">
+                    <div class="section no-border">
+                        Entertainment
+                    </div>
+                    <div class="thumb-128 inline-block">
+                        <span class="timestamp">3:44</span>
+                    </div>
+                    <div class="video-meta">
+                        <a href="/watch?v=test">example video</a><br>
+                        <span class="small">3,541,329 views</span><br>
+                        <a href="/user/test" class="video-author">drakeandjosh</a>
+                    </div>
+                </div>
+                <div class="video-item inline-block w-310">
+                    <div class="section no-border">
+                        Music
+                    </div>
+                    <div class="thumb-128 inline-block">
+                        <span class="timestamp">3:44</span>
+                    </div>
+                    <div class="video-meta">
+                        <a href="/watch?v=test">example video</a><br>
+                        <span class="small">3,541,329 views</span><br>
+                        <a href="/user/test" class="video-author">drakeandjosh</a>
+                    </div>
+                </div><br><br>
+                <div class="video-item inline-block w-310">
+                    <div class="section no-border">
+                        Entertainment
+                    </div>
+                    <div class="thumb-128 inline-block">
+                        <span class="timestamp">3:44</span>
+                    </div>
+                    <div class="video-meta">
+                        <a href="/watch?v=test">example video</a><br>
+                        <span class="small">3,541,329 views</span><br>
+                        <a href="/user/test" class="video-author">drakeandjosh</a>
+                    </div>
+                </div>
+                <div class="video-item inline-block w-310">
+                    <div class="section no-border">
+                        Music
+                    </div>
+                    <div class="thumb-128 inline-block">
+                        <span class="timestamp">3:44</span>
+                    </div>
+                    <div class="video-meta">
+                        <a href="/watch?v=test">example video</a><br>
+                        <span class="small">3,541,329 views</span><br>
+                        <a href="/user/test" class="video-author">drakeandjosh</a>
+                    </div>
+                </div><br><br>
+                <div class="video-item inline-block w-310">
+                    <div class="section no-border">
+                        Entertainment
+                    </div>
+                    <div class="thumb-128 inline-block">
+                        <span class="timestamp">3:44</span>
+                    </div>
+                    <div class="video-meta">
+                        <a href="/watch?v=test">example video</a><br>
+                        <span class="small">3,541,329 views</span><br>
+                        <a href="/user/test" class="video-author">drakeandjosh</a>
+                    </div>
+                </div>
+                <div class="video-item inline-block w-310">
+                    <div class="section no-border">
+                        Music
+                    </div>
+                    <div class="thumb-128 inline-block">
+                        <span class="timestamp">3:44</span>
+                    </div>
+                    <div class="video-meta">
+                        <a href="/watch?v=test">example video</a><br>
+                        <span class="small">3,541,329 views</span><br>
+                        <a href="/user/test" class="video-author">drakeandjosh</a>
+                    </div>
+                </div><br><br>
+                <div class="video-item inline-block w-310">
+                    <div class="section no-border">
+                        Entertainment
+                    </div>
+                    <div class="thumb-128 inline-block">
+                        <span class="timestamp">3:44</span>
+                    </div>
+                    <div class="video-meta">
+                        <a href="/watch?v=test">example video</a><br>
+                        <span class="small">3,541,329 views</span><br>
+                        <a href="/user/test" class="video-author">drakeandjosh</a>
+                    </div>
+                </div>
+                <div class="video-item inline-block w-310">
+                    <div class="section no-border">
+                        Music
+                    </div>
+                    <div class="thumb-128 inline-block">
+                        <span class="timestamp">3:44</span>
+                    </div>
+                    <div class="video-meta">
+                        <a href="/watch?v=test">example video</a><br>
+                        <span class="small">3,541,329 views</span><br>
+                        <a href="/user/test" class="video-author">drakeandjosh</a>
+                    </div>
+                </div><br><br>
+            </div>
+        </div>
+        <div class="top-right">
+            <div class="section black">
+                Spotlight
+            </div>
+            <div class="black">
+                <b>Remembering SubRocks</b>
+                <p>
+                    SubRocks was the worst YouTube revival ever made. Please stop using my codebase.<br>
+                    <span class="small">Presented by: <a href="/user/jackd">jackd</a></a>
+                </p>
+            </div>
+            <div class="videos-list">
+                <div class="video-item inline-block w-300 hover-video padding">
+                    <div class="thumb-64 inline-block">
+                        <span class="timestamp">3:44</span>
+                    </div>
+                    <div class="video-meta">
+                        <a href="/watch?v=test" class="video-author bigger">example video</a><br>
+                        <span class="small">3,541,329 views</span><br>
+                        <a href="/user/test" class="video-author">drakeandjosh</a>
+                    </div>
+                </div>
+                <div class="video-item inline-block w-300 hover-video padding">
+                    <div class="thumb-64 inline-block">
+                        <span class="timestamp">3:44</span>
+                    </div>
+                    <div class="video-meta">
+                        <a href="/watch?v=test" class="video-author bigger">example video</a><br>
+                        <span class="small">3,541,329 views</span><br>
+                        <a href="/user/test" class="video-author">drakeandjosh</a>
+                    </div>
+                </div>
+                <div class="video-item inline-block w-300 hover-video padding">
+                    <div class="thumb-64 inline-block">
+                        <span class="timestamp">3:44</span>
+                    </div>
+                    <div class="video-meta">
+                        <a href="/watch?v=test" class="video-author bigger">example video</a><br>
+                        <span class="small">3,541,329 views</span><br>
+                        <a href="/user/test" class="video-author">drakeandjosh</a>
+                    </div>
+                </div>
+                <div class="video-item inline-block w-300 hover-video padding">
+                    <div class="thumb-64 inline-block">
+                        <span class="timestamp">3:44</span>
+                    </div>
+                    <div class="video-meta">
+                        <a href="/watch?v=test" class="video-author bigger">example video</a><br>
+                        <span class="small">3,541,329 views</span><br>
+                        <a href="/user/test" class="video-author">drakeandjosh</a>
+                    </div>
+                </div>
+            </div><br>
+            <div class="section">
+                Featured
+            </div>
+            <div class="videos-list">
+                <div class="video-item inline-block w-300 hover-video padding">
+                    <div class="thumb-64 inline-block">
+                        <span class="timestamp">3:44</span>
+                    </div>
+                    <div class="video-meta">
+                        <a href="/watch?v=test" class="video-author bigger">example video</a><br>
+                        <span class="small">3,541,329 views</span><br>
+                        <a href="/user/test" class="video-author">drakeandjosh</a>
+                    </div>
+                </div>
+                <div class="video-item inline-block w-300 hover-video padding">
+                    <div class="thumb-64 inline-block">
+                        <span class="timestamp">3:44</span>
+                    </div>
+                    <div class="video-meta">
+                        <a href="/watch?v=test" class="video-author bigger">example video</a><br>
+                        <span class="small">3,541,329 views</span><br>
+                        <a href="/user/test" class="video-author">drakeandjosh</a>
+                    </div>
+                </div>
+                <div class="video-item inline-block w-300 hover-video padding">
+                    <div class="thumb-64 inline-block">
+                        <span class="timestamp">3:44</span>
+                    </div>
+                    <div class="video-meta">
+                        <a href="/watch?v=test" class="video-author bigger">example video</a><br>
+                        <span class="small">3,541,329 views</span><br>
+                        <a href="/user/test" class="video-author">drakeandjosh</a>
+                    </div>
+                </div>
+            </div><br>
+            <div class="section black">
+                What's New
+            </div>
+            <a href="#"><b>UTue.net/Porn</b></a><br><br>
+            Your place to start watching pornographic content on uTue. Releasing in 48 hours!<br>
+            <a href="#">Learn more</a>
+        </div>
+    </div>
+{% endblock %}
