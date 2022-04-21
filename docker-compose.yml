@@ -1,9 +1,11 @@
 version: '3'
 
 networks:
+
     backend:
 
 services:
+
     nginx:
         image: nginx:1.21.6-alpine
         volumes:
@@ -21,6 +23,7 @@ services:
             - php
         networks:
             - backend
+
     php:
         build: containers/php
         restart: always
@@ -34,11 +37,13 @@ services:
             - mysql
         networks:
             - backend
+
     composer:
         image: composer
         volumes:
             - "./web/app:/app"
         command: install
+
     pma:
         image: phpmyadmin/phpmyadmin:5.1.3
         container_name: phpmyadmin
@@ -53,6 +58,7 @@ services:
             - mysql
         networks:
             - backend
+
     mysql:
         image: mysql:8.0.21
         restart: always
@@ -62,3 +68,11 @@ services:
             - "./data/db:/var/lib/mysql"
         networks:
             - backend
+
+    quetue:
+        build: containers/quetue
+        restart: always
+        networks:
+            - backend
+        volumes:
+            - ./data/vids:/vids

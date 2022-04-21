@@ -1,7 +1,10 @@
 FROM php:8.1.5-fpm-alpine3.15
 
 RUN apk add --no-cache icu-dev
-RUN docker-php-ext-install intl opcache pdo pdo_mysql
+RUN docker-php-ext-install intl
+RUN docker-php-ext-install opcache
+RUN docker-php-ext-install pdo
+RUN docker-php-ext-install pdo_mysql
 RUN apk add --no-cache autoconf alpine-sdk
 RUN pecl install apcu
 RUN docker-php-ext-enable apcu
