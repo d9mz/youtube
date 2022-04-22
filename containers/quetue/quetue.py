@@ -1,5 +1,6 @@
-from distutils.command.upload import upload
+import signal
 import subprocess
+import sys
 import zmq
 import threading
 import time
@@ -115,8 +116,9 @@ def serverThread():
 
 # def encodingManagementThread():
 
-
 if __name__ == "__main__":
+
+    signal.signal(signal.SIGTERM, sys.exit)
 
     print("QueTue ;;; uTue video queue by zulc22, 2022")
 

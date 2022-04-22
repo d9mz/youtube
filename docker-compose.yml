@@ -50,7 +50,6 @@ services:
         ports:
             - "1337:80"
         environment:
-            - PMA_ARBITRARY=1
             - PMA_HOST=mysql
             - UPLOAD_LIMIT=300M
         restart: always
@@ -66,6 +65,7 @@ services:
             - ".env"
         volumes:
             - "./data/db:/var/lib/mysql"
+            - "./etc/sql:/etc/mysql/conf.d"
         networks:
             - backend
 
