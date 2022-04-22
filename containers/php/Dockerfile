@@ -17,3 +17,12 @@ WORKDIR /var/www/symfony_docker
 RUN apk add --no-cache bash
 RUN curl -sS https://get.symfony.com/cli/installer | bash
 RUN mv /root/.symfony/bin/symfony /usr/local/bin/symfony
+
+WORKDIR /var/www/zmq
+RUN git clone https://github.com/mkoppanen/php-zmq.git /var/www/zmq
+RUN apk add --no-cache libzmq zeromq zeromq-dev
+RUN phpize
+RUN ./configure
+RUN make
+RUN make install
+RUN docker-php-ext-enable zmq
