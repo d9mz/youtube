@@ -31,7 +31,7 @@ NTH = ["th", "st", "nd", "rd", "th", "th", "th", "th", "th", "th"]
 def nth(n):
     "1, 2, 3, 4... -> 1st, 2nd, 3rd, 4th..."
     ns = str(n)
-    return ns+NTH[int(n[-1])]
+    return ns+NTH[int(ns[-1])]
 
 queue = []
 
@@ -78,8 +78,7 @@ def serverThread():
             log(vid,"Writing video file")
             with open(uploadedFile, "wb") as fp:
                 fp.write(fileData)
-            queue.append(jsonDecoded)
-
+            
             log(vid,"Verifying video file")
             videoStreams = subprocess.run([
                 "ffprobe",
@@ -99,12 +98,14 @@ def serverThread():
                 sendResp(); continue
             else: log(vid,"Validated!")
 
+            queue.append(jsonDecoded)
+
         except Exception as e:
 
             # Error handler
             resp = {
                 "status": "fail",
-                "message": f"An error occurred in QueTue attempting to process your upload. Please screenshot and report this error.\n{traceback.format_exc(e)}"
+                "message": f"An error occurred in QueTue attempting to process your upload. Please screenshot and report this error.\n{traceback.format_exception(e)}"
             }
             sendResp(); continue
 
@@ -114,7 +115,16 @@ def serverThread():
         )
         sendResp(); continue
 
-# def encodingManagementThread():
+ffthreads = []
+
+def encodeVideo():
+    pass
+
+def encodingManagementThread():
+
+    while True:
+
+        time.sleep(1)
 
 if __name__ == "__main__":
 
@@ -127,11 +137,17 @@ if __name__ == "__main__":
     print("Server thread started. ",end='')
     server_thread.start()
     print(server_thread.name)
+
+    encodeD_thread = threading.Thread(target=encodingManagementThread)
+    encodeD_thread.daemon = True
+    print("Encoding management thread started. ",end='')
+    encodeD_thread.start()
+    print(encodeD_thread.name)
     
     while True:
         try:
             time.sleep(1)
-            if not (server_thread.is_alive()):
+            if not (server_thread.is_alive() and encodeD_thread.is_alive()):
                 logError("One of the threads has crashed!")
                 break
         except KeyboardInterrupt:
