@@ -1,8 +1,8 @@
 <?php
 $config = (object) [
     "db_config" => (object) [
-        "db_username" => "root",
-        "db_password" => "root",
+        "db_username" => "dev",
+        "db_password" => "dev",
         "db_name"     => "youtube",
         "db_host"     => "mysql",
     ],
