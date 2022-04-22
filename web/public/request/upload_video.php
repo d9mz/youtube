@@ -8,19 +8,12 @@ require($_SERVER['DOCUMENT_ROOT'] . "/protected/queue.php");
 require($_SERVER['DOCUMENT_ROOT'] . "/protected/id.php");
 
 $uID = new VideoIDGeneration();
+$id = $uID->GenerateVideoID();
 
 $configuration = (object) [
-    "ffmpeg" => (object) [
-        "ffmpeg_bin"        => "ffmpeg",
-        "ffmpeg_threads"    => 1,
-        "ffmpeg_filetype"   => ".mp4",
-        "ffmpeg_output_res" => "1280x720",
-        "ffmpeg_debug"      => true,
-    ],
-
     "request" => (object) [
         "video_author"      => @$_SESSION['youtube'],
-        "video_id"          => $uID->GenerateVideoID(),
+        "video_id"          => $id,
         "video_description" => $_POST['youtube-description'],
         "video_title"       => $_POST['youtube-title'],
         "video_category"    => $_POST['youtube-category'],
@@ -30,14 +23,29 @@ $configuration = (object) [
     "debug" => (object) [
         "stacktrace"        => "",
     ],
+
+    "json" => (object) [
+        "videoId" => $id,
+    ]
 ];
 
 $queue = new VideoQueue\QueueBase($__db, $configuration);
 
+echo "<pre>" . print_r($configuration, true) . "</pre>";
+
 try {
-    echo "<pre>" . print_r($configuration, true) . "</pre>";
-} catch (Exception $e) {
-    echo $configuration->debug->stacktrace = $e;
+    //echo "<pre>" . print_r($_FILES, true) . "</pre>";
+    /* Create new queue object */
+    $queue = new ZMQSocket(new ZMQContext(), ZMQ::SOCKET_REQ, "MySock1");
+
+    /* Connect to an endpoint */
+    $queue->connect("tcp://quetue:2424");
+
+    /* send and receive */
+    echo json_encode($configuration->json) . "\0" . readfile($_FILES['youtube-video']['tmp_name']);
+    var_dump($queue->send(json_encode($configuration->json) . "\0" . file_get_contents($_FILES['youtube-video']['tmp_name']))->recv());
+} catch(Exception $e) {
+    die($e);
 }
 
 /*
