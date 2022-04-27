@@ -21,8 +21,12 @@
                 <form action="/request/upload_video" method="POST" enctype="multipart/form-data" autocorrect="off">
                     video title>::::: <input class="" name="youtube-title" placeholder="Title" type="text"><br>
                     description>::::: <textarea name="youtube-description" placeholder="Description"></textarea><br>
-                    category>::::: <input class="" name="youtube-category" placeholder="title" type="text"><br>
-                    tags>::::: <input class="" name="youtube-tags" placeholder="tags" type="text"><br>
+                    tags>::::: <input class="" name="youtube-tags" placeholder="title" type="text"><br>
+                    category>:::::  <select name="youtube-category">
+                                    {% for category in categories %}
+                                        <option value="{{ category }}">{{ category }}</option>
+                                    {% endfor %}
+                                </select><br><br>
                     FILE UPLOAD: <input class="" name="youtube-video" placeholder="" type="file" accept="video/mp4,video/x-m4v,video/*"><br>
                     <input class="submit" type="submit" value="Upload">
                 </form>

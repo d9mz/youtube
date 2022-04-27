@@ -28,7 +28,8 @@ $router->get('/sign_up', function() use ($twig, $__db) {
 });
 
 $router->get('/upload_video', function() use ($twig, $__db) { 
-    echo $twig->render('upload_video.twig', array());
+    $categories = ["None", "Film & Animation", "Autos & Vehicles", "Music", "Pets & Animals", "Sports", "Travel & Events", "Gaming", "People & Blogs", "Comedy", "Entertainment", "News & Politics", "Howto & Style", "Education", "Science & Technology", "Nonprofits & Activism"];
+    echo $twig->render('upload_video.twig', array("categories" => $categories));
 });
 
 $router->set404(function() use ($twig) {

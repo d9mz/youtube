@@ -2,7 +2,7 @@
 /* don't edit these unless 
    you know what you're doing */
 
-body, html {
+   body, html {
     padding: 0px;
     margin: 0px;
     color: #666;
@@ -421,9 +421,39 @@ h1, h2, h3, h4, h5 {
     padding: 0px;
 }
 
+.icon {
+    display: inline-block;
+    vertical-align: middle;
+}
+
 .bg-author_videos_watch {
     width: 16px; height: 16px;
     background: url('/img/sprite_vfl36B3d_Rp.png') -10px -10px;
+}
+
+.bg-add_to {
+    width: 11px; height: 11px;
+    background: url('/img/css_sprites_4.png') -45px -2px;
+}
+
+.bg-analytics {
+    width: 16px; height: 14px;
+    background: url('/img/css_sprites_4.png') -25px -24px;
+}
+
+.bg-flag {
+    width: 19px; height: 17px;
+    background: url('/img/css_sprites_4.png') -2px -2px;
+}
+
+.bg-dislike_button {
+    width: 16px; height: 18px;
+    background: url('/img/css_sprites_4.png') -2px -23px;
+}
+
+.bg-like_button {
+    width: 16px; height: 18px;
+    background: url('/img/css_sprites_4.png') -25px -2px;
 }
 
 .author {

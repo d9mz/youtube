@@ -1,5 +1,6 @@
 FROM php:8.1.5-fpm-alpine3.15
 
+RUN apk add --no-cache ffmpeg
 RUN apk add --no-cache icu-dev
 RUN docker-php-ext-install intl
 RUN docker-php-ext-install opcache
