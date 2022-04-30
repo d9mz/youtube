@@ -71,7 +71,7 @@ hr {
 .w-310 .timestamp {
     position: relative;
     top: 67px;
-    left: 88px;
+    left: 84px;
 }
 
 .timestamp {
@@ -298,6 +298,24 @@ button.ut-blue-button {
     font-size: 11px;
 }
 
+.comment-text {
+    margin-top: 3px;
+}
+
+.comments {
+    margin-top: 20px;
+}
+
+.comment {
+    border-bottom: 1px solid #EBEBEB;
+    padding-top: 16px;
+    padding-bottom: 10px;
+}
+
+.comment.first {
+    padding-top: 0px;   
+}
+
 .footer .inline-block.small.padding-top a {
     margin-left: 15px;
 }
@@ -504,6 +522,13 @@ h1 {
     font-size: 20px;
 }
 
+.comment-box.signedout {
+    background: #eee;
+    padding: 5px;
+    height: 34px;
+    border: 1px solid #ccc;
+}
+
 .video-meta {
     display: inline-block;
     vertical-align: top;
@@ -520,6 +545,7 @@ h1 {
     margin-bottom: 5px;
     font-weight: bolder;
     font-size: 15px;
+    width: 170px;
 }
 
 .video-author {
@@ -531,4 +557,15 @@ h1 {
     position: relative;
     top: 50px;
     left: 76px
+}
+
+
+.comment .small {
+    color: #a4a4a4 !important;
+}
+
+.comment-box form textarea {
+    width: 75%;
+    height: 60px;
+    resize: vertical;
 }

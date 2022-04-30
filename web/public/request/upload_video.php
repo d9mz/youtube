@@ -21,7 +21,7 @@ $configuration = (object) [
         "video_description" => $_POST['youtube-description'],
         "video_title"       => $_POST['youtube-title'],
         "video_category"    => $_POST['youtube-category'],
-        "video_tags"        => $_POST['youtube-title'],
+        "video_tags"        => $_POST['youtube-tags'],
         "video_meta"        => (object) [
             "video"                 => $_FILES['youtube-video'],
             "video_processing_logs" => "",
@@ -131,18 +131,13 @@ try {
             $frame->save( '../v/thumb/' . $configuration->request->video_id . "/" . $i . '.jpg');
         }
 
+        // default value - can change later
+        $configuration->request->video_meta->video_thumbnail = $configuration->request->video_id . "/0.jpg";
+
         $video
             ->filters()
             ->resize(new FFMpeg\Coordinate\Dimension(640, 480))
             ->synchronize();
-
-        $video
-            ->filters()
-            ->watermark("../v/thumb/watermark.png", array(
-                'position' => 'relative',
-                'bottom' => 5,
-                'right' => 5,
-            ));
 
         $format = new FFMpeg\Format\Video\X264();
         $format->on('progress', function ($video, $format, $percentage) {
@@ -150,14 +145,32 @@ try {
         });
 
         $format
-            ->setKiloBitrate(2000)
+            ->setKiloBitrate(1500)
             ->setAudioChannels(2)
             ->setAudioKiloBitrate(128);
         
         $video->save($format, "../v/" . $configuration->request->video_id . ".mp4");
         unlink("../v/t/" . $configuration->request->video_id . ".mp4");
 
-        echo "<a href='/v/" . $configuration->request->video_id . ".mp4'>" . $configuration->request->video_id . "</a>";
+        $stmt = $__db->prepare(
+            "INSERT INTO videos 
+                (video_id, video_title, video_description, video_author, video_tags, video_category, video_thumbnail, video_duration) 
+             VALUES 
+                (?, ?, ?, ?, ?, ?, ?, ?)"
+        );
+        $stmt->execute([
+            $configuration->request->video_id,
+            $configuration->request->video_title,
+            $configuration->request->video_description,
+            $configuration->request->video_author,
+            $configuration->request->video_tags,
+            $configuration->request->video_category,
+            $configuration->request->video_meta->video_thumbnail,
+            $configuration->request->video_meta->video_duration,
+        ]);
+        $stmt = null;
+
+        echo "<a href='/watch?v=" . $configuration->request->video_id . "'>" . $configuration->request->video_id . "</a>";
         $queue->set($configuration);
     } else {
         $_SESSION['alert'] = (object) [

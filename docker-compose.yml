@@ -28,7 +28,7 @@ services:
         build: containers/php
         restart: always
         volumes:
-            - "./etc/php/php.ini:/opt/bitnami/php/lib/php.ini"
+            - "./etc/php/php.ini:/usr/local/etc/php/conf.d/custom.ini"
             - "./web:/var/www/html"
         environment:
             - PHP_OPCACHE_ENABLED=no

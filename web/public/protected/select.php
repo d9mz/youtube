@@ -15,15 +15,6 @@ class Select {
         return ($stmt->rowCount() === 0 ? 0 : $stmt->fetch(\PDO::FETCH_ASSOC));
     }
 
-    function fetch_file($username, $file_name) {
-        $stmt = $this->__db->prepare("SELECT * FROM files WHERE belongs_to = :username AND file_name = :filename");
-        $stmt->bindParam(":username", $username);
-        $stmt->bindParam(":filename", $file_name);
-        $stmt->execute();
-
-        return ($stmt->rowCount() === 0 ? 0 : $stmt->fetch(\PDO::FETCH_ASSOC));
-    }
-
     function user_exists($user) {
         $stmt = $this->__db->prepare("SELECT username FROM users WHERE username = :username");
         $stmt->bindParam(":username", $user);
@@ -32,8 +23,8 @@ class Select {
         return $stmt->rowCount() === 1;
     }
 
-    function mod_exists($id) {
-        $stmt = $this->__db->prepare("SELECT content_title FROM content WHERE id = :id");
+    function video_exists($id) {
+        $stmt = $this->__db->prepare("SELECT video_id FROM videos WHERE video_id = :id");
         $stmt->bindParam(":id", $id);
         $stmt->execute();
 

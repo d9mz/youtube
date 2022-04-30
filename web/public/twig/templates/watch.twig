@@ -4,7 +4,7 @@
     {# page metadata #}
 
     {% set page = page | merge({
-        "title"       : "YouTube - GTA: San Andreas - Dog",
+        "title"       : "YouTube - {{ video.video_title }}",
         "description" : "Broadcast yourself"
     }) %}    
 
@@ -15,8 +15,8 @@
     <div class="clearfix watch-page">
         <div class="top-left">
             <div class="video-watch-meta no-padding">
-                <h1 class="video-watch-title">GTA: San Andreas - Dog</h1>
-                <a class="video-watch-author bold">jackd</a>
+                <h1 class="video-watch-title">{{ video.video_title }}</h1>
+                <a class="video-watch-author bold">{{ video.video_author }}</a>
                 <div class="video-author-videos inline-block">10 videos <div class="bg-author_videos_watch inline-block mid"></div></div>
                 <button class="ut-button">Subscribe</button>
             </div><br>
@@ -32,15 +32,13 @@
                 <div class="watch-description">
                     <div class="small">Uploaded by <a href="#">jackd</a> on Apr 12, 2022</div>
                     <div class="black" style="margin-top: 5px">
-                        OVERFLOWOVERFLOWOVERFLOWOVERFLOWOVERFLOWOVERFLOWOVERFLOWOVERFLOWOVERFLOWOVERFLOWOVERFLOWOVERFLOWOVERFLOWOVERFLOWOVERFLOWOVERFLOWOVERFLOWOVERFLOWOVERFLOWOVERFLOWOVERFLOWOVERFLOWOVERFLOWOVERFLOWOVERFLOWOVERFLOWOVERFLOWOVERFLOWOVERFLOWOVERFLOWOVERFLOWOVERFLOWOVERFLOWOVERFLOWOVERFLOWOVERFLOW
+                        {{ video.video_description }}
                     </div>
                     <div class="small" style="margin-top: 5px">
                         <b>Category:</b><br>
-                        <a href="#">Gaming</a><br>
+                        <a href="#">{{ video.video_category }}</a><br>
                         <b>Tags:</b><br>
-                        <a href="#" class="tag">GTA</a><a href="#" class="tag">GTA</a><a href="#" class="tag">GTA</a><a href="#" class="tag">GTA</a><a href="#" class="tag">GTA</a><a href="#" class="tag">GTA</a><a href="#" class="tag">GTA</a><a href="#" class="tag">GTA</a><a href="#" class="tag">GTA</a><a href="#" class="tag">GTA</a><a href="#" class="tag">GTA</a><a href="#" class="tag">GTA</a><a href="#" class="tag">GTA</a><a href="#" class="tag">GTA</a><a href="#" class="tag">GTA</a><a href="#" class="tag">GTA</a><br>
-                        <b>Category:</b><br>
-                        <a href="#">Gaming</a><br>
+                        <a href="#" class="tag">{{ video.video_tag }}</a><br>
                     </div>
                 </div>
             </div>
@@ -54,7 +52,33 @@
             </div>
             <button class="ut-button width-full no-margin js_open_description no-border" style="margin-top: 5px;">Show more</button><br><br>
             <div class="comment-section">
-                <div class="section">Uploader Comments</div>
+                <div class="section">All Comments (unspecified)</div><br>
+                {% if session.youtube is not defined %}
+                    <div class="comment-box black signedout">
+                        <a href="/sign_in">Sign In</a> or <a href="/sign_up">Sign Up</a> now to post a comment!
+                    </div>
+                {% else %}
+                    <div class="comment-box black">
+                        <form action="/request/comment_video?v={{ video.video_id }}" method="POST">
+                            <textarea name="comment" class="comment-textbox"></textarea><br>
+                            <input type="submit" name="submit" value="Publish">
+                        </form>
+                    </div>
+                {% endif %}
+                <div class="comments">
+                    {% set comment_i = 0 %}
+                    {% for comment in comments %}
+                        {% if comment.id is defined %}
+                            <div class="comment {% if comment_1 == 0 %}first{% endif %}">
+                                <a href="/user/{{ comment.comment_author }}">{{ comment.comment_author }}</a> &nbsp;&nbsp; <span class="small gray">{{ comment.comment_creation|timeago }}</span>
+                                <div class="comment-text black">
+                                    {{ comment.comment_text }}
+                                </div>
+                            </div>
+                            {% set comment_1 = comment_1 + 1 %}
+                        {% endif %}
+                    {% endfor %}
+                </div>
             </div>
         </div>
         <div class="top-right">
