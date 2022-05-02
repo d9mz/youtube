@@ -89,7 +89,7 @@ try {
         $queue->set($configuration);
     }
 
-    if(strlen(trim($configuration->request->video_title)) > 30) {
+    if(strlen(trim($configuration->request->video_title)) > 50) {
         $configuration->debug->stacktrace = "Your video title is too long,";
         $queue->set($configuration);
     }
@@ -132,7 +132,7 @@ try {
         }
 
         // default value - can change later
-        $configuration->request->video_meta->video_thumbnail = $configuration->request->video_id . "/0.jpg";
+        $configuration->request->video_meta->video_thumbnail = $configuration->request->video_id . "/1.jpg";
 
         $video
             ->filters()

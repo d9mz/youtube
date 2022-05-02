@@ -7,12 +7,12 @@
     <a href="#" class="divider">Home</a>
     <a href="#" class="divider">Videos</a>
     <a href="/upload_video" class="divider">Upload</a>
-    {% if session.youtube is not defined %}
-        <a href="/sign_up" class="divider end">Create Account</a>
-        <a href="/sign_in" class="divider">Sign In</a>
-    {% else %}
+    {% if session.youtube is defined and session.youtube is not empty %}
         <a href="/user/{{ session.youtube }}" class="divider end">{{ session.youtube }}</a>
         <a href="/request/sign_out" class="divider">Logout</a>
+    {% else %}
+        <a href="/sign_up" class="divider end">Create Account</a>
+        <a href="/sign_in" class="divider">Sign In</a>
     {% endif %}
 </div>
 <hr>

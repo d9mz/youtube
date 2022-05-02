@@ -198,46 +198,20 @@
                 </p>
             </div>
             <div class="videos-list">
-                <div class="video-item inline-block w-300 hover-video padding">
-                    <div class="thumb-64 inline-block">
-                        <span class="timestamp">3:44</span>
-                    </div>
-                    <div class="video-meta">
-                        <a href="/watch?v=test" class="video-author bigger">example video</a><br>
-                        <span class="small">3,541,329 views</span><br>
-                        <a href="/user/test" class="video-author">drakeandjosh</a>
-                    </div>
-                </div>
-                <div class="video-item inline-block w-300 hover-video padding">
-                    <div class="thumb-64 inline-block">
-                        <span class="timestamp">3:44</span>
-                    </div>
-                    <div class="video-meta">
-                        <a href="/watch?v=test" class="video-author bigger">example video</a><br>
-                        <span class="small">3,541,329 views</span><br>
-                        <a href="/user/test" class="video-author">drakeandjosh</a>
-                    </div>
-                </div>
-                <div class="video-item inline-block w-300 hover-video padding">
-                    <div class="thumb-64 inline-block">
-                        <span class="timestamp">3:44</span>
-                    </div>
-                    <div class="video-meta">
-                        <a href="/watch?v=test" class="video-author bigger">example video</a><br>
-                        <span class="small">3,541,329 views</span><br>
-                        <a href="/user/test" class="video-author">drakeandjosh</a>
-                    </div>
-                </div>
-                <div class="video-item inline-block w-300 hover-video padding">
-                    <div class="thumb-64 inline-block">
-                        <span class="timestamp">3:44</span>
-                    </div>
-                    <div class="video-meta">
-                        <a href="/watch?v=test" class="video-author bigger">example video</a><br>
-                        <span class="small">3,541,329 views</span><br>
-                        <a href="/user/test" class="video-author">drakeandjosh</a>
-                    </div>
-                </div>
+                {% for video in videos_new %}
+                    {% if video.id is defined %}
+                        <div class="video-item inline-block w-300 hover-video padding">
+                            <div class="thumb-64 inline-block" style="background-image: url('/v/thumb/{{ video.video_thumbnail }}');">
+                                <span class="timestamp">{{ video.video_duration|date('i:s') }}</span>
+                            </div>
+                            <div class="video-meta">
+                                <a href="/watch?v={{ video.video_id }}" class="video-author bigger">{{ video.video_title }}</a><br>
+                                <span class="small">3,541,329 views</span><br>
+                                <a href="/user/{{ video.video_author }}" class="video-author">{{ video.video_author }}</a>
+                            </div>
+                        </div>
+                    {% endif %}
+                {% endfor %}
             </div><br>
             <div class="section">
                 Featured

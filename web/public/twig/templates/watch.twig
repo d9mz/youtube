@@ -16,21 +16,36 @@
         <div class="top-left">
             <div class="video-watch-meta no-padding">
                 <h1 class="video-watch-title">{{ video.video_title }}</h1>
-                <a class="video-watch-author bold">{{ video.video_author }}</a>
-                <div class="video-author-videos inline-block">10 videos <div class="bg-author_videos_watch inline-block mid"></div></div>
-                <button class="ut-button">Subscribe</button>
+                <a href="/user/{{ video.video_author }}" class="video-watch-author bold">{{ video.video_author }}</a>
+                <div class="video-author-videos inline-block">{{ video.author_videos }} videos <div class="bg-author_videos_watch inline-block mid"></div></div>
+                {% if video.author_subscribed == false %}
+                    <a href="/request/subscribe?u={{ video.video_author }}&v={{ video.video_id }}">
+                        <button class="ut-button">Subscribe</button>
+                    </a>
+                {% else %}
+                    <a href="/request/subscribe?u={{ video.video_author }}&v={{ video.video_id }}">
+                        <button class="ut-button">Unsubscribe</button>
+                    </a>
+                {% endif %}
             </div><br>
-            <div class="video-player"></div><br>
+            <script src="/assets/player.js"></script>
+            <div class="utue-player" data-src="/v/{{ video.video_id }}.mp4"></div><br>
             <div class="top-left">
                 <div class="video-watch-meta no-padding">
-                    <button class="ut-button no-margin start js_like_button"><span class="bg-like_button icon"></span> Like</button>
-                    <button class="ut-button no-margin end dislike js_dislike_button"><span class="bg-dislike_button icon"></span></button>
+                    <a href="/request/like_video?v={{ video.video_id }}&t=l">
+                        <button class="ut-button no-margin start js_like_button">
+                            <span class="{% if video.vote_liked == true %}bg-liked_button {% endif %} bg-like_button icon"></span> Like
+                        </button>
+                    </a>
+                    <a href="/request/like_video?v={{ video.video_id }}&t=d">
+                        <button class="ut-button no-margin end dislike js_dislike_button"><span class="bg-dislike_button icon"></span></button>
+                    </a>
                     <button class="ut-button no-margin js_addto_button"><span class="bg-add_to icon"></span> &nbsp;Add To</button>
                     <button class="ut-button no-margin js_share_button">Share</button>
                     <button class="ut-button no-margin js_flag_button"><span class="bg-flag icon"></span></button>
                 </div>
                 <div class="watch-description">
-                    <div class="small">Uploaded by <a href="#">jackd</a> on Apr 12, 2022</div>
+                    <div class="small">Uploaded by <a href="/user/{{ video.video_author }}">{{ video.video_author }}</a> on Apr 12, 2022</div>
                     <div class="black" style="margin-top: 5px">
                         {{ video.video_description }}
                     </div>
@@ -43,12 +58,12 @@
                 </div>
             </div>
             <div class="top-right no-margin views">
-                <h1 class="float-right">3,541,329</h1><br><br>
+                <h1 class="float-right">{{ video.video_views }}</h1><br><br>
                 <div class="watch-sparkbars">
-                    <div class="watch-sparkbar-likes" style="width: 91.5887850467%"></div>
-                    <div class="watch-sparkbar-dislikes" style="width: 8.41121495327%"></div>
+                    <div class="watch-sparkbar-likes" style="width: {{ video.likes_width }}%"></div>
+                    <div class="watch-sparkbar-dislikes" style="width: {{ video.dislikes_width }}%"></div>
                 </div>
-                <span class="likes small">294 likes, 27 dislikes</span>
+                <span class="likes small">{{ video.vote_likes }} likes, {{ video.vote_dislikes }} dislikes</span>
             </div>
             <button class="ut-button width-full no-margin js_open_description no-border" style="margin-top: 5px;">Show more</button><br><br>
             <div class="comment-section">
@@ -83,136 +98,20 @@
         </div>
         <div class="top-right">
             <div class="videos-list">
-                <div class="video-item inline-block w-300 hover-video padding">
-                    <div class="thumb-64 inline-block">
-                        <span class="timestamp">3:44</span>
-                    </div>
-                    <div class="video-meta">
-                        <a href="/watch?v=test" class="video-author bigger">example video</a><br>
-                        <span class="small">3,541,329 views</span><br>
-                        <a href="/user/test" class="video-author">drakeandjosh</a>
-                    </div>
-                </div>
-                <div class="video-item inline-block w-300 hover-video padding">
-                    <div class="thumb-64 inline-block">
-                        <span class="timestamp">3:44</span>
-                    </div>
-                    <div class="video-meta">
-                        <a href="/watch?v=test" class="video-author bigger">example video</a><br>
-                        <span class="small">3,541,329 views</span><br>
-                        <a href="/user/test" class="video-author">drakeandjosh</a>
-                    </div>
-                </div>
-                <div class="video-item inline-block w-300 hover-video padding">
-                    <div class="thumb-64 inline-block">
-                        <span class="timestamp">3:44</span>
-                    </div>
-                    <div class="video-meta">
-                        <a href="/watch?v=test" class="video-author bigger">example video</a><br>
-                        <span class="small">3,541,329 views</span><br>
-                        <a href="/user/test" class="video-author">drakeandjosh</a>
-                    </div>
-                </div>
-                <div class="video-item inline-block w-300 hover-video padding">
-                    <div class="thumb-64 inline-block">
-                        <span class="timestamp">3:44</span>
-                    </div>
-                    <div class="video-meta">
-                        <a href="/watch?v=test" class="video-author bigger">example video</a><br>
-                        <span class="small">3,541,329 views</span><br>
-                        <a href="/user/test" class="video-author">drakeandjosh</a>
-                    </div>
-                </div>
-                <div class="video-item inline-block w-300 hover-video padding">
-                    <div class="thumb-64 inline-block">
-                        <span class="timestamp">3:44</span>
-                    </div>
-                    <div class="video-meta">
-                        <a href="/watch?v=test" class="video-author bigger">example video</a><br>
-                        <span class="small">3,541,329 views</span><br>
-                        <a href="/user/test" class="video-author">drakeandjosh</a>
-                    </div>
-                </div>
-                <div class="video-item inline-block w-300 hover-video padding">
-                    <div class="thumb-64 inline-block">
-                        <span class="timestamp">3:44</span>
-                    </div>
-                    <div class="video-meta">
-                        <a href="/watch?v=test" class="video-author bigger">example video</a><br>
-                        <span class="small">3,541,329 views</span><br>
-                        <a href="/user/test" class="video-author">drakeandjosh</a>
-                    </div>
-                </div>
-                <div class="video-item inline-block w-300 hover-video padding">
-                    <div class="thumb-64 inline-block">
-                        <span class="timestamp">3:44</span>
-                    </div>
-                    <div class="video-meta">
-                        <a href="/watch?v=test" class="video-author bigger">example video</a><br>
-                        <span class="small">3,541,329 views</span><br>
-                        <a href="/user/test" class="video-author">drakeandjosh</a>
-                    </div>
-                </div>
-                <div class="video-item inline-block w-300 hover-video padding">
-                    <div class="thumb-64 inline-block">
-                        <span class="timestamp">3:44</span>
-                    </div>
-                    <div class="video-meta">
-                        <a href="/watch?v=test" class="video-author bigger">example video</a><br>
-                        <span class="small">3,541,329 views</span><br>
-                        <a href="/user/test" class="video-author">drakeandjosh</a>
-                    </div>
-                </div>
-                <div class="video-item inline-block w-300 hover-video padding">
-                    <div class="thumb-64 inline-block">
-                        <span class="timestamp">3:44</span>
-                    </div>
-                    <div class="video-meta">
-                        <a href="/watch?v=test" class="video-author bigger">example video</a><br>
-                        <span class="small">3,541,329 views</span><br>
-                        <a href="/user/test" class="video-author">drakeandjosh</a>
-                    </div>
-                </div>
-                <div class="video-item inline-block w-300 hover-video padding">
-                    <div class="thumb-64 inline-block">
-                        <span class="timestamp">3:44</span>
-                    </div>
-                    <div class="video-meta">
-                        <a href="/watch?v=test" class="video-author bigger">example video</a><br>
-                        <span class="small">3,541,329 views</span><br>
-                        <a href="/user/test" class="video-author">drakeandjosh</a>
-                    </div>
-                </div>
-                <div class="video-item inline-block w-300 hover-video padding">
-                    <div class="thumb-64 inline-block">
-                        <span class="timestamp">3:44</span>
-                    </div>
-                    <div class="video-meta">
-                        <a href="/watch?v=test" class="video-author bigger">example video</a><br>
-                        <span class="small">3,541,329 views</span><br>
-                        <a href="/user/test" class="video-author">drakeandjosh</a>
-                    </div>
-                </div>
-                <div class="video-item inline-block w-300 hover-video padding">
-                    <div class="thumb-64 inline-block">
-                        <span class="timestamp">3:44</span>
-                    </div>
-                    <div class="video-meta">
-                        <a href="/watch?v=test" class="video-author bigger">example video</a><br>
-                        <span class="small">3,541,329 views</span><br>
-                        <a href="/user/test" class="video-author">drakeandjosh</a>
-                    </div>
-                </div>
-                <div class="video-item inline-block w-300 hover-video padding">
-                    <div class="thumb-64 inline-block">
-                        <span class="timestamp">3:44</span>
-                    </div>
-                    <div class="video-meta">
-                        <a href="/watch?v=test" class="video-author bigger">example video</a><br>
-                        <span class="small">3,541,329 views</span><br>
-                        <a href="/user/test" class="video-author">drakeandjosh</a>
-                    </div>
-                </div>
+                {% for video in videos_rec %}
+                    {% if video.id is defined %}
+                        <div class="video-item inline-block w-300 hover-video padding">
+                            <div class="thumb-64 inline-block"  style="background-image: url('/v/thumb/{{ video.video_thumbnail }}');">
+                                <span class="timestamp">{{ video.video_duration|date('i:s') }}</span>
+                            </div>
+                            <div class="video-meta">
+                                <a href="/watch?v={{ video.video_id }}" class="video-author bigger">{{ video.video_title }}</a><br>
+                                <span class="small">3,541,329 views</span><br>
+                                <a href="/user/{{ video.video_author }}" class="video-author">{{ video.video_author }}</a>
+                            </div>
+                        </div>
+                    {% endif %}
+                {% endfor %}
             </div>
         </div>
     </div>

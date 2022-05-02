@@ -342,7 +342,6 @@ button.ut-blue-button {
 
 .header .logo {
 	vertical-align: middle;
-	width: 110px;	
 }
 
 .header form input[type="text"] {
@@ -451,27 +450,32 @@ h1, h2, h3, h4, h5 {
 
 .bg-add_to {
     width: 11px; height: 11px;
-    background: url('/img/css_sprites_4.png') -45px -2px;
+    background: url('/img/css_sprites_4.png') -42px -28px;
 }
 
 .bg-analytics {
     width: 16px; height: 14px;
-    background: url('/img/css_sprites_4.png') -25px -24px;
+    background: url('/img/css_sprites_4.png') -22px -28px;
 }
 
 .bg-flag {
     width: 19px; height: 17px;
-    background: url('/img/css_sprites_4.png') -2px -2px;
+    background: url('/img/css_sprites_4.png') -26px -2px;
+}
+
+.bg-liked_button {
+    width: 16px; height: 18px;
+    background: url('/img/css_sprites_4.png') -2px -2px !important;
 }
 
 .bg-dislike_button {
     width: 16px; height: 18px;
-    background: url('/img/css_sprites_4.png') -2px -23px;
+    background: url('/img/css_sprites_4.png') -49px -2px;
 }
 
 .bg-like_button {
     width: 16px; height: 18px;
-    background: url('/img/css_sprites_4.png') -25px -2px;
+    background: url('/img/css_sprites_4.png') -2px -28px;
 }
 
 .author {
@@ -539,6 +543,10 @@ h1 {
     vertical-align: middle;
 }
 
+.top {
+    vertical-align: top;
+}
+
 .video-meta a {
     color: #03c;
     display: inline-block;
@@ -556,7 +564,7 @@ h1 {
 .thumb-64 .timestamp {
     position: relative;
     top: 50px;
-    left: 76px
+    left: 70px;
 }
 
 

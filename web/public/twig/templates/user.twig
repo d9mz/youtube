@@ -1,0 +1,81 @@
+{% extends "base.twig" %}
+
+{% block page %}
+    {# page metadata #}
+
+    {% set page = page | merge({
+        "title"       : "YouTube - {{ video.video_title }}",
+        "description" : "Broadcast yourself"
+    }) %}    
+
+    {{ parent() }}
+{% endblock %}
+
+{%- block site_content -%}
+    <div class="clearfix">
+        <div class="top-left">
+            <h1 class="inline-block">{{ user.youtube_username }}</h1>
+            <div class="inline-block top" style="margin-left: 5px;">
+                {% if user.subscribed == false %}
+                    <a href="/request/subscribe?u={{ user.youtube_username }}">
+                        <button class="ut-button">Subscribe</button>
+                    </a>
+                {% else %}
+                    <a href="/request/subscribe?u={{ user.youtube_username }}">
+                        <button class="ut-button">Unsubscribe</button>
+                    </a>
+                {% endif %}
+            </div><br>
+            <p>
+                {{ youtube.youtube_description }}
+            </p>
+            <div class="comment-section">
+                <div class="section">All Comments (unspecified)</div><br>
+                {% if session.youtube is not defined %}
+                    <div class="comment-box black signedout">
+                        <a href="/sign_in">Sign In</a> or <a href="/sign_up">Sign Up</a> now to post a comment!
+                    </div>
+                {% else %}
+                    <div class="comment-box black">
+                        <form action="/request/comment_profile?u={{ user.youtube_username }}" method="POST">
+                            <textarea name="comment" class="comment-textbox"></textarea><br>
+                            <input type="submit" name="submit" value="Publish">
+                        </form>
+                    </div>
+                {% endif %}
+                <div class="comments">
+                    {% set comment_i = 0 %}
+                    {% for comment in comments %}
+                        {% if comment.id is defined %}
+                            <div class="comment {% if comment_1 == 0 %}first{% endif %}">
+                                <a href="/user/{{ comment.comment_author }}">{{ comment.comment_author }}</a> &nbsp;&nbsp; <span class="small gray">{{ comment.comment_creation|timeago }}</span>
+                                <div class="comment-text black">
+                                    {{ comment.comment_text }}
+                                </div>
+                            </div>
+                            {% set comment_1 = comment_1 + 1 %}
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        <div class="top-right">
+            <div class="videos-list">
+                {% for video in videos %}
+                    {% if video.id is defined %}
+                        <div class="video-item inline-block w-300 hover-video padding">
+                            <div class="thumb-64 inline-block"  style="background-image: url('/v/thumb/{{ video.video_thumbnail }}');">
+                                <span class="timestamp">{{ video.video_duration|date('i:s') }}</span>
+                            </div>
+                            <div class="video-meta">
+                                <a href="/watch?v={{ video.video_id }}" class="video-author bigger">{{ video.video_title }}</a><br>
+                                <span class="small">3,541,329 views</span><br>
+                                <a href="/user/{{ video.video_author }}" class="video-author">{{ video.video_author }}</a>
+                            </div>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    </div><br>
+{% endblock %}

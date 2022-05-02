@@ -16,7 +16,7 @@ class Select {
     }
 
     function user_exists($user) {
-        $stmt = $this->__db->prepare("SELECT username FROM users WHERE username = :username");
+        $stmt = $this->__db->prepare("SELECT youtube_username FROM users WHERE youtube_username = :username");
         $stmt->bindParam(":username", $user);
         $stmt->execute();
 
