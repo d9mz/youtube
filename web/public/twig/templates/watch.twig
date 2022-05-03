@@ -32,6 +32,15 @@
                         <button class="ut-button">Unsubscribe</button>
                     </a>
                 {% endif %}
+                <div class="js_mixed_watch_videos_page mixed-content-attach hidden">
+                    <span class="loading-content-ajax loading black ">
+                        <img src="/img/spinner.gif">
+                        <span class="mid inline-block">
+                            Loading...
+                        </span>
+                    </span>
+                    <div class="js_mixed_content"></div>
+                </div>
             </div><br>
             <script src="/assets/player.js"></script>
             <div class="utue-player" data-src="/v/{{ video.video_id }}.mp4"></div><br>
@@ -49,7 +58,7 @@
                     <button class="ut-button no-margin js_share_button">Share</button>
                     <button class="ut-button no-margin js_flag_button"><span class="bg-flag icon"></span></button>
                 </div>
-                <div class="js_mixed_watch_page hidden">
+                <div class="js_mixed_watch_page mixed-content-attach hidden">
                     <span class="loading-content-ajax loading black ">
                         <img src="/img/spinner.gif">
                         <span class="mid inline-block">
@@ -132,7 +141,7 @@
     <script>
         $('.js_addto_button').click(function() {
             var mixed_con = $('.js_mixed_watch_page');
-            var data_dom = $('.js_mixed_content');
+            var data_dom = $('.js_mixed_watch_page .js_mixed_content');
             var loading_dom = $('.js_mixed_watch_page .loading');
 
             if(mixed_con.hasClass("hidden")) {
@@ -140,6 +149,25 @@
                 mixed_con.removeClass("hidden");
                 loading_dom.addClass("hidden");
                 $.get("/request/ajax/add_to?v={{ video.video_id }}", function(data, status) {
+                    data_dom.html(data);
+                });
+            } else {
+                mixed_con.addClass("hidden");
+                mixed_con.fadeOut(300);
+                loading_dom.removeClass("hidden");
+            }
+        });
+
+        $('.video-author-videos').click(function() {
+            var mixed_con = $('.js_mixed_watch_videos_page');
+            var data_dom = $('.js_mixed_watch_videos_page .js_mixed_content');
+            var loading_dom = $('.js_mixed_watch_videos_page .loading');
+
+            if(mixed_con.hasClass("hidden")) {
+                mixed_con.fadeIn(300);
+                mixed_con.removeClass("hidden");
+                loading_dom.addClass("hidden");
+                $.get("/request/ajax/channel_videos?c={{ video.video_author }}", function(data, status) {
                     data_dom.html(data);
                 });
             } else {

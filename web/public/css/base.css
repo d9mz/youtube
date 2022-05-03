@@ -414,11 +414,20 @@ button.ut-blue-button {
     display: none;
 }
 
-.js_mixed_watch_page {
+.mixed-content-attach {
     margin-top: 10px;
     border-radius: 5px;
     padding: 10px;
     border: 1px solid #ccc;
+}
+
+.w-115 {
+    width: 109px;
+}
+
+.w-115 .video-meta .video-author.bigger {
+    margin-top: 5px;
+    width: 100px;
 }
 
 .center {
@@ -501,6 +510,8 @@ h1, h2, h3, h4, h5 {
 .bg-liked_button {
     width: 20px; height: 22px;
     background: url('/img/css_sprites_4.png') -38px -2px;
+    position: relative;
+    bottom: 2px;
 }
 
 .author {

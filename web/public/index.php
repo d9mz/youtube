@@ -253,7 +253,7 @@ $router->get('/watch', function() use ($twig, $__db, $select) {
         
         $views_search = $__db->prepare("SELECT id FROM views WHERE view_video = :view_target AND view_ip = :view_ip");
         $views_search->bindParam(':view_target',  $_GET['v'], PDO::PARAM_STR);
-        $views_search->bindParam(':view_ip',     $_SERVER['HTTP_CF_CONNECTING_IP'], PDO::PARAM_STR);
+        $views_search->bindParam(':view_ip',     $_SERVER['REMOTE_ADDR'], PDO::PARAM_STR);
         $views_search->execute();
         $view = $views_search->fetch();
         if(isset($_SESSION['youtube']) && !isset($view['id'])) {
@@ -265,7 +265,7 @@ $router->get('/watch', function() use ($twig, $__db, $select) {
             );
             $stmt->execute([
                 $_GET['v'],
-                $_SERVER['HTTP_CF_CONNECTING_IP'],
+                $_SERVER['REMOTE_ADDR'],
             ]);
         }
 
