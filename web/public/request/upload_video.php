@@ -122,7 +122,7 @@ try {
         }
 
         $video = $ffmpeg->open($configuration->request->video_meta->full_path);
-        $configuration->request->video_meta->video_duration = round($ffprobe->format("../v/t/" . $configuration->request->video_id . ".mp4")->get('duration'));
+        $configuration->request->video_meta->video_duration = round($ffprobe->format("../v/t/" . $configuration->request->video_id . $configuration->request->video_meta->video_file_type)->get('duration'));
 
         mkdir("../v/thumb/" . $configuration->request->video_id . "/");
         $interval = floor( $configuration->request->video_meta->video_duration / 3 );
@@ -149,8 +149,8 @@ try {
             ->setAudioChannels(2)
             ->setAudioKiloBitrate(128);
         
-        $video->save($format, "../v/" . $configuration->request->video_id . ".mp4");
-        unlink("../v/t/" . $configuration->request->video_id . ".mp4");
+        $video->save($format, "../v/" . $configuration->request->video_id . $configuration->request->video_meta->video_file_type);
+        unlink("../v/t/" . $configuration->request->video_id . $configuration->request->video_meta->video_file_type);
 
         $stmt = $__db->prepare(
             "INSERT INTO videos 

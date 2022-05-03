@@ -11,6 +11,11 @@
     {{ parent() }}
 {% endblock %}
 
+{%- block head -%}
+    {{ parent() }}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+{% endblock %}
+
 {%- block site_content -%}
     <div class="clearfix watch-page">
         <div class="top-left">
@@ -44,10 +49,19 @@
                     <button class="ut-button no-margin js_share_button">Share</button>
                     <button class="ut-button no-margin js_flag_button"><span class="bg-flag icon"></span></button>
                 </div>
+                <div class="js_mixed_watch_page hidden">
+                    <span class="loading-content-ajax loading black ">
+                        <img src="/img/spinner.gif">
+                        <span class="mid inline-block">
+                            Loading...
+                        </span>
+                    </span>
+                    <div class="js_mixed_content"></div>
+                </div>
                 <div class="watch-description">
                     <div class="small">Uploaded by <a href="/user/{{ video.video_author }}">{{ video.video_author }}</a> on Apr 12, 2022</div>
                     <div class="black" style="margin-top: 5px">
-                        {{ video.video_description }}
+                        {{ video.video_description|nl2br }}
                     </div>
                     <div class="small" style="margin-top: 5px">
                         <b>Category:</b><br>
@@ -58,7 +72,7 @@
                 </div>
             </div>
             <div class="top-right no-margin views">
-                <h1 class="float-right">{{ video.video_views }}</h1><br><br>
+                <h1 class="float-right">{{ video[0].video_views }}</h1><br><br>
                 <div class="watch-sparkbars">
                     <div class="watch-sparkbar-likes" style="width: {{ video.likes_width }}%"></div>
                     <div class="watch-sparkbar-dislikes" style="width: {{ video.dislikes_width }}%"></div>
@@ -115,4 +129,24 @@
             </div>
         </div>
     </div>
+    <script>
+        $('.js_addto_button').click(function() {
+            var mixed_con = $('.js_mixed_watch_page');
+            var data_dom = $('.js_mixed_content');
+            var loading_dom = $('.js_mixed_watch_page .loading');
+
+            if(mixed_con.hasClass("hidden")) {
+                mixed_con.fadeIn(300);
+                mixed_con.removeClass("hidden");
+                loading_dom.addClass("hidden");
+                $.get("/request/ajax/add_to?v={{ video.video_id }}", function(data, status) {
+                    data_dom.html(data);
+                });
+            } else {
+                mixed_con.addClass("hidden");
+                mixed_con.fadeOut(300);
+                loading_dom.removeClass("hidden");
+            }
+        });
+    </script>
 {% endblock %}

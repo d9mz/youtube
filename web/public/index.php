@@ -39,7 +39,11 @@ $router->get('/', function() use ($twig, $__db) {
     $videos_search->execute();
     
     while($video = $videos_search->fetch(PDO::FETCH_ASSOC)) { 
+        $views_search = $__db->prepare("SELECT id FROM views WHERE view_video = :view_target");
+        $views_search->bindParam(':view_target',  $video['video_id'], PDO::PARAM_STR);
+        $views_search->execute();
         $videos_ent[] = $video;
+        $videos_ent[0]["video_views"] = $views_search->rowCount();
     }
 
     $videos_ent['rows'] = $videos_search->rowCount();
@@ -49,7 +53,11 @@ $router->get('/', function() use ($twig, $__db) {
     $videos_search->execute();
     
     while($video = $videos_search->fetch(PDO::FETCH_ASSOC)) { 
+        $views_search = $__db->prepare("SELECT id FROM views WHERE view_video = :view_target");
+        $views_search->bindParam(':view_target',  $video['video_id'], PDO::PARAM_STR);
+        $views_search->execute();
         $videos_mus[] = $video;
+        $videos_mus[0]["video_views"] = $views_search->rowCount();
     }
 
     $videos_mus['rows'] = $videos_search->rowCount();
@@ -59,7 +67,11 @@ $router->get('/', function() use ($twig, $__db) {
     $videos_search->execute();
     
     while($video = $videos_search->fetch(PDO::FETCH_ASSOC)) { 
+        $views_search = $__db->prepare("SELECT id FROM views WHERE view_video = :view_target");
+        $views_search->bindParam(':view_target',  $video['video_id'], PDO::PARAM_STR);
+        $views_search->execute();
         $videos_gaming[] = $video;
+        $videos_gaming[0]["video_views"] = $views_search->rowCount();
     }
 
     $videos_gaming['rows'] = $videos_search->rowCount();
@@ -69,7 +81,11 @@ $router->get('/', function() use ($twig, $__db) {
     $videos_search->execute();
     
     while($video = $videos_search->fetch(PDO::FETCH_ASSOC)) { 
+        $views_search = $__db->prepare("SELECT id FROM views WHERE view_video = :view_target");
+        $views_search->bindParam(':view_target',  $video['video_id'], PDO::PARAM_STR);
+        $views_search->execute();
         $videos_film[] = $video;
+        $videos_film[0]["video_views"] = $views_search->rowCount();
     }
 
     $videos_film['rows'] = $videos_search->rowCount();
@@ -79,7 +95,11 @@ $router->get('/', function() use ($twig, $__db) {
     $videos_search->execute();
     
     while($video = $videos_search->fetch(PDO::FETCH_ASSOC)) { 
+        $views_search = $__db->prepare("SELECT id FROM views WHERE view_video = :view_target");
+        $views_search->bindParam(':view_target',  $video['video_id'], PDO::PARAM_STR);
+        $views_search->execute();
         $videos_sports[] = $video;
+        $videos_sports[0]["video_views"] = $views_search->rowCount();
     }
 
     $videos_sports['rows'] = $videos_search->rowCount();
@@ -89,7 +109,11 @@ $router->get('/', function() use ($twig, $__db) {
     $videos_search->execute();
     
     while($video = $videos_search->fetch(PDO::FETCH_ASSOC)) { 
+        $views_search = $__db->prepare("SELECT id FROM views WHERE view_video = :view_target");
+        $views_search->bindParam(':view_target',  $video['video_id'], PDO::PARAM_STR);
+        $views_search->execute();
         $videos_diy[] = $video;
+        $videos_diy[0]["video_views"] = $views_search->rowCount();
     }
 
     $videos_diy['rows'] = $videos_search->rowCount();
@@ -99,7 +123,11 @@ $router->get('/', function() use ($twig, $__db) {
     $videos_search->execute();
     
     while($video = $videos_search->fetch(PDO::FETCH_ASSOC)) { 
+        $views_search = $__db->prepare("SELECT id FROM views WHERE view_video = :view_target");
+        $views_search->bindParam(':view_target',  $video['video_id'], PDO::PARAM_STR);
+        $views_search->execute();
         $videos_sci[] = $video;
+        $videos_sci[0]["video_views"] = $views_search->rowCount();
     }
 
     $videos_sci['rows'] = $videos_search->rowCount();
@@ -109,7 +137,11 @@ $router->get('/', function() use ($twig, $__db) {
     $videos_search->execute();
     
     while($video = $videos_search->fetch(PDO::FETCH_ASSOC)) { 
+        $views_search = $__db->prepare("SELECT id FROM views WHERE view_video = :view_target");
+        $views_search->bindParam(':view_target',  $video['video_id'], PDO::PARAM_STR);
+        $views_search->execute();
         $videos_travel[] = $video;
+        $videos_travel[0]["video_views"] = $views_search->rowCount();
     }
 
     $videos_travel['rows'] = $videos_search->rowCount();
@@ -118,8 +150,14 @@ $router->get('/', function() use ($twig, $__db) {
     $videos_search = $__db->prepare("SELECT * FROM videos ORDER BY id DESC LIMIT 3");
     $videos_search->execute();
     
+    $i = 0;
     while($video = $videos_search->fetch(PDO::FETCH_ASSOC)) { 
+        $views_search = $__db->prepare("SELECT id FROM views WHERE view_video = :view_target");
+        $views_search->bindParam(':view_target',  $video['video_id'], PDO::PARAM_STR);
+        $views_search->execute();
         $videos_new[] = $video;
+        $videos_new[$i]["video_views"] = $views_search->rowCount();
+        $i++;
     }
 
     $videos_new['rows'] = $videos_search->rowCount();
@@ -184,7 +222,7 @@ $router->get('/watch', function() use ($twig, $__db, $select) {
         $video = $select->fetch_table_singlerow($_GET['v'], "videos", "video_id");
         $video["vote_likes"]    = 0;
         $video["vote_dislikes"] = 0;
-        $video["video_views"]   = 0;
+        $video[0]["video_views"]   = 0;
         $video["vote_liked"]    = false;
         $video["vote_disliked"] = false;
         $video["author_subscribed"] = false;
@@ -234,7 +272,7 @@ $router->get('/watch', function() use ($twig, $__db, $select) {
         $views_search = $__db->prepare("SELECT id FROM views WHERE view_video = :view_target");
         $views_search->bindParam(':view_target',  $_GET['v'], PDO::PARAM_STR);
         $views_search->execute();
-        $video["video_views"] = $views_search->rowCount();
+        $video[0]["video_views"] = $views_search->rowCount();
 
         $videos_search = $__db->prepare("SELECT id FROM videos WHERE video_author = :video_author");
         $videos_search->bindParam(':video_author',  $video['video_author'], PDO::PARAM_STR);
@@ -253,7 +291,6 @@ $router->get('/watch', function() use ($twig, $__db, $select) {
 
         $videos_search = $__db->prepare("SELECT * FROM videos ORDER BY RAND() LIMIT 13");
         $videos_search->execute();
-        
         while($video_n = $videos_search->fetch(PDO::FETCH_ASSOC)) { 
             $videos_new[] = $video_n;
         }

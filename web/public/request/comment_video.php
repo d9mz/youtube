@@ -32,7 +32,7 @@ if(!isset($_GET['v'])) {
 
 if(!isset($_SESSION['youtube'])) {
     $request->error->type    = 1;
-    $request->error->message = "Your video title is too long.";
+    $request->error->message = "You are not logged in!";
 }
 
 if(strlen(trim($_POST['comment'])) > 500) {
