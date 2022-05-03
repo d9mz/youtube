@@ -605,13 +605,12 @@ h1 {
 
 .utue-player {
     left: 0px;
-    transition: width 0.3s, left 0.3s;
+    transition: width 0.3s, height 0.3s;
 }
 
 .utue-player[data-theater] {
-    width: 128%;
-    position: relative;
-    left: 90px;
+    width: 970px;
+    height: 450px;
 }
 
 .top-left .utue-player[data-theater] ~ .top-right {

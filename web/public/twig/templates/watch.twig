@@ -148,5 +148,17 @@
                 loading_dom.removeClass("hidden");
             }
         });
+
+        addEventListener('load', function () {
+            $($('.utue-player')[0].shadowRoot.querySelector('button[control][theater]')).click(function () {
+                var right = $('.top-right');
+                var player = $('.utue-player')[0];
+
+                if(player.hasAttribute('data-theater')) 
+                    right.css('margin-top', '530px');
+                else 
+                    right.css('margin-top', '65px');
+            });
+        });
     </script>
 {% endblock %}
