@@ -217,6 +217,18 @@ $router->get('/user/(\w+)', function($username) use ($twig, $__db, $select) {
     }
 });
 
+$router->get('/my/video_manager', function() use ($twig, $__db, $select) { 
+    $video_manager = $__db->prepare("SELECT * FROM videos WHERE video_author = :video_author ORDER BY id DESC LIMIT 20");
+    $video_manager->bindParam(':video_author',  $_SESSION['youtube'], PDO::PARAM_STR);
+    $video_manager->execute();
+    while($video = $video_manager->fetch(PDO::FETCH_ASSOC)) { 
+        $videos[] = $video;
+    }
+
+    $videos['rows'] = $video_manager->rowCount();
+    echo $twig->render('video_manager.twig', array("videos" => $videos));
+});
+
 $router->get('/watch', function() use ($twig, $__db, $select) { 
     if(isset($_GET['v']) && $select->video_exists($_GET['v'])) {
         $video = $select->fetch_table_singlerow($_GET['v'], "videos", "video_id");

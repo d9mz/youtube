@@ -1,0 +1,80 @@
+{% extends "base.twig" %}
+
+{% block page %}
+    {# page metadata #}
+
+    {% set page = page | merge({
+        "title"       : "YouTube - #{ video.video_title }",
+        "description" : "#{ video.video_description }"
+    }) %}    
+
+    {{ parent() }}
+{% endblock %}
+
+{%- block head -%}
+    {{ parent() }}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+{% endblock %}
+
+{%- block site_content -%}
+    <div class="clearfix video-manager-page">
+        <div class="top-left">
+            <br>
+            <ul class="side-list">
+                <li class=""><a href="/my/video_history">History</a></li>
+                <li class="active"><a href="/my/video_uploads">Uploaded</a></li>
+                <li class=""><a href="#">Purchased</a></li>
+                <li class=""><a href="/my/video_liked">Liked</a></li>
+                <li class=""><a href="#">Content ID Matches</a></li>
+                <li class=""><br><b class="black">Playlists</b></li>
+                <li class=""><a href="#">Favorites</a></li>
+                <li class=""><a href="#">Playlist #342</a></li>
+                <li class=""><a href="#">Playlist #222</a></li>
+                <li class=""><a href="#">Playlist #146</a></li>
+                <li class=""><a href="#">Playlist #733</a></li>
+                <li class="height-expander">&nbsp;</li>
+            </ul>
+        </div>
+        <div class="top-right">
+            <h1 class="video-manager">My Uploaded Videos</h1>
+            <div class="inline-block mid">
+                <input type="checkbox">
+            </div>
+            <div class="padding inline-block" style="padding-left: 10px;">
+                <div class="inline-block mid">
+                    <button class="ut-button">Add to</button>&nbsp;&nbsp;&nbsp;<button class="ut-button">Delete</button>
+                </div>
+                <div class="inline-block mid" style="margin-left: 10px;">
+                    <span class="black mid">{{ videos.rows }} videos <span class="seperator"></span> Sort by: Newest</span>
+                </div>
+            </div>
+            <hr>
+            <div class="videos-list">
+                {% for video in videos %}
+                    {% if video.id is defined %}
+                        <input type="checkbox">
+                        <div class="video-item inline-block w-300 hover-video padding">
+                            <div class="thumb-64 inline-block"  style="background-image: url('/v/thumb/{{ video.video_thumbnail }}');">
+                                <span class="timestamp">{{ video.video_duration|date('i:s') }}</span>
+                            </div>
+                            <div class="video-meta">
+                                <a href="/watch?v={{ video.video_id }}" class="video-author bigger">{{ video.video_title }}</a><br>
+                                <span class="small"> 
+                                    {{ video.video_added }}
+                                    <span class="seperator"></span>
+                                    <span class="video-description-meta">
+                                        {{ video.video_description }}
+                                    </span>
+                                </span><br>
+                                <div class="padding">
+                                    <button class="ut-button start">Edit</button> 
+                                    <button class="ut-button end">Insight</button>
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

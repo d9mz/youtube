@@ -1,19 +1,22 @@
 /* base.css */
+
+
 /* don't edit these unless 
    you know what you're doing */
 
-   body, html {
+body,
+html {
     padding: 0px;
     margin: 0px;
     color: #666;
-    font: 12px arial,sans-serif;
+    font: 12px arial, sans-serif;
     height: 100%;
     word-wrap: break-word;
 }
 
 .site {
-	width: 970px;
-	margin: auto;
+    width: 970px;
+    margin: auto;
 }
 
 hr {
@@ -34,10 +37,10 @@ hr {
 
 .promo-grey-big {
     background: #f0f0f0;
-    background-image: -moz-linear-gradient(center bottom,#d9d9d9 0,#f0f0f0 40%);
-    background-image: -webkit-gradient(linear,left bottom,left top,color-stop(0,#d9d9d9),color-stop(0.4,#f0f0f0));
+    background-image: -moz-linear-gradient(center bottom, #d9d9d9 0, #f0f0f0 40%);
+    background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0, #d9d9d9), color-stop(0.4, #f0f0f0));
     -ms-filter: 'progid:DXImageTransform.Microsoft.Gradient(startColorStr=#F0F0F0, endColorStr=#D9D9D9)';
-    filter: progid:DXImageTransform.Microsoft.Gradient(startColorStr=#f0f0f0,endColorStr=#d9d9d9);
+    filter: progid: DXImageTransform.Microsoft.Gradient(startColorStr=#f0f0f0, endColorStr=#d9d9d9);
     -moz-box-shadow: 0 1px 2px #838383;
     -webkit-box-shadow: 0 1px 2px #838383;
     box-shadow: 0 1px 2px #838383;
@@ -62,6 +65,10 @@ hr {
 
 .video-item.w-300 {
     width: 300px;
+}
+
+.video-manager-page .video-item {
+    width: 700px;
 }
 
 .watch-page .top-right {
@@ -96,7 +103,8 @@ hr {
 }
 
 .hover-video:hover {
-    background-color: #d1e1fa;;
+    background-color: #d1e1fa;
+    ;
 }
 
 .dotted-under {
@@ -133,8 +141,8 @@ button.ut-blue-button {
     border-radius: 5px;
     color: white;
     background: #83a1d1;
-    background-image: -moz-linear-gradient(top,#83a1d1,#2b59b2);
-    background-image: -webkit-gradient(linear,left top,left bottom,from(#83a1d1),to(#2b59b2));
+    background-image: -moz-linear-gradient(top, #83a1d1, #2b59b2);
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#83a1d1), to(#2b59b2));
     font-size: 1.2em;
     border: 1px solid #36c;
 }
@@ -221,7 +229,7 @@ button.ut-blue-button {
 }
 
 .views {
-    width: calc( 28% - 20px ) !important;
+    width: calc( 28% - 20px) !important;
 }
 
 .watch-sparkbars {
@@ -278,16 +286,16 @@ button.ut-blue-button {
 
 .top-right {
     float: right;
-    width: calc( 34% - 20px );
+    width: calc( 34% - 20px);
 }
 
 .top-left {
     float: left;
-    width: calc( 67.5% - 20px );
+    width: calc( 67.5% - 20px);
 }
 
 .padding {
-	padding: 5px;
+    padding: 5px;
 }
 
 .padding-top {
@@ -313,7 +321,7 @@ button.ut-blue-button {
 }
 
 .comment.first {
-    padding-top: 0px;   
+    padding-top: 0px;
 }
 
 .footer .inline-block.small.padding-top a {
@@ -329,23 +337,23 @@ button.ut-blue-button {
 }
 
 .inherit-color {
-	color: inherit;
+    color: inherit;
 }
 
 .inline-block {
-	display: inline-block;
+    display: inline-block;
 }
 
 .float-right {
-	float: right;
+    float: right;
 }
 
 .header .logo {
-	vertical-align: middle;
+    vertical-align: middle;
 }
 
 .header form input[type="text"] {
-	border: 1px solid #fff;
+    border: 1px solid #fff;
     padding: 2px 4px 3px;
     margin: 0;
     border-color: #8c8c8c #999 #ccc #8c8c8c;
@@ -355,7 +363,7 @@ button.ut-blue-button {
 
 .header form input[type="submit"] {
     vertical-align: top;
-    background-image: -webkit-gradient(linear,left top,left bottom,from(#ffffff),to(#efefef));
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#ffffff), to(#efefef));
     border: 1px solid #8c8c8c;
     border-top-right-radius: 3px;
     border-bottom-right-radius: 3px;
@@ -364,18 +372,18 @@ button.ut-blue-button {
     height: 24px;
     padding-right: 6px;
     margin-left: -5px;
-	font-size: 12px;
+    font-size: 12px;
 }
 
 .header form input[type="submit"]:active {
     background: #ddd;
-    background-image: -moz-linear-gradient(top,#cccccc,#ffffff);
-    background-image: -webkit-gradient(linear,left top,left bottom,from(#cccccc),to(#ffffff));
+    background-image: -moz-linear-gradient(top, #cccccc, #ffffff);
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#cccccc), to(#ffffff));
 }
 
 .ut-button {
     vertical-align: top;
-    background-image: -webkit-gradient(linear,left top,left bottom,from(#ffffff),to(#efefef));
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#ffffff), to(#efefef));
     border: 1px solid #cccccc;
     border-radius: 3px;
     padding: 3px;
@@ -383,7 +391,7 @@ button.ut-blue-button {
     height: 24px;
     padding-right: 6px;
     margin-left: -5px;
-	font-size: 12px;
+    font-size: 12px;
 }
 
 .video-watch-meta .ut-button {
@@ -392,8 +400,8 @@ button.ut-blue-button {
 
 .ut-button:active {
     background: #ddd;
-    background-image: -moz-linear-gradient(top,#cccccc,#ffffff);
-    background-image: -webkit-gradient(linear,left top,left bottom,from(#cccccc),to(#ffffff));
+    background-image: -moz-linear-gradient(top, #cccccc, #ffffff);
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#cccccc), to(#ffffff));
 }
 
 .header form {
@@ -406,7 +414,7 @@ button.ut-blue-button {
 }
 
 .header a.divider {
-	padding: 0.1em 0.8em;
+    padding: 0.1em 0.8em;
     border-left: 1px solid #ccc;
 }
 
@@ -444,20 +452,25 @@ button.ut-blue-button {
     margin-left: 35px;
 }
 
-a, a:visited {
-	text-decoration: none;
-	color: #03c;
+a,
+a:visited {
+    text-decoration: none;
+    color: #03c;
 }
 
 .header {
-	font-size: 13px;
+    font-size: 13px;
 }
 
 .header .user-panel-bar {
-	margin-top: 5px;
+    margin-top: 5px;
 }
 
-h1, h2, h3, h4, h5 {
+h1,
+h2,
+h3,
+h4,
+h5 {
     padding: 0px;
     margin: 0px;
     color: black;
@@ -473,42 +486,50 @@ h1, h2, h3, h4, h5 {
 }
 
 .bg-author_videos_watch {
-    width: 16px; height: 16px;
+    width: 16px;
+    height: 16px;
     background: url('/img/sprite_vfl36B3d_Rp.png') -10px -10px;
 }
 
 .bg-add_to {
-    width: 11px; height: 11px;
+    width: 11px;
+    height: 11px;
     background: url('/img/css_sprites_4.png') -45px -35px;
 }
 
 .bg-analytics {
-    width: 16px; height: 14px;
+    width: 16px;
+    height: 14px;
     background: url('/img/css_sprites_4.png') -25px -35px;
 }
 
 .bg-dislike_button {
-    width: 16px; height: 18px;
+    width: 16px;
+    height: 18px;
     background: url('/img/css_sprites_4.png') -62px -2px;
 }
 
 .bg-flag {
-    width: 19px; height: 17px;
+    width: 19px;
+    height: 17px;
     background: url('/img/css_sprites_4.png') -2px -35px;
 }
 
 .bg-warning {
-    width: 32px; height: 29px;
+    width: 32px;
+    height: 29px;
     background: url('/img/css_sprites_4.png') -2px -2px;
 }
 
 .bg-like_button {
-    width: 16px; height: 18px;
+    width: 16px;
+    height: 18px;
     background: url('/img/css_sprites_4.png') -62px -24px;
 }
 
 .bg-liked_button {
-    width: 20px; height: 22px;
+    width: 20px;
+    height: 22px;
     background: url('/img/css_sprites_4.png') -38px -2px;
     position: relative;
     bottom: 2px;
@@ -603,7 +624,6 @@ h1 {
     left: 70px;
 }
 
-
 .comment .small {
     color: #a4a4a4 !important;
 }
@@ -624,6 +644,99 @@ h1 {
     height: 450px;
 }
 
-.top-left .utue-player[data-theater] ~ .top-right {
+.top-left .utue-player[data-theater]~.top-right {
     margin-top: 470px;
+}
+
+.video-manager-page .top-left {
+    float: left;
+    width: calc( 24.5% - 20px);
+    border-right: 1px solid #aaa;
+    height: 100%;
+}
+
+.video-manager-page .top-right {
+    float: right;
+    width: calc( 79.54% - 20px);
+}
+
+h1.video-manager {
+    background-color: #f0f0f0;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+.clearfix.video-manager-page {
+    position: relative;
+    bottom: 11px;
+    width: 99.5%;
+}
+
+hr {
+    border-top: 0px solid #aaa;
+    border-bottom: 1px solid #aaa;
+}
+
+.height-expander {
+    height: 600px;
+}
+
+ul.side-list {
+    list-style: none;
+    padding: 0px;
+    margin: 0px;
+}
+
+.side-list li {
+    padding: 5px 10px;
+    width: 150px;
+}
+
+.side-list li.active {
+    background-color: #ddd;
+    border-radius: 5px;
+    color: black;
+}
+
+.side-list li.active a {
+    color: black;
+}
+
+input[type="checkbox"] {
+    background-color: initial;
+    cursor: default;
+    appearance: auto;
+    box-sizing: border-box;
+    margin: 3px 3px 3px 4px;
+    padding: initial;
+    border: initial;
+}
+
+.seperator {
+    border-left: 1px solid #ccc;
+    margin: 0 3px;
+    height: 12px;
+}
+
+.video-manager-page .video-item .video-meta {
+    width: 500px;
+    word-break: break-all;
+    word-wrap: break-word;
+}
+
+.video-description-meta {
+    width: 300px;
+    text-overflow: ellipsis;
+    display: inline-block;
+    white-space: nowrap;
+    overflow: hidden;
+    vertical-align: bottom;
+}
+
+.video-manager-page .video-meta a {
+    width: 300px;
+}
+
+.video-manager-page input[type="checkbox"] {
+    margin-left: 10px;
 }

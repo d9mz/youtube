@@ -4,8 +4,8 @@
     {# page metadata #}
 
     {% set page = page | merge({
-        "title"       : "YouTube - {{ video.video_title }}",
-        "description" : "Broadcast yourself"
+        "title"       : "YouTube - #{ video.video_title }",
+        "description" : "#{ video.video_description }"
     }) %}    
 
     {{ parent() }}
@@ -90,7 +90,7 @@
             </div>
             <button class="ut-button width-full no-margin js_open_description no-border" style="margin-top: 5px;">Show more</button><br><br>
             <div class="comment-section">
-                <div class="section">All Comments (unspecified)</div><br>
+                <div class="section">All Comments ({{ comments.rows }})</div><br>
                 {% if session.youtube is not defined %}
                     <div class="comment-box black signedout">
                         <a href="/sign_in">Sign In</a> or <a href="/sign_up">Sign Up</a> now to post a comment!
