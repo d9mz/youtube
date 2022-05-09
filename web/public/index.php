@@ -222,11 +222,60 @@ $router->get('/my/video_manager', function() use ($twig, $__db, $select) {
     $video_manager->bindParam(':video_author',  $_SESSION['youtube'], PDO::PARAM_STR);
     $video_manager->execute();
     while($video = $video_manager->fetch(PDO::FETCH_ASSOC)) { 
+        $views_search = $__db->prepare("SELECT id FROM views WHERE view_video = :view_target");
+        $views_search->bindParam(':view_target',  $video['video_id'], PDO::PARAM_STR);
+        $views_search->execute();
+        $comments_search = $__db->prepare("SELECT * FROM comment WHERE comment_target = :target ORDER BY id DESC LIMIT 20");
+        $comments_search->bindParam(':target', $video['video_id'], PDO::PARAM_STR);
+        $comments_search->execute();
+        $video["video_views"] = $views_search->rowCount();
+        $video['comments'] = $comments_search->rowCount();
+
         $videos[] = $video;
     }
 
     $videos['rows'] = $video_manager->rowCount();
     echo $twig->render('video_manager.twig', array("videos" => $videos));
+});
+
+$router->get('/my/video_history', function() use ($twig, $__db, $select) { 
+    $video_manager = $__db->prepare("SELECT * FROM history WHERE video_author = :video_author ORDER BY id DESC LIMIT 20");
+    $video_manager->bindParam(':video_author',  $_SESSION['youtube'], PDO::PARAM_STR);
+    $video_manager->execute();
+    while($video = $video_manager->fetch(PDO::FETCH_ASSOC)) { 
+        $video = $select->fetch_table_singlerow($video['video_id'], "videos", "video_id");
+        $videos[] = $video;
+    }
+
+    $videos['rows'] = $video_manager->rowCount();
+    echo $twig->render('video_history.twig', array("videos" => $videos));
+});
+
+$router->get('/my/video_liked', function() use ($twig, $__db, $select) { 
+    $video_manager = $__db->prepare("SELECT * FROM votes WHERE vote_from = :vote_from ORDER BY id DESC LIMIT 20");
+    $video_manager->bindParam(':vote_from',  $_SESSION['youtube'], PDO::PARAM_STR);
+    $video_manager->execute();
+    while($video = $video_manager->fetch(PDO::FETCH_ASSOC)) { 
+        $video = $select->fetch_table_singlerow($video['vote_target'], "videos", "video_id");
+        $videos[] = $video;
+    }
+
+    $videos['rows'] = $video_manager->rowCount();
+    echo $twig->render('video_liked.twig', array("videos" => $videos));
+});
+
+$router->get('/my/edit_video', function() use ($twig, $__db, $select) { 
+    if(isset($_GET['v']) && $select->video_exists($_GET['v'])) {
+        $video = $select->fetch_table_singlerow($_GET['v'], "videos", "video_id");
+        echo $twig->render('edit_video.twig', array("video" => $video));
+    } else {
+        $_SESSION['alert'] = (object) [
+            "message" => "This video does not exist!",
+            "type" => 1,
+        ];
+
+        header("Location: /");
+    }
 });
 
 $router->get('/watch', function() use ($twig, $__db, $select) { 
@@ -278,6 +327,24 @@ $router->get('/watch', function() use ($twig, $__db, $select) {
             $stmt->execute([
                 $_GET['v'],
                 $_SERVER['REMOTE_ADDR'],
+            ]);
+        }
+
+        $history_search = $__db->prepare("SELECT video_id FROM history WHERE video_id = :video_id AND video_author = :video_author");
+        $history_search->bindParam(':video_id',       $_GET['v'], PDO::PARAM_STR);
+        $history_search->bindParam(':video_author',   $_SESSION['youtube'], PDO::PARAM_STR);
+        $history_search->execute();
+        $history = $history_search->fetch();
+        if(isset($_SESSION['youtube']) && !isset($history['id'])) {
+            $stmt = $__db->prepare(
+                "INSERT INTO history 
+                    (video_id, video_author) 
+                 VALUES 
+                    (?, ?)"
+            );
+            $stmt->execute([
+                $_GET['v'],
+                $_SESSION['youtube'],
             ]);
         }
 

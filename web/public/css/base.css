@@ -19,10 +19,6 @@ html {
     margin: auto;
 }
 
-hr {
-    border-top: 1px solid #f3f3f3;
-}
-
 .footer a {
     margin-right: 23px;
 }
@@ -655,6 +651,24 @@ h1 {
     height: 100%;
 }
 
+.edit-video-page .top-right {
+    float: right;
+    width: calc( 79.54% - 20px);
+}
+
+.edit-video-page .top-left {
+    float: left;
+    width: calc( 24.5% - 20px);
+    border-right: 1px solid #aaa;
+    height: 100%;
+}
+
+.clearfix.edit-video-page {
+    position: relative;
+    bottom: 11px;
+    width: 99.5%;
+}
+
 .video-manager-page .top-right {
     float: right;
     width: calc( 79.54% - 20px);
@@ -719,7 +733,7 @@ input[type="checkbox"] {
 }
 
 .video-manager-page .video-item .video-meta {
-    width: 500px;
+    width: 470px;
     word-break: break-all;
     word-wrap: break-word;
 }
@@ -739,4 +753,144 @@ input[type="checkbox"] {
 
 .video-manager-page input[type="checkbox"] {
     margin-left: 10px;
+}
+
+.right {
+    float: right;
+}
+
+.video-info {
+    width: 90px;
+    height: 74px;
+    font-size: 11px;
+    line-height: 14px;
+    padding-left: 10px;
+}
+
+.edit-video button {
+    border-radius: 0px;
+    width: 300px;
+    text-align: left;
+    font-weight: bold;
+}
+
+.padding.edit-video {
+    padding: 5px;
+    padding-left: 10px;
+}
+
+.edit-video .padding {
+    border: 1px solid #cccccc;
+    width: 288px;
+    border-top: 0px;
+    font-size: 11px;
+}
+
+.edit-video button,
+.edit-video input[type="submit"] {
+    margin-left: 0px;
+}
+
+.edit-video .thumbnail {
+    width: 91px;
+    border: 1px solid #8c8c8c;
+}
+
+.edit-video .thumbnail.big {
+    width: 98.3%;
+}
+
+.edit-video .padding form {
+    line-height: 25px;
+}
+
+.edit-video .padding hr {
+    border-top: 0px dotted #aaa;
+    border-bottom: 1px dotted #aaa;
+}
+
+.edit-video .padding form input[type="text"],
+.edit-video .padding form textarea {
+    width: 97%;
+}
+
+.unbold {
+    font-weight: normal !important;
+}
+
+.padding form textarea[name="youtube_description"] {
+    resize: vertical;
+    height: 153px;
+}
+
+.ut-button.disabled {
+    color: #b3b3b3;
+}
+
+.ut-button.disabled:active {
+    vertical-align: top;
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#ffffff), to(#efefef));
+    border: 1px solid #cccccc;
+    border-radius: 3px;
+    padding: 3px;
+    padding-left: 6px;
+    height: 24px;
+    padding-right: 6px;
+    margin-left: -5px;
+    font-size: 12px;
+}
+
+.ut-dropbutton {
+    background-color: #04AA6D;
+    color: white;
+    padding: 16px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+}
+
+.ut-dropbutton:hover,
+.ut-dropbutton:focus {
+    background-color: #3e8e41;
+}
+
+.ut-dropdown {
+    position: relative;
+    display: inline-block;
+    margin-right: 10px;
+    margin-left: 50px;
+}
+
+.ut-dropdown button {
+    border: 0px;
+    background: none;
+}
+
+.ut-dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #fff;
+    min-width: 100px;
+    overflow: auto;
+    border: 1px solid #999;
+    border-bottom-left-radius: 3px;
+    border-bottom-right-radius: 3px;
+    right: 0;
+    z-index: 1;
+}
+
+.ut-dropdown-content a {
+    color: black;
+    padding: 5px;
+    text-decoration: none;
+    display: block;
+    border: 1px solid #eaeaea;
+}
+
+.ut-dropdown a:hover {
+    background-color: #eaeaea;
+}
+
+.show {
+    display: block;
 }

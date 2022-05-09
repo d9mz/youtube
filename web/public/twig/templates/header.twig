@@ -8,7 +8,17 @@
     <a href="#" class="divider">Videos</a>
     <a href="/upload_video" class="divider">Upload</a>
     {% if session.youtube is defined and session.youtube is not empty %}
-        <a href="/user/{{ session.youtube }}" class="divider end">{{ session.youtube }}</a>
+        <div class="ut-dropdown">
+            <button onclick="dropdown()" class="dropbtn divider end">{{ session.youtube }}</button>
+            <div id="user-dropdown" class="ut-dropdown-content">
+                <a href="/user/{{ session.youtube }}">My Channel</a>
+                <a href="#">Subscriptions</a>
+                <a href="#">Inbox</a>
+                <a href="/my/video_manager">My Videos</a>
+                <a href="#">Account</a>
+                <a href="/my/video_history">History</a>
+            </div>
+        </div>
         <a href="/request/sign_out" class="divider">Logout</a>
     {% else %}
         <a href="/sign_up" class="divider end">Create Account</a>
@@ -26,3 +36,24 @@
             {{ session.alert.message|raw }}
     </div>
 {% endif %}
+<script>
+/* When the user clicks on the button, 
+toggle between hiding and showing the dropdown content */
+function dropdown() {
+  document.getElementById("user-dropdown").classList.toggle("show");
+}
+
+// Close the dropdown if the user clicks outside of it
+window.onclick = function(event) {
+  if (!event.target.matches('.dropbtn')) {
+    var dropdowns = document.getElementsByClassName("dropdown-content");
+    var i;
+    for (i = 0; i < dropdowns.length; i++) {
+      var openDropdown = dropdowns[i];
+      if (openDropdown.classList.contains('show')) {
+        openDropdown.classList.remove('show');
+      }
+    }
+  }
+}
+</script>

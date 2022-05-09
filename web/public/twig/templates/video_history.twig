@@ -21,8 +21,8 @@
         <div class="top-left">
             <br>
             <ul class="side-list">
-                <li class=""><a href="/my/video_history">History</a></li>
-                <li class="active"><a href="/my/video_manager">Uploaded</a></li>
+                <li class="active"><a href="/my/video_history">History</a></li>
+                <li class=""><a href="/my/video_manager">Uploaded</a></li>
                 <li class=""><a href="#">Purchased</a></li>
                 <li class=""><a href="/my/video_liked">Liked</a></li>
                 <li class=""><a href="#">Content ID Matches</a></li>
@@ -36,7 +36,7 @@
             </ul>
         </div>
         <div class="top-right">
-            <h1 class="video-manager">My Uploaded Videos</h1>
+            <h1 class="video-manager">My Video History</h1>
             <div class="inline-block mid">
                 <input type="checkbox">
             </div>
@@ -66,17 +66,6 @@
                                         {{ video.video_description }}
                                     </span>
                                 </span><br>
-                                <div class="padding">
-                                    <a style="width:unset;" href="/my/edit_video?v={{ video.video_id }}">
-                                        <button class="ut-button start">Edit</button>
-                                    </a> 
-                                    <button class="ut-button end disabled">Insight</button>
-                                </div>
-                            </div>
-                            <div class="right seperator video-info">
-                                Views: <a href="#">{{ video.video_views }}</a><br>
-                                Comments: <span class="black">{{ video.comments }}</span><br>
-                                Responses: <span class="black">0</span>
                             </div>
                         </div>
                     {% endif %}
