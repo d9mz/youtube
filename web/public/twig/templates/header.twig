@@ -20,6 +20,25 @@
             </div>
         </div>
         <a href="/request/sign_out" class="divider">Logout</a>
+
+        <script>
+            function dropdown() {
+                document.getElementById("user-dropdown").classList.toggle("show");
+            }
+            
+            window.onclick = function(event) {
+                if (!event.target.matches('.dropbtn')) {
+                    var dropdowns = document.getElementsByClassName("dropdown-content");
+                    var i;
+                    for (i = 0; i < dropdowns.length; i++) {
+                        var openDropdown = dropdowns[i];
+                        if (openDropdown.classList.contains('show')) {
+                            openDropdown.classList.remove('show');
+                        }
+                    }
+                }
+            }
+        </script>
     {% else %}
         <a href="/sign_up" class="divider end">Create Account</a>
         <a href="/sign_in" class="divider">Sign In</a>
@@ -36,24 +55,3 @@
             {{ session.alert.message|raw }}
     </div>
 {% endif %}
-<script>
-/* When the user clicks on the button, 
-toggle between hiding and showing the dropdown content */
-function dropdown() {
-  document.getElementById("user-dropdown").classList.toggle("show");
-}
-
-// Close the dropdown if the user clicks outside of it
-window.onclick = function(event) {
-  if (!event.target.matches('.dropbtn')) {
-    var dropdowns = document.getElementsByClassName("dropdown-content");
-    var i;
-    for (i = 0; i < dropdowns.length; i++) {
-      var openDropdown = dropdowns[i];
-      if (openDropdown.classList.contains('show')) {
-        openDropdown.classList.remove('show');
-      }
-    }
-  }
-}
-</script>
