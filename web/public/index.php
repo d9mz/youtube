@@ -363,6 +363,17 @@ $router->get('/watch', function() use ($twig, $__db, $select) {
         $comments_search->execute();
         
         while($comment = $comments_search->fetch(PDO::FETCH_ASSOC)) { 
+            // CATEGORY 
+            $like_votes_search = $__db->prepare("SELECT id FROM comment_votes WHERE vote_target = :vote_target AND vote_type = 'l'");
+            $like_votes_search->bindParam(':vote_target', $comment['id'], PDO::PARAM_STR);
+            $like_votes_search->execute();
+            $comment["vote_likes"] = $like_votes_search->rowCount();
+        
+            // CATEGORY 
+            $like_votes_search = $__db->prepare("SELECT id FROM comment_votes WHERE vote_target = :vote_target AND vote_type = 'd'");
+            $like_votes_search->bindParam(':vote_target', $comment['id'], PDO::PARAM_STR);
+            $like_votes_search->execute();
+            $comment["vote_dislikes"] = $like_votes_search->rowCount();
             $comments[] = $comment;
         }
     
@@ -377,16 +388,14 @@ $router->get('/watch', function() use ($twig, $__db, $select) {
         $videos_new['rows'] = $videos_search->rowCount();
     
         // CATEGORY 
-        $like_votes_search = $__db->prepare("SELECT id FROM votes WHERE vote_target = :vote_target AND vote_from = :vote_from AND vote_type = 'l'");
+        $like_votes_search = $__db->prepare("SELECT id FROM votes WHERE vote_target = :vote_target AND vote_type = 'l'");
         $like_votes_search->bindParam(':vote_target', $_GET['v'], PDO::PARAM_STR);
-        $like_votes_search->bindParam(':vote_from',   $_SESSION['youtube'], PDO::PARAM_STR);
         $like_votes_search->execute();
         $video["vote_likes"] = $like_votes_search->rowCount();
     
         // CATEGORY 
-        $like_votes_search = $__db->prepare("SELECT id FROM votes WHERE vote_target = :vote_target AND vote_from = :vote_from AND vote_type = 'd'");
+        $like_votes_search = $__db->prepare("SELECT id FROM votes WHERE vote_target = :vote_target AND vote_type = 'd'");
         $like_votes_search->bindParam(':vote_target', $_GET['v'], PDO::PARAM_STR);
-        $like_votes_search->bindParam(':vote_from',   $_SESSION['youtube'], PDO::PARAM_STR);
         $like_votes_search->execute();
         $video["vote_dislikes"] = $like_votes_search->rowCount();
     

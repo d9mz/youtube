@@ -394,7 +394,8 @@ button.ut-blue-button {
     margin-left: 5px;
 }
 
-.ut-button:active {
+.ut-button:active,
+.ut-button.active {
     background: #ddd;
     background-image: -moz-linear-gradient(top, #cccccc, #ffffff);
     background-image: -webkit-gradient(linear, left top, left bottom, from(#cccccc), to(#ffffff));
@@ -893,4 +894,73 @@ input[type="checkbox"] {
 
 .show {
     display: block;
+}
+
+.comment-positive {
+    color: #090;
+    margin-left: 20px;
+}
+
+.comment-negative {
+    color: rgb(151, 0, 0);
+    margin-left: 20px;
+}
+
+.ut-input[type="text"],
+textarea.ut-input {
+    border-radius: 3px;
+    border: 1px solid #ccc;
+    padding: 5px;
+    background: rgb(245, 245, 245);
+    background: linear-gradient(0deg, rgb(247, 247, 247) 0%, rgb(255, 255, 255) 100%);
+}
+
+.share-panel .ut-input {
+    margin-top: 5px;
+    font-size: 15px;
+    width: 97%;
+}
+
+.share-panel hr {
+    border-bottom: 1px solid #ccc;
+}
+
+.no-resize {
+    resize: none;
+}
+
+.sprite {
+    background-image: url(/img/spritesheet.png);
+    background-repeat: no-repeat;
+    display: inline-block;
+}
+
+.sprite-digg {
+    width: 32px;
+    height: 32px;
+    background-position: -2px -2px;
+}
+
+.sprite-facebook {
+    width: 32px;
+    height: 32px;
+    background-position: -38px -2px;
+}
+
+.sprite-reddit {
+    width: 32px;
+    height: 32px;
+    background-position: -2px -38px;
+}
+
+.sprite-tumblr {
+    width: 32px;
+    height: 32px;
+    background-position: -38px -38px;
+}
+
+.sprite-twitter {
+    width: 32px;
+    height: 32px;
+    background-position: -74px -2px;
 }

@@ -109,9 +109,22 @@
                         {% if comment.id is defined %}
                             <div class="comment {% if comment_1 == 0 %}first{% endif %}">
                                 <a href="/user/{{ comment.comment_author }}">{{ comment.comment_author }}</a> &nbsp;&nbsp; <span class="small gray">{{ comment.comment_creation|timeago }}</span>
-                                <button class="ut-button right" style="margin-left: 15px;">Reply</button>
-                                <button class="ut-button js_comment_like right no-margin end">like</button>
-                                <button class="ut-button js_comment_dlslike right no-margin start">dislike</button>
+                                {% set total = comment.vote_likes - comment.vote_dislikes %}
+                                {% if total > 0 %}
+                                    <span class="comment-positive">{{ total }} people like this</span>
+                                {% endif %}
+                                {% if total < 0 %}
+                                    <span class="comment-negative">{{ total|abs }} people dislike this</span>
+                                {% endif %}
+                                {% if session.youtube is defined %}
+                                    <button class="ut-button right" style="margin-left: 15px;">Reply</button>
+                                    <a href="/request/like_comment?i={{ comment.id }}&t=l">
+                                        <button class="ut-button js_comment_like right no-margin end">like</button>
+                                    </a>
+                                    <a href="/request/like_comment?i={{ comment.id }}&t=d">
+                                        <button class="ut-button js_comment_dlslike right no-margin start">dislike</button>
+                                    </a>
+                                {% endif %}
                                 <div class="comment-text black">
                                     {{ comment.comment_text|nl2br }}
                                 </div>
@@ -143,6 +156,9 @@
     </div>
     <script>
         $('.js_addto_button').click(function() {
+            $(".js_addto_button").addClass("active");
+            $(".js_share_button").removeClass("active");
+            $(".video-author-videos").removeClass("active");
             var mixed_con = $('.js_mixed_watch_page');
             var data_dom = $('.js_mixed_watch_page .js_mixed_content');
             var loading_dom = $('.js_mixed_watch_page .loading');
@@ -158,10 +174,37 @@
                 mixed_con.addClass("hidden");
                 mixed_con.fadeOut(300);
                 loading_dom.removeClass("hidden");
+                $(".js_addto_button").removeClass("active");
+            }
+        });
+
+        $('.js_share_button').click(function() {
+            $(".js_addto_button").removeClass("active");
+            $(".js_share_button").addClass("active");
+            $(".video-author-videos").removeClass("active");
+            var mixed_con = $('.js_mixed_watch_page');
+            var data_dom = $('.js_mixed_watch_page .js_mixed_content');
+            var loading_dom = $('.js_mixed_watch_page .loading');
+
+            if(mixed_con.hasClass("hidden")) {
+                mixed_con.fadeIn(300);
+                mixed_con.removeClass("hidden");
+                loading_dom.addClass("hidden");
+                $.get("/request/ajax/share_video?v={{ video.video_id }}", function(data, status) {
+                    data_dom.html(data);
+                });
+            } else {
+                mixed_con.addClass("hidden");
+                mixed_con.fadeOut(300);
+                loading_dom.removeClass("hidden");
+                $(".js_share_button").removeClass("active");
             }
         });
 
         $('.video-author-videos').click(function() {
+            $(".js_addto_button").removeClass("active");
+            $(".js_share_button").removeClass("active");
+            $(".video-author-videos").addClass("active");
             var mixed_con = $('.js_mixed_watch_videos_page');
             var data_dom = $('.js_mixed_watch_videos_page .js_mixed_content');
             var loading_dom = $('.js_mixed_watch_videos_page .loading');
@@ -177,6 +220,7 @@
                 mixed_con.addClass("hidden");
                 mixed_con.fadeOut(300);
                 loading_dom.removeClass("hidden");
+                $(".video-author-videos").removeClass("active");
             }
         });
 
