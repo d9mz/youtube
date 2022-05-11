@@ -109,8 +109,11 @@
                         {% if comment.id is defined %}
                             <div class="comment {% if comment_1 == 0 %}first{% endif %}">
                                 <a href="/user/{{ comment.comment_author }}">{{ comment.comment_author }}</a> &nbsp;&nbsp; <span class="small gray">{{ comment.comment_creation|timeago }}</span>
+                                <button class="ut-button right" style="margin-left: 15px;">Reply</button>
+                                <button class="ut-button js_comment_like right no-margin end">like</button>
+                                <button class="ut-button js_comment_dlslike right no-margin start">dislike</button>
                                 <div class="comment-text black">
-                                    {{ comment.comment_text }}
+                                    {{ comment.comment_text|nl2br }}
                                 </div>
                             </div>
                             {% set comment_1 = comment_1 + 1 %}
