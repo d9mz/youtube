@@ -107,7 +107,7 @@
                     {% set comment_i = 0 %}
                     {% for comment in comments %}
                         {% if comment.id is defined %}
-                            <div class="comment {% if comment_1 == 0 %}first{% endif %}">
+                            <div class="comment {% if comment.comment_target starts with '/reply/' %}comment-reply{% endif %} {% if comment_1 == 0 %}first{% endif %}">
                                 <a href="/user/{{ comment.comment_author }}">{{ comment.comment_author }}</a> &nbsp;&nbsp; <span class="small gray">{{ comment.comment_creation|timeago }}</span>
                                 {% set total = comment.vote_likes - comment.vote_dislikes %}
                                 {% if total > 0 %}
@@ -117,19 +117,36 @@
                                     <span class="comment-negative">{{ total|abs }} people dislike this</span>
                                 {% endif %}
                                 {% if session.youtube is defined %}
-                                    <button class="ut-button right" style="margin-left: 15px;">Reply</button>
-                                    <a href="/request/like_comment?i={{ comment.id }}&t=l">
-                                        <button class="ut-button js_comment_like right no-margin end">like</button>
-                                    </a>
-                                    <a href="/request/like_comment?i={{ comment.id }}&t=d">
-                                        <button class="ut-button js_comment_dlslike right no-margin start">dislike</button>
-                                    </a>
+                                    {% if not (comment.comment_target starts with '/reply/') %}
+                                        <a href="#" onclick=";document.getElementById('js_comment_reply_{{ comment.id }}').style.display = 'block';return false;">
+                                            <button class="ut-button right" style="margin-left: 15px;">Reply</button>
+                                        </a>
+                                        <a href="/request/like_comment?i={{ comment.id }}&t=l">
+                                            <button class="ut-button js_comment_like right no-margin end">like</button>
+                                        </a>
+                                        <a href="/request/like_comment?i={{ comment.id }}&t=d">
+                                            <button class="ut-button js_comment_dlslike right no-margin start">dislike</button>
+                                        </a>
+                                    {% endif %}
                                 {% endif %}
                                 <div class="comment-text black">
                                     {{ comment.comment_text|nl2br }}
                                 </div>
+                                {% if not (comment.comment_target starts with '/reply/') %}
+                                    <div id="js_comment_reply_{{ comment.id }}" class="comment-reply hidden">
+                                        <form action="/request/comment_reply?i={{ comment.id }}" method="POST">
+                                            <textarea name="comment" class="comment-textbox"></textarea><br>
+                                            <input type="submit" name="submit" value="Reply">
+                                        </form>
+                                    </div>
+                                {% endif %}
                             </div>
                             {% set comment_1 = comment_1 + 1 %}
+                            {% for comment in comments["replies"] %}
+                                {% if comment.id is defined %}
+                                    test{{comment.id}}
+                                {% endif %}
+                            {% endfor %}
                         {% endif %}
                     {% endfor %}
                 </div>

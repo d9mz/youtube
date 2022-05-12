@@ -374,7 +374,16 @@ $router->get('/watch', function() use ($twig, $__db, $select) {
             $like_votes_search->bindParam(':vote_target', $comment['id'], PDO::PARAM_STR);
             $like_votes_search->execute();
             $comment["vote_dislikes"] = $like_votes_search->rowCount();
+
             $comments[] = $comment;
+            $replyid = "/reply/" . $comment['id'];
+            $replies_search = $__db->prepare("SELECT * FROM comment WHERE comment_target = :target ORDER BY id DESC LIMIT 20");
+            $replies_search->bindParam(':target', $replyid, PDO::PARAM_STR);
+            $replies_search->execute();
+            
+            while($reply = $replies_search->fetch(PDO::FETCH_ASSOC)) { 
+                $comments["replies"] = $reply;
+            }
         }
     
         $comments['rows'] = $comments_search->rowCount();

@@ -394,6 +394,15 @@ button.ut-blue-button {
     margin-left: 5px;
 }
 
+.comment-reply {
+    margin-left: 50px;
+}
+
+.comment-reply textarea {
+    width: 73%;
+    height: 70px;
+}
+
 .ut-button:active,
 .ut-button.active {
     background: #ddd;
@@ -661,6 +670,17 @@ h1 {
     float: left;
     width: calc( 24.5% - 20px);
     border-right: 1px solid #aaa;
+    height: 100%;
+}
+
+.user-page .top-right {
+    float: right;
+    width: calc( 65.5% - 20px);
+}
+
+.user-page .top-left {
+    float: left;
+    width: calc( 37.5% - 20px);
     height: 100%;
 }
 
@@ -963,4 +983,53 @@ textarea.ut-input {
     width: 32px;
     height: 32px;
     background-position: -74px -2px;
+}
+
+.user-page {
+    background-color: #cccccc;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.user-page .panel {
+    background-color: #eeeeff;
+    padding: 10px;
+    border-radius: 5px;
+    line-height: 14px;
+}
+
+.user-bar-channel {
+    background-color: #eeeeff;
+    padding: 3px;
+    border-radius: 3px;
+}
+
+.user-sub-bar-channel {
+    background-color: #cccccc;
+    padding: 6px;
+    border-radius: 3px;
+    width: 33%;
+    margin: 2px;
+}
+
+.profile-picture {
+    width: 32px;
+    height: 32px;
+    border: 1px solid black;
+}
+
+.user-sub-bar-channel h1 {
+    margin-left: 10px;
+}
+
+.user-sub-bar-channel .ut-button {
+    margin-left: 5px;
+}
+
+.double-line {
+    border: 4px double #0000cc;
+}
+
+.user-information {
+    margin-left: 10px;
 }

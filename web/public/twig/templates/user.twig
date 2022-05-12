@@ -12,25 +12,48 @@
 {% endblock %}
 
 {%- block site_content -%}
-    <div class="clearfix">
-        <div class="top-left">
-            <h1 class="inline-block">{{ user.youtube_username }}</h1>
-            <div class="inline-block top" style="margin-left: 5px;">
+    <div class="clearfix user-page">
+        <div class="user-bar-channel">
+            <div class="user-sub-bar-channel">
+                <img class="inline-block profile-picture mid" src="/v/p/default.png">
+                <h1 class="inline-block unbold mid">{{ user.youtube_username }}'s Channel</h1> 
                 {% if user.subscribed == false %}
                     <a href="/request/subscribe?u={{ user.youtube_username }}">
-                        <button class="ut-button">Subscribe</button>
+                        <button class="ut-button mid">Subscribe</button>
                     </a>
                 {% else %}
                     <a href="/request/subscribe?u={{ user.youtube_username }}">
-                        <button class="ut-button">Unsubscribe</button>
+                        <button class="ut-button mid">Unsubscribe</button>
                     </a>
                 {% endif %}
+            </div>
+        </div><br>
+
+        <div class="top-left">
+            <div class="panel">
+                <img class="inline-block profile-picture mid double-line" style="width: 94px;height: 94px;" src="/v/p/default.png">
+                <div class="inline-block user-information top">
+                    <h2 class="unbold">{{ user.youtube_username }}</h2>
+                    <p class="inline-block" style="width: 149px;">
+                        Your channel viewers will see links here, including "subscribe" and "add as friend".
+                    </p>
+                </div>
             </div><br>
-            <p>
-                {{ youtube.youtube_description }}
-            </p>
-            <div class="comment-section">
-                <div class="section">All Comments (unspecified)</div><br>
+            <div class="panel">
+                <h2 class="unbold">Profile</h2><br>
+                <b class="black">Joined:</b> <span class="right">{{ user.account_created }}</span>
+                <hr class="dotted-under">
+                <b class="black">Age:</b> <span class="right">0</span>
+                <hr class="dotted-under">
+                <b class="black">Last Visit Date:</b> <span class="right">{{ user.last_login }}</span>
+                <hr class="dotted-under">
+                <b class="black">Country:</b> <span class="right">{{ user.youtube_country }}</span>
+                <hr class="dotted-under">
+            </div>
+        </div>
+        <div class="top-right">
+            <div class="panel">
+                <h2 class="unbold">Channel Comments</h2><br>
                 {% if session.youtube is not defined %}
                     <div class="comment-box black signedout">
                         <a href="/sign_in">Sign In</a> or <a href="/sign_up">Sign Up</a> now to post a comment!
@@ -43,38 +66,21 @@
                         </form>
                     </div>
                 {% endif %}
+                <hr class="dotted-under">
                 <div class="comments">
                     {% set comment_i = 0 %}
                     {% for comment in comments %}
                         {% if comment.id is defined %}
-                            <div class="comment {% if comment_1 == 0 %}first{% endif %}">
-                                <a href="/user/{{ comment.comment_author }}">{{ comment.comment_author }}</a> &nbsp;&nbsp; <span class="small gray">{{ comment.comment_creation|timeago }}</span>
+                            <div class="comment {% if comment_i == 0 %}first{% endif %}">
+                                <a href="/user/{{ comment.comment_author }}">{{ comment.comment_author }}</a> &nbsp;&nbsp; 
+                                <span class="small gray">{{ comment.comment_creation|timeago }}</span>
                                 <div class="comment-text black">
-                                    {{ comment.comment_text }}
+                                    {{ comment.comment_text|nl2br }}
                                 </div>
                             </div>
-                            {% set comment_1 = comment_1 + 1 %}
                         {% endif %}
                     {% endfor %}
                 </div>
-            </div>
-        </div>
-        <div class="top-right">
-            <div class="videos-list">
-                {% for video in videos %}
-                    {% if video.id is defined %}
-                        <div class="video-item inline-block w-300 hover-video padding">
-                            <div class="thumb-64 inline-block"  style="background-image: url('/v/thumb/{{ video.video_thumbnail }}');">
-                                <span class="timestamp">{{ video.video_duration|date('i:s') }}</span>
-                            </div>
-                            <div class="video-meta">
-                                <a href="/watch?v={{ video.video_id }}" class="video-author bigger">{{ video.video_title }}</a><br>
-                                <span class="small">3,541,329 views</span><br>
-                                <a href="/user/{{ video.video_author }}" class="video-author">{{ video.video_author }}</a>
-                            </div>
-                        </div>
-                    {% endif %}
-                {% endfor %}
             </div>
         </div>
     </div><br>
