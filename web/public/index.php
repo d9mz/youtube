@@ -34,6 +34,18 @@ $filter = new \Twig\TwigFilter('timeago', function ($datetime) {
 
 $twig->addFilter($filter);
 
+/*
+$channel_modules = (object) [
+	"subscribers"      => true,
+	"subscriptions"    => true,
+	"recent_activity"  => true,
+	"profile_info"     => true,
+	"profile_comments" => true,
+];
+
+echo json_encode($channel_modules);
+*/
+
 $router->get('/', function() use ($twig, $__db) { 
     $videos_search = $__db->prepare("SELECT * FROM videos WHERE video_category = 'Entertainment' ORDER BY id DESC LIMIT 1");
     $videos_search->execute();
@@ -161,19 +173,35 @@ $router->get('/', function() use ($twig, $__db) {
     }
 
     $videos_new['rows'] = $videos_search->rowCount();
+    // CATEGORY 
+    $videos_search = $__db->prepare("SELECT * FROM videos WHERE video_meta = 'f' ORDER BY id DESC LIMIT 3");
+    $videos_search->execute();
+    
+    $i = 0;
+    while($video = $videos_search->fetch(PDO::FETCH_ASSOC)) { 
+        $views_search = $__db->prepare("SELECT id FROM views WHERE view_video = :view_target");
+        $views_search->bindParam(':view_target',  $video['video_id'], PDO::PARAM_STR);
+        $views_search->execute();
+        $videos_featured[] = $video;
+        $videos_featured[$i]["video_views"] = $views_search->rowCount();
+        $i++;
+    }
+
+    $videos_featured['rows'] = $videos_search->rowCount();
 
     // CATEGORY 
 
     echo $twig->render('index.twig', array(
-        "videos_ent"    => $videos_ent,
-        "videos_mus"    => $videos_mus,
-        "videos_gaming" => $videos_gaming,
-        "videos_film"   => $videos_film,
-        "videos_sports" => $videos_sports,
-        "videos_diy"    => $videos_diy,
-        "videos_sci"    => $videos_sci,
-        "videos_travel" => $videos_travel,
-        "videos_new"    => $videos_new,
+        "videos_ent"      => $videos_ent,
+        "videos_mus"      => $videos_mus,
+        "videos_gaming"   => $videos_gaming,
+        "videos_film"     => $videos_film,
+        "videos_sports"   => $videos_sports,
+        "videos_diy"      => $videos_diy,
+        "videos_sci"      => $videos_sci,
+        "videos_travel"   => $videos_travel,
+        "videos_new"      => $videos_new,
+        "videos_featured" => $videos_featured,
     ));
 });
 
@@ -201,17 +229,68 @@ $router->get('/user/(\w+)', function($username) use ($twig, $__db, $select) {
     
         $videos['rows'] = $videos_search->rowCount();
 
+        $subscribers_search = $__db->prepare("SELECT * FROM subscribers WHERE subscription_to = :video_author ORDER BY RAND() LIMIT 14");
+        $subscribers_search->bindParam(':video_author',    $user['youtube_username'], PDO::PARAM_STR);
+        $subscribers_search->execute();
+        
+        $i = 0;
+        while($sub = $subscribers_search->fetch(PDO::FETCH_ASSOC)) { 
+            $sub["profile_picture"] = $select->fetch_user_pfp($sub['subscription_from']);
+            $subscribers[] = $sub;
+            $i++;
+        }
+    
+        $subscribers['rows'] = $subscribers_search->rowCount();
+
+        $subscriptions_search = $__db->prepare("SELECT * FROM subscribers WHERE subscription_from = :video_author ORDER BY id DESC LIMIT 14");
+        $subscriptions_search->bindParam(':video_author',    $user['youtube_username'], PDO::PARAM_STR);
+        $subscriptions_search->execute();
+        
+        $i = 0;
+        while($sub = $subscriptions_search->fetch(PDO::FETCH_ASSOC)) { 
+            $sub["profile_picture"] = $select->fetch_user_pfp($sub['subscription_to']);
+            $subscriptions[] = $sub;
+            $i++;
+        }
+    
+        $subscriptions['rows'] = $subscriptions_search->rowCount();
+
         $comments_search = $__db->prepare("SELECT * FROM comment WHERE comment_target = :target ORDER BY id DESC LIMIT 20");
         $comments_search->bindParam(':target', $username, PDO::PARAM_STR);
         $comments_search->execute();
         
         while($comment = $comments_search->fetch(PDO::FETCH_ASSOC)) { 
+            $comment["profile_picture"] = $select->fetch_user_pfp($comment['comment_author']);
             $comments[] = $comment;
         }
     
         $comments['rows'] = $comments_search->rowCount();
 
-        echo $twig->render('user.twig', array("user" => $user, "videos" => $videos, "comments" => $comments));
+        $categories = ["UTuer", "Director", "Musician", "Comedian", "Guru", "Nonprofit"];
+        $channel_colors = json_decode($user['youtube_colors']);
+
+        if($user['youtube_featured'] != "" && $select->video_exists($user['youtube_featured'])) {
+            $video = $select->fetch_table_singlerow($user['youtube_featured'], "videos", "video_id");
+            $views_search = $__db->prepare("SELECT id FROM views WHERE view_video = :view_target");
+            $views_search->bindParam(':view_target',  $video['video_id'], PDO::PARAM_STR);
+            $views_search->execute();
+            $video["video_views"] = $views_search->rowCount();
+        }
+		
+		$user_videos = $__db->prepare("SELECT * FROM videos WHERE video_author = :video_author ORDER BY id DESC LIMIT 20");
+		$user_videos->bindParam(':video_author',  $user['youtube_username'], PDO::PARAM_STR);
+		$user_videos->execute();
+		while($side_video = $user_videos->fetch(PDO::FETCH_ASSOC)) { 
+			$views_search = $__db->prepare("SELECT id FROM views WHERE view_video = :view_target");
+			$views_search->bindParam(':view_target',  $side_video['video_id'], PDO::PARAM_STR);
+			$views_search->execute();
+			$side_video["video_views"] = $views_search->rowCount();
+
+			$side_videos[] = $side_video;
+		}
+
+        echo $twig->render('user.twig', array("side_videos" => @$side_videos, "video" => $video, "channel_colors" => $channel_colors, "categories" => $categories, "user" => $user, "subscribers" => $subscribers, "subscriptions" => $subscriptions, "videos" => $videos, "comments" => $comments));
+        
     } else {
         header("Location: /");
     }
@@ -317,7 +396,7 @@ $router->get('/watch', function() use ($twig, $__db, $select) {
         $views_search->bindParam(':view_ip',     $_SERVER["REMOTE_ADDR"], PDO::PARAM_STR);
         $views_search->execute();
         $view = $views_search->fetch();
-        if(isset($_SESSION['youtube']) && !isset($view['id'])) {
+        if(!isset($view['id'])) {
             $stmt = $__db->prepare(
                 "INSERT INTO views 
                     (view_video, view_ip) 
@@ -390,8 +469,14 @@ $router->get('/watch', function() use ($twig, $__db, $select) {
 
         $videos_search = $__db->prepare("SELECT * FROM videos ORDER BY RAND() LIMIT 13");
         $videos_search->execute();
+        $i = 0;
         while($video_n = $videos_search->fetch(PDO::FETCH_ASSOC)) { 
+            $views_search = $__db->prepare("SELECT id FROM views WHERE view_video = :view_target");
+            $views_search->bindParam(':view_target',  $video_n['video_id'], PDO::PARAM_STR);
+            $views_search->execute();
             $videos_new[] = $video_n;
+            $videos_new[$i]["video_views"] = $views_search->rowCount();
+            $i++;
         }
     
         $videos_new['rows'] = $videos_search->rowCount();
@@ -443,6 +528,7 @@ $router->get('/upload_video', function() use ($twig, $__db) {
 });
 
 $router->set404(function() use ($twig) {
+    header("HTTP/1.1 404 Not Found");
     echo "404";
 });
 

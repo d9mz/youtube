@@ -34,12 +34,10 @@ if(!isset($_SESSION['youtube'])) {
     $request->error->message = "You are not logged in.";
 }
 
-/*
-    if(!$select->video_exists($_GET['v'])) {
-        $request->error->type    = 1;
-        $request->error->message = "This video does not exist.";
-    }
-*/
+if(!$select->user_exists($_GET['u'])) {
+    $request->error->type    = 1;
+    $request->error->message = "This user does not exist.";
+}
 
 // Sub Check
 $sub_search = $__db->prepare(
@@ -74,7 +72,7 @@ if($request->error->message == "") {
             ]
         );
     }
-    
+
     header("Location: " . $_SERVER['HTTP_REFERER']);
 } else {
     $_SESSION['alert'] = (object) [

@@ -6,18 +6,25 @@ addEventListener('load', () => UTUE_PLAYER.init({
 const UTUE_PLAYER = function () {
   'use strict';
 
-  function init({ imageDir, seekSpeed = 5, seekSpeedFast = 10, volumeChangeSpeed = 10, autoplay = null }) {
+  function init({
+    imageDir,
+    seekSpeed = 5,
+    seekSpeedFast = 10,
+    volumeChangeSpeed = 10,
+    autoplay = null
+  }) {
 
     function generatePlayerHTML(videoSrc) {
       return `
       <video play tabindex="-1" src="${videoSrc}"></video>
       <bar tabindex="-1">
+        <input seekbar type="range" value="0" step="0.01" tabindex="-1" title="Seek">
         <controls>
           <controls-left>
             <button control play title="Play"></button>
             <button control volume title="Mute"></button>
             <volume-panel>
-              <input volume type="range">
+              <input volume type="range" title="Volume">
             </volume-panel>
             <progress-label></progress-label>
           </controls-left>
@@ -44,7 +51,7 @@ const UTUE_PLAYER = function () {
         }
 
         :host {
-          background: #000;
+          background-color: #000;
           flex-direction: column;
           position: relative;
           width: 640px;
@@ -52,29 +59,40 @@ const UTUE_PLAYER = function () {
           font-family: sans-serif;
           overflow: hidden;
           user-select: none;
+
+          --ease: cubic-bezier(0.33, 0, 0.67, 0.33);
+        }
+
+        :host(:not([data-mousemove])) {
+          cursor: none;
         }
 
         video {
-          flex: 1;
-          min-height: 0;
+          display: block;
+          width: 100%;
+          height: calc(100% - 29px);
         }
 
-        :host, bar, controls, controls-left, controls-right {
+        bar, controls, controls-left, controls-right {
           display: flex;
         }
 
         bar {
-          background: #fff url('${imageDir}/controls-bg.svg');
-          flex-direction: column-reverse;
+          background-color: #ebebeb;
+          background-image: url('${imageDir}/bar-bg.svg');
+          background-position: center bottom -4px;
+          background-repeat-y: no-repeat;
+          flex-direction: column;
+          position: absolute;
+          bottom: 0;
           width: 100%;
-          height: 30px;
         }
 
         bar::after {
           content: '';
           background:
-        ${(function () { // preload control button images
-          const controlButtonImages = [
+        ${(() => { // preload button images
+          const buttonImages = [
             'control-button',
             'play',
             'pause',
@@ -90,20 +108,96 @@ const UTUE_PLAYER = function () {
 
           let str = '';
 
-          controlButtonImages.forEach(cur => {
+          buttonImages.forEach(cur => {
             str += `
               url('${imageDir}/${cur}.svg'),
               url('${imageDir}/${cur}-hover.svg'),
             `;
           });
 
+          str += `
+              url('${imageDir}/seekbar-thumb.svg'),
+              url('${imageDir}/seekbar-thumb-active.svg'),
+            `;
+
           return replaceWhitespace(str).slice(0, -2);
         })()}
         }
 
+        input[seekbar] {
+          -webkit-appearance: none;
+          margin-bottom: 1px;
+          width: 100%;
+          height: 3px;
+          filter: contrast(200%);
+          transition: margin 0.4s var(--ease), height 0.4s var(--ease), filter 0.4s var(--ease);
+        }
+
+        :host([data-mousemove]) input[seekbar] {
+          margin-bottom: 4px;
+          height: 12px;
+          filter: none;
+          transition: margin 0.1s, height 0.1s, filter 0.1s;
+        }
+
+        input[seekbar]::-webkit-slider-thumb { /* can't select both sliders at once using a comma (yeah i have no clue why either) */
+          -webkit-appearance: none;
+          appearance: none;
+          background-image: url('${imageDir}/seekbar-thumb.svg');
+          background-position: center bottom;
+          background-size: contain;
+          background-repeat: no-repeat;
+          width: 16px;
+          height: 0;
+          transition: height 0.4s var(--ease);
+        }
+
+        input[seekbar]::-moz-range-thumb {
+          -moz-appearance: none;
+          appearance: none;
+          background-color: transparent;
+          background-image: url('${imageDir}/seekbar-thumb.svg');
+          background-position: center bottom;
+          background-size: contain;
+          background-repeat: no-repeat;
+          border: none;
+          border-radius: 0;
+          width: 16px;
+          height: 0;
+          transition: height 0.4s var(--ease);
+        }
+
+        input[seekbar]::-webkit-slider-thumb:active {
+          background-image: url('${imageDir}/seekbar-thumb-active.svg');
+        }
+
+        input[seekbar]::-moz-range-thumb:active {
+          background-image: url('${imageDir}/seekbar-thumb-active.svg');
+        }
+
+        :host([data-mousemove]) input[seekbar]::-webkit-slider-thumb {
+          height: 16px;
+          transition: height 0.1s;
+        }
+
+        :host([data-mousemove]) input[seekbar]::-moz-range-thumb {
+          height: 16px;
+          transition: height 0.1s;
+        }
+
         controls {
           border: 1px solid #bfbfbf;
+          border-top: none;
+          box-sizing: border-box;
+          align-items: end;
           justify-content: space-between;
+          filter: opacity(50%);
+          transition: filter 0.4s var(--ease);
+        }
+
+        :host([data-mousemove]) controls {
+          filter: none;
+          transition: filter 0.1s;
         }
 
         controls-left, controls-right {
@@ -152,18 +246,18 @@ const UTUE_PLAYER = function () {
         }
 
         button[control]:active::after {
-          box-shadow: inset 0 0 2px 2px #bbbbbb66;
+          box-shadow: inset 0 0 2px 2px #d9d9d9;
         }
 
         controls-left button[control]:last-of-type {
-          box-shadow: 2px 0 2px #bbbbbbbb;
+          box-shadow: 2px 0 2px #bfbfbf;
         }
         
         controls-right > button[control]:first-of-type {
-          box-shadow: -1px 0 1px #bbbbbb88;
+          box-shadow: -1px 0 1px #bfbfbf;
         }
 
-        ${(function () { // generate control button css
+        ${(() => { // generate control button css
           const controlButton = {
             play: [
               {
@@ -250,13 +344,16 @@ const UTUE_PLAYER = function () {
           margin-left: -65px;
           box-sizing: content-box;
           box-shadow: 2px 0 2px #bbbbbbbb;
+          display: flex;
+          align-items: center;
+          justify-content: center;
           width: 64px;
           height: 25px;
           text-align: center;
           overflow: hidden;
           opacity: 0;
           z-index: -1;
-          transition: margin-left 0.5s cubic-bezier(0.33, 0, 0.67, 0.33), opacity 0s linear 0.5s, z-index 0s linear 0.5s;
+          transition: margin-left 0.5s var(--ease), opacity 0s linear 0.5s, z-index 0s linear 0.5s;
         }
     
         button[control][volume]:hover ~ volume-panel,
@@ -271,7 +368,6 @@ const UTUE_PLAYER = function () {
           -webkit-appearance: none;
           width: 53px;
           height: 4px;
-          vertical-align: bottom;
         }
     
         input[volume]::-webkit-slider-thumb {
@@ -299,7 +395,13 @@ const UTUE_PLAYER = function () {
       return str.replace(/\s+/g, ' ');
     }
 
-    function togglePlayback(video, playButton) {
+    function sliderPreventDefault(e) {
+      if (e.code === 'ArrowLeft' || e.code === 'ArrowRight') {
+        e.preventDefault();
+      }
+    }
+
+    function togglePlayback(container, video, playButton) {
       if (video.paused) {
         video.play();
         playButton.title = 'Pause';
@@ -307,6 +409,7 @@ const UTUE_PLAYER = function () {
         video.pause();
         playButton.title = 'Play';
       }
+      expandSeekbar(container);
     }
 
     function toggleFullscreen(container) {
@@ -317,7 +420,7 @@ const UTUE_PLAYER = function () {
       }
     }
 
-    function checkFullscreen(container, video, fullscreenButton) {
+    function checkFullscreen(container, fullscreenButton) {
       if (document.fullscreenElement === container) {
         container.setAttribute('data-fullscreen', '');
         fullscreenButton.title = 'Exit full screen';
@@ -351,20 +454,21 @@ const UTUE_PLAYER = function () {
         volumeSlider.value = video.volume * 100;
       }
       updateVolumeSector(container, video);
-      updateVolumeSliderTrack(volumeSlider);
+      updateVolumeTrack(volumeSlider);
     }
 
     function setVolume(container, video, volumeButton, volumeSlider) {
-      var volume = volumeSlider.value / 100;
+      const volume = volumeSlider.value / 100;
       video.volume = volume;
+      volumeSlider.title = `Volume (${volumeSlider.value}%)`;
       if (video.muted) toggleMute(container, video, volumeButton, volumeSlider);
       updateVolumeSector(container, video);
-      updateVolumeSliderTrack(volumeSlider);
+      updateVolumeTrack(volumeSlider);
       localStorage.setItem('player-volume', volumeSlider.value);
     }
 
     function updateVolumeSector(container, video) {
-      var volume = video.volume * 100;
+      const volume = video.volume * 100;
       container.setAttribute('data-volume-sector',
         (volume == 0 || container.hasAttribute('data-muted')) ? 0 :
           (volume > 0 && volume <= 33) ? 1 :
@@ -373,21 +477,44 @@ const UTUE_PLAYER = function () {
       );
     }
 
-    function updateVolumeSliderTrack(volumeSlider) {
-      var volume = volumeSlider.value;
-      volumeSlider.style.background = `linear-gradient(to right, #e60000 0%, #e60000 ${volume}%, transparent ${volume}%, transparent 100%), url('${imageDir}/slider-track.svg')`;
+    function updateTrack(input, bg, color) {
+      const value = parseFloat(input.value) - (input.value - 50) / 100; // fix stupid alignment
+      input.style.background = `linear-gradient(to right, ${color} 0%, ${color} ${value}%, transparent ${value}%, transparent 100%), ${bg}`;
     }
 
-    function updateTime(video, progressLabel) {
-      const underHour = (video.duration / 3600 < 1) * - 5;
-      const currentTime = new Date(video.currentTime * 1000).toISOString().substring(11, 19).slice(underHour).replace(/^0/, '');
-      const duration = new Date(video.duration * 1000).toISOString().substring(11, 19).slice(underHour).replace(/^0/, '');
+    function updateSeekbarTrack(seekbar) {
+      updateTrack(seekbar, 'transparent', '#b03434');
+    }
+
+    function updateVolumeTrack(volumeSlider) {
+      updateTrack(volumeSlider, `url('${imageDir}/slider-track.svg')`, '#e60000');
+    }
+
+    function updateTime(video, seekbar, progressLabel) {
+      const currentTimeUnderHour = (video.currentTime / 3600 < 1) * - 5;
+      const durationUnderHour = (video.duration / 3600 < 1) * - 5;
+      const currentTime = new Date(video.currentTime * 1000).toISOString().substring(11, 19).slice(currentTimeUnderHour).replace(/^0/, '');
+      const duration = new Date(video.duration * 1000).toISOString().substring(11, 19).slice(durationUnderHour).replace(/^0/, '');
+
+      seekbar.value = video.currentTime / video.duration * 100;
+      updateSeekbarTrack(seekbar);
 
       progressLabel.innerText =
         currentTime +
         ' / ' +
         duration;
     }
+
+    const expandSeekbar = (() => {
+      let mouseInactive;
+
+      return (container) => {
+        clearTimeout(mouseInactive);
+        container.setAttribute('data-mousemove', '');
+        mouseInactive = setTimeout(() => container.removeAttribute('data-mousemove'), 2000);
+      };
+
+    })();
 
     // why isn't there a method for removing shadow DOMs
     Array.from(document.getElementsByClassName('utue-player')).forEach(container => container.outerHTML = container.outerHTML);
@@ -401,8 +528,8 @@ const UTUE_PLAYER = function () {
       try {
         root = container.attachShadow({ mode: 'open' });
       } catch (error) {
-        container.style = 'background: #110000; display: flex; width: 640px; height: 390px; align-items: center; justify-content: center;';
-        container.innerHTML = '<div style="font: 28px sans-serif; text-align: center; color: #fff;">Your browser does not support the HTML5 player.</div>'
+        container.style = 'background-color: #110000; display: flex; width: 640px; height: 390px; align-items: center; justify-content: center;';
+        container.innerHTML = '<div style="font: 24px sans-serif; text-align: center; line-height: 1.5em; color: #fff;">Due to a skill issue, your browser does not support the HTML5 player.<br><br>😈</div>'
       }
 
       // insert player markup
@@ -415,6 +542,7 @@ const UTUE_PLAYER = function () {
       // video elements
 
       const video = root.querySelector('video');
+      const seekbar = root.querySelector('input[seekbar]');
       const playButton = root.querySelector('button[control][play]');
       const fullscreenButton = root.querySelector('button[control][fullscreen]');
       const theaterButton = root.querySelector('button[control][theater]');
@@ -429,7 +557,7 @@ const UTUE_PLAYER = function () {
 
           // playback
           case 'Space': case 'KeyK':
-            togglePlayback(video, playButton);
+            togglePlayback(container, video, playButton);
             e.preventDefault();
             break;
 
@@ -473,27 +601,31 @@ const UTUE_PLAYER = function () {
         }
       });
 
-      // event listeners
+      // other event listeners
+
+      container.addEventListener('mousemove', () => expandSeekbar(container));
 
       video.addEventListener('play', () => container.setAttribute('data-playing', ''));
       video.addEventListener('pause', () => container.removeAttribute('data-playing'));
-      video.addEventListener('timeupdate', () => updateTime(video, progressLabel));
-      video.addEventListener('canplay', () => updateTime(video, progressLabel));
+      video.addEventListener('timeupdate', () => updateTime(video, seekbar, progressLabel));
+      video.addEventListener('canplay', () => updateTime(video, seekbar, progressLabel));
       video.addEventListener('contextmenu', e => e.preventDefault());
       video.addEventListener('dblclick', () => toggleFullscreen(container, fullscreenButton));
 
+      seekbar.addEventListener('input', () => {
+        video.currentTime = video.duration * seekbar.value / 100;
+        updateSeekbarTrack(seekbar);
+      });
+      seekbar.addEventListener('keydown', e => sliderPreventDefault(e));
+
       Array.from(root.querySelectorAll('[play]')).forEach(cur => {
-        cur.addEventListener('click', () => togglePlayback(video, playButton));
+        cur.addEventListener('click', () => togglePlayback(container, video, playButton));
       });
 
       volumeButton.addEventListener('click', () => toggleMute(container, video, volumeButton, volumeSlider));
 
       volumeSlider.addEventListener('input', () => setVolume(container, video, volumeButton, volumeSlider));
-      volumeSlider.addEventListener('keydown', e => {
-        if (e.code === 'ArrowLeft' || e.code === 'ArrowRight') {
-          e.preventDefault();
-        }
-      });
+      volumeSlider.addEventListener('keydown', e => sliderPreventDefault(e));
 
       fullscreenButton.addEventListener('click', () => toggleFullscreen(container, fullscreenButton));
       theaterButton.addEventListener('click', () => toggleTheater(container, theaterButton));
@@ -503,8 +635,8 @@ const UTUE_PLAYER = function () {
       // retrieve previous volume and mute settings from localStorage
 
       volumeSlider.value = (localStorage.getItem('player-volume') != null) ? localStorage.getItem('player-volume') : 50;
-      if (localStorage.getItem('player-muted') === 'true') toggleMute(container, video, volumeButton, volumeSlider);
       setVolume(container, video, volumeButton, volumeSlider);
+      if (localStorage.getItem('player-muted') === 'true') toggleMute(container, video, volumeButton, volumeSlider);
 
       // autoplay player if option enabled and container id matches
 

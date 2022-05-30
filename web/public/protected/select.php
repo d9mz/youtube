@@ -15,6 +15,17 @@ class Select {
         return ($stmt->rowCount() === 0 ? 0 : $stmt->fetch(\PDO::FETCH_ASSOC));
     }
 
+    function fetch_user_pfp($username) {
+        $stmt = $this->__db->prepare("SELECT youtube_picture FROM users WHERE youtube_username = :username");
+        $stmt->bindParam(":username", $username);
+        $stmt->execute();
+        while($row = $stmt->fetch(\PDO::FETCH_ASSOC)) {
+            $pfp = $row['youtube_picture'];
+        }
+
+        return (isset($pfp) ? $pfp : "default.png");
+    }
+
     function user_exists($user) {
         $stmt = $this->__db->prepare("SELECT youtube_username FROM users WHERE youtube_username = :username");
         $stmt->bindParam(":username", $user);

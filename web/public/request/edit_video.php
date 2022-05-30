@@ -7,6 +7,7 @@ require($_SERVER['DOCUMENT_ROOT'] . "/protected/db.php");
 require($_SERVER['DOCUMENT_ROOT'] . "/protected/select.php");
 
 $select = new \Database\Select($__db);
+$video = $select->fetch_table_singlerow($_GET['v'], "videos", "video_id");
 
 $request = (object) [
     "video_target"      => @$_GET['v'],
@@ -36,24 +37,36 @@ if(!isset($_SESSION['youtube'])) {
     $request->error->message = "You are not logged in!";
 }
 
-if(strlen(trim($_POST['youtube_description'])) > 500) {
+if(@$_SESSION['youtube'] != $video['video_author']) {
     $request->error->type    = 1;
-    $request->error->message = "Your comment is too long.";
+    $request->error->message = "You do not own this video!";
 }
 
-if(strlen(trim($_POST['youtube_title'])) > 50) {
-    $request->error->type    = 1;
-    $request->error->message = "Your title is too long.";
-}
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if(strlen(trim($_POST['youtube_description'])) > 500) {
+        $request->error->type    = 1;
+        $request->error->message = "Your comment is too long.";
+    }
 
-if(!isset($_POST['youtube_description']) || empty(trim($_POST['youtube_title']))) {
-    $request->error->type    = 1;
-    $request->error->message = "Your comment or title is empty.";
-}
+    if(strlen(trim($_POST['youtube_title'])) > 50) {
+        $request->error->type    = 1;
+        $request->error->message = "Your title is too long.";
+    }
 
-if(!$select->video_exists($_GET['v'])) {
-    $request->error->type    = 1;
-    $request->error->message = "This video does not exist.";
+    if(!isset($_POST['youtube_description']) || empty(trim($_POST['youtube_title']))) {
+        $request->error->type    = 1;
+        $request->error->message = "Your comment or title is empty.";
+    }
+
+    if(!$select->video_exists($_GET['v'])) {
+        $request->error->type    = 1;
+        $request->error->message = "This video does not exist.";
+    }
+} else {
+    if(!$select->video_exists($_GET['v'])) {
+        $request->error->type    = 1;
+        $request->error->message = "This video does not exist.";
+    }
 }
 
 if($request->error->message == "") {
@@ -66,11 +79,18 @@ if($request->error->message == "") {
             $request->video_description,
             $request->video_target,
         ]);
+
+        header("Location: /my/edit_video?v=" . $request->video_target);
     } else if($_SERVER['REQUEST_METHOD'] === 'GET') {
+        $thumbnail = $video['video_id'] . "/" . $_GET['t'] . ".jpg";
+        $stmt = $__db->prepare("UPDATE videos SET video_thumbnail = ? WHERE video_id = ?");
+        $stmt->execute([
+            $thumbnail,
+            $request->video_target,
+        ]);
 
+        echo "Successfully updated your thumbnail.";
     }
-
-    header("Location: /my/edit_video?v=" . $request->video_target);
 } else {
     $_SESSION['alert'] = (object) [
         "message" => $request->error->message,

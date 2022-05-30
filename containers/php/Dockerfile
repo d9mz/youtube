@@ -12,6 +12,9 @@ RUN docker-php-ext-enable apcu
 RUN apk add --no-cache libzip-dev
 RUN docker-php-ext-configure zip
 RUN docker-php-ext-install zip
+RUN docker-php-ext-configure exif
+RUN docker-php-ext-install exif
+RUN docker-php-ext-enable exif
 
 WORKDIR /var/www/symfony_docker
 

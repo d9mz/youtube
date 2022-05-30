@@ -684,6 +684,17 @@ h1 {
     height: 100%;
 }
 
+.featured-video .top-right {
+    float: right;
+    width: calc( 30.5% - 20px);
+}
+
+.featured-video .top-left {
+    float: left;
+    width: calc( 73.5% - 20px);
+    height: 100%;
+}
+
 .clearfix.edit-video-page {
     position: relative;
     bottom: 11px;
@@ -926,7 +937,7 @@ input[type="checkbox"] {
     margin-left: 20px;
 }
 
-.ut-input[type="text"],
+.ut-input,
 textarea.ut-input {
     border-radius: 3px;
     border: 1px solid #ccc;
@@ -986,7 +997,7 @@ textarea.ut-input {
 }
 
 .user-page {
-    background-color: #cccccc;
+    background-color: #999999;
     padding: 10px;
     border-radius: 5px;
 }
@@ -1008,8 +1019,25 @@ textarea.ut-input {
     background-color: #cccccc;
     padding: 6px;
     border-radius: 3px;
-    width: 33%;
+    min-width: 33%;
     margin: 2px;
+    max-width: 42%;
+    display: inline-block;
+}
+
+.user-page-corner-tab {
+    width: 0;
+    height: 0;
+    border: 1px solid #CCCCCC;
+    border-width: 23px 0 23px 12px;
+    border-top-color: transparent;
+    border-bottom-color: transparent;
+    font-size: 0;
+    line-height: 0;
+    display: inline-block;
+    vertical-align: middle;
+    position: relative;
+    right: 6px;
 }
 
 .profile-picture {
@@ -1018,8 +1046,15 @@ textarea.ut-input {
     border: 1px solid black;
 }
 
+.user .profile-picture {
+    border-color: #0000cc;
+    width: 60px;
+    height: 60px;
+}
+
 .user-sub-bar-channel h1 {
     margin-left: 10px;
+    font-size: 16px;
 }
 
 .user-sub-bar-channel .ut-button {
@@ -1032,4 +1067,165 @@ textarea.ut-input {
 
 .user-information {
     margin-left: 10px;
+}
+
+.short-description {
+    text-overflow: ellipsis;
+    height: 50px;
+    overflow: hidden;
+}
+
+form .ut-input {
+    margin-top: 3px;
+}
+
+.auth-form {
+    width: 190px;
+}
+
+.required {
+    font-size: 11px;
+    color: rgb(151, 0, 0);
+}
+
+.input-caption {
+    font-size: 11px;
+    width: 190px;
+    display: inline-block;
+}
+
+.comment .profile-picture {
+    width: 46px;
+    height: 46px;
+    border: 0px solid black;
+}
+
+.comment-side-user {
+    margin-left: 5px;
+}
+
+.user-page .comments {
+    padding: 0.4em;
+    border: 1px solid #999;
+}
+
+.user {
+    display: inline-block;
+    width: 13.79%;
+    vertical-align: top;
+}
+
+button.ut-blue-button:hover,
+button.ut-blue-button:active {
+    box-shadow: 0 0 3px #999;
+}
+
+button.ut-blue-button:active {
+    background-image: linear-gradient(to top, #9abdf5, #2b59b2);
+}
+
+button.ut-blue-button:hover,
+button.ut-blue-button:focus {
+    background-image: linear-gradient(to bottom, #9abdf5, #2b59b2);
+}
+
+.header form input[type="submit"]:hover,
+.header form input[type="submit"]:focus,
+.ut-button:hover,
+.ut-button:focus {
+    box-shadow: 0 0 3px #999;
+    background-image: linear-gradient(to bottom, #fff, #ebebeb);
+    border-color: #999;
+    outline: 0;
+}
+
+.channel-customization {
+    background-color: #ffffff;
+    border: 1px solid #d4d4d4;
+    border-radius: 0px;
+}
+
+.channel-customization-bar button {
+    border-radius: 0px;
+    font-size: 13px;
+    color: #444;
+    font-weight: bold;
+    height: 31px;
+    padding: 8px 12px 0 12px;
+    background: rgb(204, 204, 204);
+    background: linear-gradient(0deg, rgb(217, 217, 217) 0%, rgb(213, 213, 213) 27%, rgb(255, 255, 255) 53%, rgb(255, 255, 255) 100%);
+}
+
+.channel-customization-bar button.first {
+    margin-left: 3px;
+    margin-right: 6px;
+}
+
+.channel-customization .top-left,
+.channel-customization .top-right {
+    width: calc(51% - 20px);
+}
+
+.channel-customization .top-right {
+    border-left: 1px dotted #bbbbbb;
+    padding-left: 10px;
+    min-height: 171px;
+}
+
+.customization-module .input-caption {
+    font-size: 9px;
+    color: #666;
+    width: unset;
+}
+
+.customization-module textarea {
+    width: 356px;
+    height: 62px;
+    resize: none;
+}
+
+.comment-side-user.inline-block {
+    width: 516px;
+}
+
+.box {
+    padding: 0.4em;
+    border: 1px solid #999999;
+}
+
+.user-page .top.inline-block.vertical-align {
+    width: 92%;
+    padding-left: 5px;
+}
+
+.user-page-container {
+    background-color: #ccc;
+    height: 2000px;
+}
+
+.user-page-container .container {
+    width: 970px;
+    margin: auto;
+}
+
+.user-page .utue-player {
+    width: 640px;
+    height: 385px;
+}
+
+.user-page .video-item.w-300 {
+    width: 258px;
+}
+
+.user-page .video-meta {
+	width: 135px;
+}
+
+.user-page .video-meta a {
+	width: 133px;
+}
+
+.user-side-list {
+	overflow-x: hidden;
+    height: 595px;
 }

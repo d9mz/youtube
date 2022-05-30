@@ -4,7 +4,7 @@
     {# page metadata #}
 
     {% set page = page | merge({
-        "title"       : "YouTube - Video Manager",
+        "title"       : "UTue - Video Manager",
         "description" : "Broadcast yourself"
     }) %}    
 
@@ -72,11 +72,30 @@
                     <div class="edit-video window">
                         <button class="ut-button">Video Thumbnails</button>
                         <div class="padding">
-                            <img class="thumbnail" src="/v/thumb/{{ video.video_id }}/0.jpg">
-                            <img class="thumbnail" src="/v/thumb/{{ video.video_id }}/1.jpg">
-                            <img class="thumbnail" src="/v/thumb/{{ video.video_id }}/2.jpg"><br>
+                            <img class="thumbnail thumb-0" src="/v/thumb/{{ video.video_id }}/0.jpg">
+                            <img class="thumbnail thumb-1" src="/v/thumb/{{ video.video_id }}/1.jpg">
+                            <img class="thumbnail thumb-2" src="/v/thumb/{{ video.video_id }}/2.jpg"><br>
                             <img class="thumbnail big" src="/v/thumb/{{ video.video_thumbnail }}">
                         </div>
+                        <script>
+                            $('.thumb-0').click(function() {
+                                $.get("/request/edit_video?v={{ video.video_id }}&t=0", function(data, status) {
+                                    $('.thumbnail.big').attr("src", "/v/thumb/{{ video.video_id }}/0.jpg")
+                                });
+                            });
+
+                            $('.thumb-1').click(function() {
+                                $.get("/request/edit_video?v={{ video.video_id }}&t=1", function(data, status) {
+                                    $('.thumbnail.big').attr("src", "/v/thumb/{{ video.video_id }}/1.jpg")
+                                });
+                            });
+
+                            $('.thumb-2').click(function() {
+                                $.get("/request/edit_video?v={{ video.video_id }}&t=2", function(data, status) {
+                                    $('.thumbnail.big').attr("src", "/v/thumb/{{ video.video_id }}/2.jpg")
+                                });
+                            });
+                        </script>
                     </div>
                 </div>
             </div>

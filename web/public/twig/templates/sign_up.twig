@@ -4,7 +4,7 @@
     {# page metadata #}
 
     {% set page = page | merge({
-        "title"       : "YouTube - Sign Up",
+        "title"       : "UTue - Sign Up",
         "description" : "Broadcast yourself"
     }) %}    
 
@@ -14,15 +14,21 @@
 {%- block site_content -%}
     <div class="clearfix">
         <div class="section bold sign-up">
-            Create Account for YouTube
+            Create Account for UTue
         </div>
         <div class="outer-box" style="width: 500px;">
             <div class="inner-box">
-                <form action="/request/sign_up" method="POST" autocorrect="off">
-                    username>::::: <input class="" name="youtube-username" type="text"><br>
-                    password>::::: <input class="" name="youtube-password" type="password"><br>
-                    email>::::: <input class="" name="youtube-email" type="email"><br>
-                    <input class="submit" type="submit" value="Create Account">
+                <form class="auth-form inline-block" action="/request/sign_up" method="POST" autocorrect="off">
+                    <label class="black" for="username">Username <span class="required">* required</span></label><br>
+                    <input class="ut-input" required placeholder="Username" name="youtube-username" type="text"><br>
+                    <span class="input-caption">Your username must not be shorter than 5 characters or longer than 10 characters. No special characters are allowed.</span><br><br>
+                    <label class="black" for="username">Password <span class="required">* required</span></label><br>
+                    <input class="ut-input" required placeholder="Password" name="youtube-password" type="password"><br>
+                    <span class="input-caption">There are no requirements for passwords, but it is definitely recommended you set a strong password.</span><br><br>
+                    <label class="black" for="username">E-Mail</label><br>
+                    <span class="input-caption">This input is not required, but if you ever need to recover your account, this is needed.</span><br>
+                    <input class="ut-input" placeholder="E-Mail" name="youtube-email" type="email"><br><br>
+                    <input class="submit ut-button no-margin" type="submit" value="Create Account">
                 </form>
             </div>
         </div>

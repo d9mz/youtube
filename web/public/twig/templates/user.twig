@@ -4,84 +4,287 @@
     {# page metadata #}
 
     {% set page = page | merge({
-        "title"       : "YouTube - #{ user.youtube_username }",
+        "title"       : "UTue - #{ user.youtube_username }",
         "description" : "Broadcast yourself"
     }) %}    
 
     {{ parent() }}
 {% endblock %}
 
-{%- block site_content -%}
-    <div class="clearfix user-page">
-        <div class="user-bar-channel">
-            <div class="user-sub-bar-channel">
-                <img class="inline-block profile-picture mid" src="/v/p/default.png">
-                <h1 class="inline-block unbold mid">{{ user.youtube_username }}'s Channel</h1> 
-                {% if user.subscribed == false %}
-                    <a href="/request/subscribe?u={{ user.youtube_username }}">
-                        <button class="ut-button mid">Subscribe</button>
-                    </a>
-                {% else %}
-                    <a href="/request/subscribe?u={{ user.youtube_username }}">
-                        <button class="ut-button mid">Unsubscribe</button>
-                    </a>
-                {% endif %}
-            </div>
-        </div><br>
+{%- block head -%}
+    {{ parent() }}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <style>
+        .user-page-container {
+            background-color: {{ channel_colors.background_color }};
+        }
 
-        <div class="top-left">
-            <div class="panel">
-                <img class="inline-block profile-picture mid double-line" style="width: 94px;height: 94px;" src="/v/p/default.png">
-                <div class="inline-block user-information top">
-                    <h2 class="unbold">{{ user.youtube_username }}</h2>
-                    <p class="inline-block" style="width: 149px;">
-                        Your channel viewers will see links here, including "subscribe" and "add as friend".
-                    </p>
-                </div>
-            </div><br>
-            <div class="panel">
-                <h2 class="unbold">Profile</h2><br>
-                <b class="black">Joined:</b> <span class="right">{{ user.account_created }}</span>
-                <hr class="dotted-under">
-                <b class="black">Age:</b> <span class="right">0</span>
-                <hr class="dotted-under">
-                <b class="black">Last Visit Date:</b> <span class="right">{{ user.last_login }}</span>
-                <hr class="dotted-under">
-                <b class="black">Country:</b> <span class="right">{{ user.youtube_country }}</span>
-                <hr class="dotted-under">
-            </div>
-        </div>
-        <div class="top-right">
-            <div class="panel">
-                <h2 class="unbold">Channel Comments</h2><br>
-                {% if session.youtube is not defined %}
-                    <div class="comment-box black signedout">
-                        <a href="/sign_in">Sign In</a> or <a href="/sign_up">Sign Up</a> now to post a comment!
+        .user-page .panel, .user-bar-channel {
+            background-color: {{ channel_colors.secondary_color }};
+        }
+
+        .user-page-container .user-page {
+            background-color: {{ channel_colors.primary_color }};
+        }
+
+        .user .profile-picture, .inline-block.profile-picture.mid, .box, .user-page .comments {
+            border: 1px solid {{ channel_colors.border_color }};
+        }
+
+        .inline-block.profile-picture.mid.double-line {
+            border: 4px double {{ channel_colors.border_color }};
+        }
+
+        .comment {
+            border-bottom: 1px solid {{ channel_colors.border_color }};
+        }
+
+        .comment-text {
+            color: {{ channel_colors.text_color }};
+        }
+
+        .unbold, .bold, b, b.black {
+            color: {{ channel_colors.bold_text_color }};
+        }
+
+        .user-page-container a {
+            color: {{ channel_colors.link_color }};
+        }
+
+        .user-information.top, .panel .right {
+            color: {{ channel_colors.grey_text_color }};
+        }
+
+        .user-sub-bar-channel {
+            background-color: {{ channel_colors.inset_color }};
+        }
+
+        .user-page-corner-tab {
+            border-color: {{ channel_colors.inset_color }};
+            border-top-color: transparent;
+            border-bottom-color: transparent;
+        }
+
+        .user-page-container {
+            background-image: url("/v/p/{{ channel_colors.background_image }}");
+        }
+    </style>
+{% endblock %}
+
+{%- block footer -%}
+{%- endblock footer -%}
+
+{%- block site_content -%}
+    {% if session.youtube == user.youtube_username %}
+        {% include 'channel_customization.twig' %}
+    {% endif %}
+    </div></div></div></div>
+    <div class="user-page-container"><br>
+        <div class="container">
+            <div class="clearfix user-page">
+                <div class="user-bar-channel">
+                    <div class="user-sub-bar-channel">
+                        <img class="inline-block profile-picture mid" src="/v/p/{{ user.youtube_picture }}">
+                        <h1 class="inline-block unbold mid">
+                            {% if user.youtube_nickname is empty %}
+                                {{ user.youtube_username }}'s Channel
+                            {% else %}
+                                {{ user.youtube_nickname }}
+                            {% endif %}
+                        </h1> 
+                        {% if user.subscribed == false %}
+                            <a href="/request/subscribe?u={{ user.youtube_username }}">
+                                <button class="ut-button mid">Subscribe</button>
+                            </a>
+                        {% else %}
+                            <a href="/request/subscribe?u={{ user.youtube_username }}">
+                                <button class="ut-button mid">Unsubscribe</button>
+                            </a>
+                        {% endif %}
                     </div>
-                {% else %}
-                    <div class="comment-box black">
-                        <form action="/request/comment_profile?u={{ user.youtube_username }}" method="POST">
-                            <textarea name="comment" class="comment-textbox"></textarea><br>
-                            <input type="submit" name="submit" value="Publish">
-                        </form>
+                    <div class="user-page-corner-tab"></div>
+                </div>
+                {% if user.youtube_featured != "" %}
+                    <br>
+                    <div class="panel featured-video clearfix">
+                        <div class="top-left clearfix">
+                            <script src="/assets/player.js"></script>
+                            <div class="utue-player" data-src="/v/{{ user.youtube_featured }}.mp4"></div><br>
+                            <h1 class="video-watch-title">{{ video.video_title }}</h1>
+                            <p>
+                                From: <a href="/user/{{ video.video_author }}">{{ video.video_author }}</a> | January 15, 2010 | {{ video.video_views }} views
+                            </p>
+                            <p>
+                                {{ video.video_description|nl2br }}
+                                <br><br>
+                                <a class="bold black" href="/watch?v={{ video.video_id }}">View comments, related videos, and more</a>
+                            </p>
+                        </div>
+                        <div class="top-right clearfix">
+                            <div class="videos-list user-side-list">
+								{% for video in side_videos %}
+									{% if video.id is defined %}
+										<div class="video-item inline-block w-300 hover-video padding">
+											<div class="thumb-64 inline-block"  style="background-image: url('/v/thumb/{{ video.video_thumbnail }}');">
+												<span class="timestamp">{{ video.video_duration|date('i:s') }}</span>
+											</div>
+											<div class="video-meta">
+												<a href="/watch?v={{ video.video_id }}" class="video-author bigger">{{ video.video_title }}</a><br>
+												<span class="small">{{ video.video_views }} views</span><br>
+												<a href="/user/{{ video.video_author }}" class="video-author">{{ video.video_author }}</a>
+											</div>
+										</div>
+									{% endif %}
+								{% endfor %}
+							</div>
+                        </div>
                     </div>
                 {% endif %}
-                <hr class="dotted-under">
-                <div class="comments">
-                    {% set comment_i = 0 %}
-                    {% for comment in comments %}
-                        {% if comment.id is defined %}
-                            <div class="comment {% if comment_i == 0 %}first{% endif %}">
-                                <a href="/user/{{ comment.comment_author }}">{{ comment.comment_author }}</a> &nbsp;&nbsp; 
-                                <span class="small gray">{{ comment.comment_creation|timeago }}</span>
-                                <div class="comment-text black">
-                                    {{ comment.comment_text|nl2br }}
-                                </div>
+            </div><br>
+
+            <div class="clearfix user-page">
+                <div class="top-left">
+                    <div class="panel">
+                        <img class="inline-block profile-picture mid double-line" style="width: 94px;height: 94px;" src="/v/p/{{ user.youtube_picture }}">
+                        <div class="inline-block user-information top">
+                            <h2 class="unbold">{{ user.youtube_username }}</h2>
+                            <p class="inline-block" style="width: 149px;">
+                                {% if session.youtube == user.youtube_username %}
+                                    Your channel viewers will see links here, including "subscribe" and "add as friend".
+                                {% else %}
+                                    {% if user.subscribed == false %}
+                                        <a href="/request/subscribe?u={{ user.youtube_username }}">
+                                            <button class="ut-button mid">Subscribe</button>
+                                        </a>
+                                    {% else %}
+                                        <a href="/request/subscribe?u={{ user.youtube_username }}">
+                                            <button class="ut-button mid">Unsubscribe</button>
+                                        </a>
+                                    {% endif %}
+                                    <br><br>
+                                    <a href="#">Add as Friend</a> 
+                                    <span class="seperator"></span> 
+                                    <a href="#">Block User</a> 
+                                    <span class="seperator"></span>
+                                    <a href="#">Send Message</a>
+                                {% endif %}
+                            </p>
+                        </div>
+                    </div><br>
+                    <div class="panel">
+                        <h2 class="unbold">Profile</h2><br>
+                        <b class="black">Joined:</b> <span class="right">{{ user.account_created }}</span>
+                        <hr class="dotted-under">
+                        <b class="black">Age:</b> <span class="right">0</span>
+                        <hr class="dotted-under">
+                        <b class="black">Last Visit Date:</b> <span class="right">{{ user.last_login }}</span>
+                        <hr class="dotted-under">
+                        <b class="black">Country:</b> <span class="right">{{ user.youtube_country }}</span>
+                        <hr class="dotted-under">
+                        <b class="black">Category:</b> <span class="right">{{ user.youtube_category }}</span>
+                        <hr class="dotted-under">
+                        <b class="black">Tags:</b> <span class="right">{{ user.youtube_tag }}</span>
+                        <hr class="dotted-under">
+                    </div><br>
+                    <div class="panel">
+                        <h2 class="unbold">Recent Activity</h2><br>
+                        <div class="box">
+                            {% set i = 0 %}
+                            {% for subscription in subscriptions %}
+                                {% if subscription.id is defined and i < 5 %}
+                                    {% set i = i + 1 %}
+                                    <div class="feed-item">
+                                        <img class="icon" src="/img/feed.png">
+                                        <div class="top inline-block vertical-align">
+                                            <span class="bold">{{ user.youtube_username }} subscribed to <a href="/user/{{ subscription.subscription_to }}">{{ subscription.subscription_to }}</a></span><br>
+                                            <span class="small">({{ subscription.subscription_when|timeago }})</span>
+                                        </div>
+                                        <hr class="dotted-under">
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+
+                            {% if subscriptions.rows == 0 %}
+                                <center>
+                                    This user has no recent activity.
+                                </center>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                <div class="top-right">
+                    <div class="panel">
+                        <h2 class="unbold">Subscribers ({{ subscribers.rows }})</h2><br>
+                        <div class="users-list">
+                            {% for subscriber in subscribers %}
+                                {% if subscriber.id is defined %}
+                                    <div class="user">
+                                        <center>
+                                            <img class="profile-picture" src="/v/p/{{ subscriber.profile_picture }}">
+                                            <a href="/user/{{ subscriber.subscription_from }}">{{ subscriber.subscription_from }}</a>
+                                        </center>
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                    </div><br>
+
+                    <div class="panel">
+                        <h2 class="unbold">Subscriptions ({{ subscriptions.rows }})</h2><br>
+                        <div class="users-list">
+                            {% for subscription in subscriptions %}
+                                {% if subscription.id is defined %}
+                                    <div class="user">
+                                        <center>
+                                            <img class="profile-picture" src="/v/p/{{ subscription.profile_picture }}">
+                                            <a href="/user/{{ subscription.subscription_to }}">{{ subscription.subscription_to }}</a>
+                                        </center>
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                    </div><br>
+
+                    <div class="panel">
+                        <h2 class="unbold">Channel Comments ({{ comments.rows }})</h2><br>
+                        {% if session.youtube is not defined %}
+                            <div class="comment-box black signedout">
+                                <a href="/sign_in">Sign In</a> or <a href="/sign_up">Sign Up</a> now to post a comment!
+                            </div>
+                        {% else %}
+                            <div class="comment-box black">
+                                <form action="/request/comment_profile?u={{ user.youtube_username }}" method="POST">
+                                    <textarea name="comment" class="comment-textbox"></textarea><br>
+                                    <input class="ut-button no-margin" type="submit" name="submit" value="Publish">
+                                </form>
                             </div>
                         {% endif %}
-                    {% endfor %}
+                        <hr class="dotted-under">
+                        <div class="comments">
+                            {% set comment_i = 0 %}
+                            {% for comment in comments %}
+                                {% if comment.id is defined %}
+                                    <div class="comment {% if comment_i == 0 %}first{% endif %}">
+                                        <img class="profile-picture" src="/v/p/{{ comment.profile_picture }}">
+                                        <div class="comment-side-user inline-block top">
+                                            <a class="bold" href="/user/{{ comment.comment_author }}">{{ comment.comment_author }}</a> &nbsp;&nbsp; 
+                                            <span class="gray">({{ comment.comment_creation|timeago }})</span>
+                                            <div class="comment-text black">
+                                                {{ comment.comment_text|nl2br }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+                            {% if comments.rows == 0 %}
+                                <center>
+                                    This user has no comments.
+                                </center>
+                            {% endif %}
+                        </div>
+                    </div>
                 </div>
-            </div>
+            </div><br>
         </div>
-    </div><br>
+    </div>
 {% endblock %}

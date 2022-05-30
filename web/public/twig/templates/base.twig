@@ -2,7 +2,7 @@
 
 {# default page settings - do not mess with #}
 {% set page = page | default({}) | merge({
-    "title"       : "YouTube",
+    "title"       : "UTue",
     "description" : "Broadcast Yourself",
     "image"       : "/img/logo.png",
     "url"         : "localhost"
@@ -29,9 +29,11 @@
                         {% include 'header.twig' %}
                     </div>
                     {% block site_content %}{% endblock %}
-                    <div class="footer">
-                        {% include 'footer.twig' %}
-                    </div>
+                    {%- block footer -%}
+                        <div class="footer">
+                            {% include 'footer.twig' %}
+                        </div>
+                    {%- endblock footer -%}
                 {% endblock %}
             </div>
         </body>

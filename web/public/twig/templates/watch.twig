@@ -67,7 +67,7 @@
                     </span>
                     <div class="js_mixed_content"></div>
                 </div>
-                <div class="watch-description">
+                <div class="watch-description long-description hidden">
                     <div class="small">Uploaded by <a href="/user/{{ video.video_author }}">{{ video.video_author }}</a> on Apr 12, 2022</div>
                     <div class="black" style="margin-top: 5px">
                         {{ video.video_description|nl2br }}
@@ -77,6 +77,12 @@
                         <a href="#">{{ video.video_category }}</a><br>
                         <b>Tags:</b><br>
                         <a href="#" class="tag">{{ video.video_tag }}</a><br>
+                    </div>
+                </div>
+                <div class="watch-description short-description">
+                    <div class="small">Uploaded by <a href="/user/{{ video.video_author }}">{{ video.video_author }}</a> on Apr 12, 2022</div>
+                    <div class="black" style="margin-top: 5px">
+                        {{ video.video_description|nl2br }}
                     </div>
                 </div>
             </div>
@@ -99,7 +105,7 @@
                     <div class="comment-box black">
                         <form action="/request/comment_video?v={{ video.video_id }}" method="POST">
                             <textarea name="comment" class="comment-textbox"></textarea><br>
-                            <input type="submit" name="submit" value="Publish">
+                            <input type="submit" name="submit" class="ut-button no-margin" value="Publish">
                         </form>
                     </div>
                 {% endif %}
@@ -149,6 +155,12 @@
                             {% endfor %}
                         {% endif %}
                     {% endfor %}
+                    {% if comments.rows == 0 %}
+                        <br>
+                        <hr class="dotted-under"><br>
+                        <b class="black">This video has no comments.</b><br>
+                        <span class="little">Post the first comment under this video!</span>
+                    {% endif %}
                 </div>
             </div>
         </div>
@@ -162,7 +174,7 @@
                             </div>
                             <div class="video-meta">
                                 <a href="/watch?v={{ video.video_id }}" class="video-author bigger">{{ video.video_title }}</a><br>
-                                <span class="small">3,541,329 views</span><br>
+                                <span class="small">{{ video.video_views }} views</span><br>
                                 <a href="/user/{{ video.video_author }}" class="video-author">{{ video.video_author }}</a>
                             </div>
                         </div>
@@ -172,6 +184,32 @@
         </div>
     </div>
     <script>
+        $('.js_open_description').click(function() {
+            var long_description = $(".long-description");
+            var short_description = $(".short-description");
+            var expand_button = $(".js_open_description");
+
+            if(long_description.hasClass("hidden") && !short_description.hasClass("hidden")) {
+                short_description.fadeOut();
+                long_description.fadeIn();
+                long_description.removeClass("hidden");
+                short_description.addClass("hidden");
+                expand_button.text("Show less");
+            } else if(short_description.hasClass("hidden") && !long_description.hasClass("hidden")) {
+                long_description.fadeOut();
+                short_description.fadeIn();
+                long_description.addClass("hidden");
+                short_description.removeClass("hidden");
+                expand_button.text("Show more");
+            }
+        });
+
+        $('.js_flag_button').click(function() {
+            $.get("/request/ajax/report_video?v={{ video.video_id }}", function(data, status) {
+                alert(data);
+            });
+        });
+
         $('.js_addto_button').click(function() {
             $(".js_addto_button").addClass("active");
             $(".js_share_button").removeClass("active");
