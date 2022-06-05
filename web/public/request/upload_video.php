@@ -154,9 +154,9 @@ try {
 
         $stmt = $__db->prepare(
             "INSERT INTO videos 
-                (video_id, video_title, video_description, video_author, video_tags, video_category, video_thumbnail, video_duration) 
+                (video_id, video_title, video_description, video_author, video_tags, video_category, video_thumbnail, video_duration, video_ext) 
              VALUES 
-                (?, ?, ?, ?, ?, ?, ?, ?)"
+                (?, ?, ?, ?, ?, ?, ?, ?, ?)"
         );
         $stmt->execute([
             $configuration->request->video_id,
@@ -167,6 +167,7 @@ try {
             $configuration->request->video_category,
             $configuration->request->video_meta->video_thumbnail,
             $configuration->request->video_meta->video_duration,
+			$configuration->request->video_meta->video_file_type,
         ]);
         $stmt = null;
 

@@ -1,0 +1,38 @@
+<div class="panel">
+	<h2 class="unbold">Channel Comments ({{ comments.rows }})</h2><br>
+	{% if session.youtube is not defined %}
+		<div class="comment-box black signedout">
+			<a href="/sign_in">Sign In</a> or <a href="/sign_up">Sign Up</a> now to post a comment!
+		</div>
+	{% else %}
+		<div class="comment-box black">
+			<form action="/request/comment_profile?u={{ user.youtube_username }}" method="POST">
+				<textarea name="comment" class="comment-textbox"></textarea><br>
+				<input class="ut-button no-margin" type="submit" name="submit" value="Publish">
+			</form>
+		</div>
+	{% endif %}
+	<hr class="dotted-under">
+	<div class="comments">
+		{% set comment_i = 0 %}
+		{% for comment in comments %}
+			{% if comment.id is defined %}
+				<div class="comment {% if comment_i == 0 %}first{% endif %}">
+					<img class="profile-picture" src="/v/p/{{ comment.profile_picture }}">
+					<div class="comment-side-user inline-block top">
+						<a class="bold" href="/user/{{ comment.comment_author }}">{{ comment.comment_author }}</a> &nbsp;&nbsp; 
+						<span class="gray">({{ comment.comment_creation|timeago }})</span>
+						<div class="comment-text black">
+							{{ comment.comment_text|nl2br }}
+						</div>
+					</div>
+				</div>
+			{% endif %}
+		{% endfor %}
+		{% if comments.rows == 0 %}
+			<center>
+				This user has no comments.
+			</center>
+		{% endif %}
+	</div>
+</div>

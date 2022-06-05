@@ -35,15 +35,17 @@ $filter = new \Twig\TwigFilter('timeago', function ($datetime) {
 $twig->addFilter($filter);
 
 /*
-$channel_modules = (object) [
-	"subscribers"      => true,
-	"subscriptions"    => true,
-	"recent_activity"  => true,
-	"profile_info"     => true,
-	"profile_comments" => true,
-];
+	$channel_modules = (object) [
+		"subscribers_mod"   => true,
+		"subscriptions_mod" => true,
+		"comments_mod"      => true,
+		"profile_mod"       => true,
+		"activity_mod"      => true,
+		"info_mod"          => true,
+		"friends_mod"       => false,
+	];
 
-echo json_encode($channel_modules);
+	echo json_encode($channel_modules);
 */
 
 $router->get('/', function() use ($twig, $__db) { 
@@ -288,7 +290,8 @@ $router->get('/user/(\w+)', function($username) use ($twig, $__db, $select) {
 
 			$side_videos[] = $side_video;
 		}
-
+		
+		$user["youtube_modules"] = json_decode($user["youtube_modules"]);
         echo $twig->render('user.twig', array("side_videos" => @$side_videos, "video" => $video, "channel_colors" => $channel_colors, "categories" => $categories, "user" => $user, "subscribers" => $subscribers, "subscriptions" => $subscriptions, "videos" => $videos, "comments" => $comments));
         
     } else {
@@ -315,6 +318,22 @@ $router->get('/my/video_manager', function() use ($twig, $__db, $select) {
 
     $videos['rows'] = $video_manager->rowCount();
     echo $twig->render('video_manager.twig', array("videos" => $videos));
+});
+
+$router->get('/inbox/', function() use ($twig, $__db, $select) { 
+	$inbox_search = $__db->prepare("SELECT * FROM inbox WHERE inbox_author = :author ORDER BY id DESC LIMIT 50");
+	$inbox_search->bindParam(':author', $_SESSION['youtube'], PDO::PARAM_STR);
+	$inbox_search->execute();
+	
+	while($message = $inbox_search->fetch(PDO::FETCH_ASSOC)) { 
+		$message["profile_picture"] = $select->fetch_user_pfp($message['inbox_author']);
+		$messages[] = $message;
+	}
+    echo $twig->render('inbox/inbox.twig', array("messages" => $messages));
+});
+
+$router->get('/inbox/compose', function() use ($twig, $__db, $select) { 
+    echo $twig->render('inbox/compose.twig', array());
 });
 
 $router->get('/my/video_history', function() use ($twig, $__db, $select) { 
@@ -516,6 +535,32 @@ $router->get('/watch', function() use ($twig, $__db, $select) {
 
 $router->get('/sign_in', function() use ($twig, $__db) { 
     echo $twig->render('sign_in.twig', array());
+});
+
+$router->get('/search_query', function() use ($twig, $__db) {
+	$start_time = microtime(true);
+	if(isset($_GET['q'])) {
+		$search = "%" . $_GET['q'] . "%";
+		$videos_search = $__db->prepare("SELECT * FROM videos WHERE lower(video_title) LIKE lower(:video_search) ORDER BY RAND() LIMIT 50");
+		$videos_search->bindParam(':video_search', $search, PDO::PARAM_STR);
+		$videos_search->execute();
+		$i = 0;
+		while($video_n = $videos_search->fetch(PDO::FETCH_ASSOC)) { 
+			$views_search = $__db->prepare("SELECT id FROM views WHERE view_video = :view_target");
+			$views_search->bindParam(':view_target',  $video_n["video_id"], PDO::PARAM_STR);
+			$views_search->execute();
+			$videos[] = $video_n;
+			$videos[$i]["video_views"] = $views_search->rowCount();
+			$i++;
+		}
+		
+		$videos['rows'] = $videos_search->rowCount();
+	} else {
+		header("Location: /");
+	}
+	
+	$load = number_format(microtime(true) - $start_time, 2);
+    echo $twig->render('search.twig', array("videos" => $videos, "load" => $load));
 });
 
 $router->get('/sign_up', function() use ($twig, $__db) { 

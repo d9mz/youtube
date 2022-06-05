@@ -1,0 +1,69 @@
+{% extends "base.twig" %}
+
+{% block page %}
+    {# page metadata #}
+
+    {% set page = page | merge({
+        "title"       : "UTue - Video Manager",
+        "description" : "Broadcast yourself"
+    }) %}    
+
+    {{ parent() }}
+{% endblock %}
+
+{%- block head -%}
+    {{ parent() }}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+{% endblock %}
+
+{%- block site_content -%}
+	<style>
+		.seperator {
+		    margin: 0 7px;
+		}
+	</style>
+	<div class="clearfix inbox-page">
+		<h1>My Account</h1>
+		<a href="/my/video_manager">Videos</a> <span class="seperator"></span>
+		<a href="/my/insight">Insight</a> <span class="seperator"></span>
+		<a href="/inbox/" class="bold black">Messages</a> <span class="seperator"></span>
+		<a href="/my/settings">Settings</a>
+		<hr>
+	</div>
+    <div class="clearfix inbox-page">
+        <div class="top-left">
+			<br>
+			<a href="/inbox/compose">
+				<button class="ut-button no-margin">
+					Compose
+				</button>
+			</a>
+            <br><br>
+            <ul class="side-list">
+                <li class="active"><a href="/inbox/">Inbox</a></li>
+                <li class=""><a href="/inbox/">Personal Messages</a></li>
+                <li class=""><a href="/inbox/shared">Shared with You</a></li>
+                <li class=""><a href="/inbox/comments">Comments</a></li>
+                <li class="height-expander">&nbsp;</li>
+            </ul>
+        </div>
+        <div class="top-right">
+            <h1 class="video-manager">Compose</h1>
+            <div class="videos-list">
+                <form method="POST" action="/request/inbox/compose" class="compose-form">
+					From: <input style="margin-left:34px;width:600px;" disabled type="text" value="{{ session.youtube }}" name="pm_from"><br><br>
+					To: <input value="{{ args.to }}" style="margin-left:50px;width:600px;" type="text" name="pm_to"><br><br>
+					Subject: <input value="{{ args.subject }}" style="margin-left:24px;width:600px;" type="text" name="pm_subject"><br><br>
+					<span class="top">Message:</span> <textarea style="margin-left:15px;" name="pm_message" class="inbox-message"></textarea><br><br>
+					
+					<input class="ut-button bold no-margin" type="submit" value="Send Message"> 
+					<a href="/inbox/">
+						<button class="ut-button no-margin">
+							Cancel
+						</button>
+					</a>
+				</form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

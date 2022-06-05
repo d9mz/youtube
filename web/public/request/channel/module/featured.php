@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-require("../../../app/vendor/autoload.php");
+require("../../../../app/vendor/autoload.php");
 require($_SERVER['DOCUMENT_ROOT'] . "/protected/config.inc.php");
 require($_SERVER['DOCUMENT_ROOT'] . "/protected/db.php");
 require($_SERVER['DOCUMENT_ROOT'] . "/protected/select.php");

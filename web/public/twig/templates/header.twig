@@ -13,7 +13,7 @@
             <div id="user-dropdown" class="ut-dropdown-content">
                 <a href="/user/{{ session.youtube }}">My Channel</a>
                 <a href="#">Subscriptions</a>
-                <a href="#">Inbox</a>
+                <a href="/inbox/">Inbox</a>
                 <a href="/my/video_manager">My Videos</a>
                 <a href="#">Account</a>
                 <a href="/my/video_history">History</a>
@@ -45,7 +45,7 @@
     {% endif %}
 </div>
 <hr>
-
+<div class="ajax_alerts"></div>
 {% if session.alert is defined %}
     <div class="alert
         {% if session.alert.type == 0 %}alert-success{% endif %}

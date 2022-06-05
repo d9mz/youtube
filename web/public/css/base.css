@@ -663,7 +663,7 @@ h1 {
 
 .edit-video-page .top-right {
     float: right;
-    width: calc( 79.54% - 20px);
+    width: calc( 79.51% - 20px);
 }
 
 .edit-video-page .top-left {
@@ -703,7 +703,7 @@ h1 {
 
 .video-manager-page .top-right {
     float: right;
-    width: calc( 79.54% - 20px);
+    width: calc( 79.51% - 20px);
 }
 
 h1.video-manager {
@@ -765,7 +765,7 @@ input[type="checkbox"] {
 }
 
 .video-manager-page .video-item .video-meta {
-    width: 470px;
+    width: 460px;
     word-break: break-all;
     word-wrap: break-word;
 }
@@ -1021,7 +1021,7 @@ textarea.ut-input {
     border-radius: 3px;
     min-width: 33%;
     margin: 2px;
-    max-width: 42%;
+    max-width: 60%;
     display: inline-block;
 }
 
@@ -1229,3 +1229,74 @@ button.ut-blue-button:focus {
 	overflow-x: hidden;
     height: 595px;
 }
+
+.inbox-page .video-item {
+    width: 700px;
+}
+
+.inbox-page .top-left {
+    float: left;
+    width: calc( 24.5% - 20px);
+    border-right: 1px solid #aaa;
+    height: 100%;
+}
+
+.inbox-page .top-right {
+    float: right;
+    width: calc( 79.51% - 20px);
+}
+
+.inbox-page hr, .video-manager-page hr  {
+	margin: 0px;
+	margin-top: 10px;
+}
+
+.inbox-page h1, .video-manager-page h1  {
+	margin-bottom: 5px;
+}
+
+.inbox-page h1.video-manager {
+	background-color: unset;
+	border-bottom: 1px solid #aaa;
+}
+
+.inbox-message {
+	resize: none;
+	width: 600px;
+	height: 260px;
+}
+
+.compose-form {
+	margin-left: 70px;
+	margin-top: 25px;
+}
+
+.inbox-body {
+    margin-left: 14px;
+    width: 624px;
+    margin-top: 10px;
+}
+
+.comment-bulletin {
+	min-height: 64px;
+	border: 1px solid #c9c9c9;
+	padding: 8px;
+}
+
+.search-videos .video-item {
+	width: 950px;
+}
+
+.search-videos .video-meta a {
+	font-size: unset;
+    font-weight: normal;
+	width: unset;
+}
+
+.search-videos .video-item .video-meta .seperator {
+	margin: 0 7px;
+    margin-right: 7px;
+}
+
+.search-videos .video-description-meta {
+margin-bottom: 5px;

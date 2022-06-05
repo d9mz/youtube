@@ -1,0 +1,27 @@
+<div class="panel">
+	<img class="inline-block profile-picture mid double-line" style="width: 94px;height: 94px;" src="/v/p/{{ user.youtube_picture }}">
+	<div class="inline-block user-information top">
+		<h2 class="unbold">{{ user.youtube_username }}</h2>
+		<p class="inline-block" style="width: 149px;">
+			{% if session.youtube == user.youtube_username %}
+				Your channel viewers will see links here, including "subscribe" and "add as friend".
+			{% else %}
+				{% if user.subscribed == false %}
+					<a href="/request/subscribe?u={{ user.youtube_username }}">
+						<button class="ut-button mid">Subscribe</button>
+					</a>
+				{% else %}
+					<a href="/request/subscribe?u={{ user.youtube_username }}">
+						<button class="ut-button mid">Unsubscribe</button>
+					</a>
+				{% endif %}
+				<br><br>
+				<a href="#">Add as Friend</a> 
+				<span class="seperator"></span> 
+				<a href="#">Block User</a> 
+				<span class="seperator"></span>
+				<a href="#">Send Message</a>
+			{% endif %}
+		</p>
+	</div>
+</div><br>

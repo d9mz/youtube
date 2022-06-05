@@ -17,7 +17,34 @@
 </div>
 <div class="clearfix channel-customization user-page">
     <div class="post-bulletin">
-        Post Bulletin
+        <div class="top-left clearfix">
+			<form action="/request/comment_profile?u={{ user.youtube_username }}" id="comment_profile" class="top inline-block right" method="POST">
+				<textarea name="comment" style="width: 457px;height: 60px;resize: none;" class="js-comment-textbox" placeholder="Enter message"></textarea><br><br>
+				<input type="text" name="metadata" style="width: 455px;" placeholder="Enter UTue video URL (optional)">
+			</form>
+			<script>
+				function nl2br (str, is_xhtml) {
+					var breakTag = (is_xhtml || typeof is_xhtml === 'undefined') ? '<br ' + '/>' : '<br>'; // Adjust comment to avoid issue on phpjs.org display
+					return (str + '').replace(/([^>\r\n]?)(\r\n|\n\r|\r|\n)/g, '$1' + breakTag + '$2');
+				}
+				
+				$(".js-comment-textbox").on('change keyup paste', function() {
+					$("#comment-bulletin-text").html(nl2br($(".js-comment-textbox").val()));
+				});
+			</script>
+        </div>
+        <div class="top-right clearfix" style="min-height: 110px;">
+			<div class="comment-bulletin">
+				<b>{{ user.youtube_username }}</b>
+				<span class="right gray">Bulletin Preview</span>
+				<p id="comment-bulletin-text" class="black"></p>
+			</div><br>
+			Bulletin will be posted to your profile comments.
+        </div>
+        <div class="width-full clearfix">
+            <button class="ut-button mid no-margin js_post_bulletin" id="post-bulletin">Post Bulletin</button> 
+            <span class="mid">or <a href="#">cancel</a></span>
+        </div>
     </div>
     <div class="settings hidden">
         <div class="top-left clearfix">
@@ -70,6 +97,9 @@
                 </div>
                 <form action="/request/channel/picture" id="profile_picture" enctype='multipart/form-data' class="top inline-block right" method="POST">
                     <input type="file" name="profile_picture" id="profile_picture_in">
+					{% if user.youtube_picture != "default.png" %}
+                        <a href="/request/channel/pfpreset">Remove</a>
+                    {% endif %}
                 </form>
             </div><br>
             <hr class="dotted-under"> 
@@ -179,21 +209,21 @@
 			<div class="customization-module black">
                 <span class="mid">Subscribers Module: </span>
                 <form action="/request/channel/module/subscribers" id="subscribers" class="mid inline-block right" method="POST">
-                    <input type="checkbox" name="subscribers" style="font-size: 9px;">
+                    <input type="checkbox" name="subscribers" {% if user.youtube_modules.subscribers_mod == true %}checked{% endif %} value="y" style="font-size: 9px;">
                 </form>
             </div>
             <hr class="dotted-under"> 
 			<div class="customization-module black">
                 <span class="mid">Subscriptions Module: </span>
                 <form action="/request/channel/module/subscriptions" id="subscriptions" class="mid inline-block right" method="POST">
-                    <input type="checkbox" name="subscriptions" style="font-size: 9px;">
+                    <input type="checkbox" name="subscriptions" {% if user.youtube_modules.subscriptions_mod == true %}checked{% endif %} value="y" style="font-size: 9px;">
                 </form>
             </div>
             <hr class="dotted-under"> 
 			<div class="customization-module black">
                 <span class="mid">Comments Module: </span>
                 <form action="/request/channel/module/comments" id="comments" class="mid inline-block right" method="POST">
-                    <input type="checkbox" name="comments" style="font-size: 9px;">
+                    <input type="checkbox" name="comments" {% if user.youtube_modules.comments_mod == true %}checked{% endif %} value="y" style="font-size: 9px;">
                 </form>
             </div>
             <hr class="dotted-under"> 
@@ -202,28 +232,28 @@
             <div class="customization-module black">
                 <span class="mid">Profile Module: </span>
                 <form action="/request/channel/module/profile" id="profile" class="mid inline-block right" method="POST">
-                    <input type="checkbox" name="profile" style="font-size: 9px;">
+                    <input type="checkbox" name="profile" {% if user.youtube_modules.profile_mod == true %}checked{% endif %} value="y" style="font-size: 9px;">
                 </form>
             </div>
             <hr class="dotted-under"> 
 			<div class="customization-module black">
                 <span class="mid">Activity Module: </span>
                 <form action="/request/channel/module/activity" id="activity" class="mid inline-block right" method="POST">
-                    <input type="checkbox" name="activity" style="font-size: 9px;">
+                    <input type="checkbox" name="activity" {% if user.youtube_modules.activity_mod == true %}checked{% endif %} value="y" style="font-size: 9px;">
                 </form>
             </div>
             <hr class="dotted-under"> 
 			<div class="customization-module black">
                 <span class="mid">Info Module: </span>
                 <form action="/request/channel/module/info" id="info" class="mid inline-block right" method="POST">
-                    <input type="checkbox" name="info" style="font-size: 9px;">
+                    <input type="checkbox" name="info" value="y" {% if user.youtube_modules.info_mod == true %}checked{% endif %} style="font-size: 9px;">
                 </form>
             </div>
             <hr class="dotted-under"> 
 			<div class="customization-module black">
                 <span class="mid">Friends Module: </span>
                 <form action="/request/channel/module/friends" id="friends" class="mid inline-block right" method="POST">
-                    <input type="checkbox" name="friends" style="font-size: 9px;">
+                    <input type="checkbox" name="friends" value="y" style="font-size: 9px;">
                 </form>
             </div>
             <hr class="dotted-under"> 
@@ -247,6 +277,20 @@
         $(".videos-playlists").addClass("hidden");
     });
     
+	$('.js_post_bulletin').click(function() {
+		$.ajax({   
+			type: 'POST',   
+			url: "/request/comment_profile?u={{ user.youtube_username }}",   
+			data: $('form#comment_profile').serialize(),
+			success: function(res) {
+				alert("Successfully posted your bulletin");
+			},
+			error: function(res) {
+				alert(res.status);
+			}
+		}); 
+    });
+	
     $('.js_apply_changes').click(function() {
         var forms = [
             'title',
@@ -341,12 +385,19 @@
 	$('.js_module_apply').click(function() {
         var forms = [
             'featured',
+			'subscribers',
+			'subscriptions',
+			'comments',
+			'profile',
+			'activity',
+			'info',
+			'friends',
         ];
 
         forms.forEach((form) => {
             $.ajax({   
                 type: 'POST',   
-                url: "/request/channel/" + form,   
+                url: "/request/channel/module/" + form,   
                 data: $('form#' + form).serialize(),
                 success: function(res) {
                     console.log(res);

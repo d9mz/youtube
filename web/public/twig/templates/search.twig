@@ -1,0 +1,49 @@
+{% extends "base.twig" %}
+
+{% block page %}
+    {# page metadata #}
+
+    {% set page = page | merge({
+        "title"       : "UTue - Search",
+        "description" : "Broadcast yourself"
+    }) %}    
+
+    {{ parent() }}
+{% endblock %}
+
+{%- block head -%}
+    {{ parent() }}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+{% endblock %}
+
+{%- block site_content -%}
+	<div>
+		<h1>Search results for {{ args.q }}</h1>
+		<span class="grey">About <b>{{ videos.rows }}</b> results (took {{ load }}ms to fetch)</span>
+	</div>
+	<br>
+	<div class="search-videos">
+		{% for video in videos %}
+			{% if video.id is defined %}
+				<div class="video-item inline-block w-300 hover-video padding">
+					<div class="thumb-64 inline-block"  style="background-image: url('/v/thumb/{{ video.video_thumbnail }}');">
+						<span class="timestamp">{{ video.video_duration|date('i:s') }}</span>
+					</div>
+					<div class="video-meta">
+						<a href="/watch?v={{ video.video_id }}" class="video-author bigger">{{ video.video_title }}</a><br>
+						<span class="small"> 
+							<span class="video-description-meta">
+								{% if video.video_description is not empty %} 
+									{{ video.video_description }}
+								{% else %}
+									<i>This video has no description.</i>
+								{% endif %}
+							</span>
+						</span><br>
+						by <a href="/user/{{ video.video_author }}">{{ video.video_author }}</a> <span class="seperator"></span> {{ video.video_added|timeago() }} <span class="seperator"></span> <b>{{ video.video_views }} views</b>
+					</div>
+				</div><br>
+			{% endif %}
+		{% endfor %}
+	</div>
+{% endblock %}

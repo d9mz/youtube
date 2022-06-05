@@ -43,7 +43,7 @@
                 </div>
             </div><br>
             <script src="/assets/player.js"></script>
-            <div class="utue-player" data-src="/v/{{ video.video_id }}.mp4"></div><br>
+            <div class="utue-player" data-src="/v/{{ video.video_id }}{{ video.video_ext }}"></div><br>
             <div class="top-left">
                 <div class="video-watch-meta no-padding">
                     <a href="/request/like_video?v={{ video.video_id }}&t=l">
@@ -172,7 +172,7 @@
                             <div class="thumb-64 inline-block"  style="background-image: url('/v/thumb/{{ video.video_thumbnail }}');">
                                 <span class="timestamp">{{ video.video_duration|date('i:s') }}</span>
                             </div>
-                            <div class="video-meta">
+                            <div class="video-meta small">
                                 <a href="/watch?v={{ video.video_id }}" class="video-author bigger">{{ video.video_title }}</a><br>
                                 <span class="small">{{ video.video_views }} views</span><br>
                                 <a href="/user/{{ video.video_author }}" class="video-author">{{ video.video_author }}</a>
