@@ -18,7 +18,7 @@ class Insert {
 			$message,
 			$from,
 			$subject,
-			$message,
+			$to_user,
 			$video,
 		]);
 		

@@ -5,7 +5,9 @@ require("../../app/vendor/autoload.php");
 require($_SERVER['DOCUMENT_ROOT'] . "/protected/config.inc.php");
 require($_SERVER['DOCUMENT_ROOT'] . "/protected/db.php");
 require($_SERVER['DOCUMENT_ROOT'] . "/protected/select.php");
+require($_SERVER['DOCUMENT_ROOT'] . "/protected/insert.php");
 
+$insert = new \Database\Insert($__db);
 $select = new \Database\Select($__db);
 
 $request = (object) [
@@ -63,6 +65,14 @@ if($request->error->message == "") {
         $_SESSION['youtube'],
     ]);
     $stmt = null;
+
+	$request->notification_body = "I commented on your video \"" . $request->comment_target . "\"!\n\"" . $request->comment_text . "\"";
+    $insert->send_notification( 
+		$request->comment_target, 
+		$_SESSION['youtube'], 
+		"New Video Comment",
+		$request->notification_body,
+	);
 
     // echo "<pre>" . print_r($request, true) . "</pre>";
     header("Location: /watch?v=" . $request->comment_target);

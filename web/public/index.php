@@ -34,6 +34,13 @@ $filter = new \Twig\TwigFilter('timeago', function ($datetime) {
 
 $twig->addFilter($filter);
 
+if(isset($_SESSION['youtube'])) {
+    $stmt = $__db->prepare("UPDATE users SET last_login = NOW() WHERE youtube_username = ?");
+    $stmt->execute([
+        $_SESSION['youtube'],
+    ]);
+}
+
 /*
 	$channel_modules = (object) [
 		"subscribers_mod"   => true,
@@ -347,6 +354,24 @@ $router->get('/my/video_history', function() use ($twig, $__db, $select) {
 
     $videos['rows'] = $video_manager->rowCount();
     echo $twig->render('video_history.twig', array("videos" => $videos));
+});
+
+$router->get('/account', function() use ($twig, $__db, $select) { 
+    if(isset($_SESSION['youtube'])) {
+        $user = $select->fetch_table_singlerow($_SESSION['youtube'], "users", "youtube_username");
+        echo $twig->render('settings/settings.twig', array("user" => $user));
+    } else {
+        header("Location: /");
+    }
+});
+
+$router->get('/manage_account', function() use ($twig, $__db, $select) { 
+    if(isset($_SESSION['youtube'])) {
+        $user = $select->fetch_table_singlerow($_SESSION['youtube'], "users", "youtube_username");
+        echo $twig->render('settings/manage.twig', array("user" => $user));
+    } else {
+        header("Location: /");
+    }
 });
 
 $router->get('/my/video_liked', function() use ($twig, $__db, $select) { 

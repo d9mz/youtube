@@ -1,0 +1,99 @@
+{% extends "base.twig" %}
+
+{% block page %}
+    {# page metadata #}
+
+    {% set page = page | merge({
+        "title"       : "UTue - Video Manager",
+        "description" : "Broadcast yourself"
+    }) %}    
+
+    {{ parent() }}
+{% endblock %}
+
+{%- block head -%}
+    {{ parent() }}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+{% endblock %}
+
+{%- block site_content -%}
+	<style>
+		.seperator {
+		    margin: 0 7px;
+		}
+	</style>
+	<div class="clearfix inbox-page">
+		<h1>My Account</h1>
+		<a href="/my/video_manager">Videos</a> <span class="seperator"></span>
+		<a href="/my/insight">Insight</a> <span class="seperator"></span>
+		<a href="/inbox/">Messages</a> <span class="seperator"></span>
+		<a href="/account" class="bold black">Settings</a>
+		<hr>
+	</div>
+    <div class="clearfix settings-page">
+        <div class="top-left">
+            <br>
+            <ul class="side-list">
+                <li class="active"><a href="/account">Overview</a></li>
+                <li class=""><a href="/manage_account">Manage Account</a></li>
+                <li class="height-expander">&nbsp;</li>
+            </ul>
+        </div>
+        <div class="top-right">
+            <h1 class="video-manager">Overview</h1>
+            <div class="padding">
+                <span class="caption small">
+                    These settings can be changed in your channel customization module.<br>
+                    <a href="/user/{{ user.youtube_username }}">View customization module</a>
+                </span>
+                <hr class="dotted-under"><br>
+                <div class="settings-module black">
+                    <span class="mid">Username: </span>
+                    <form action="/request/channel/title" id="title" class="mid inline-block right" method="POST">
+                        <input type="text" disabled value="{{ user.youtube_username }}" name="title" style="font-size: 9px;">
+                    </form>
+                </div>
+                <hr class="dotted-under"><br>
+                <div class="settings-module black">
+                    <span class="mid">Country: </span>
+                    <form action="/request/channel/title" id="title" class="mid inline-block right" method="POST">
+                        <input type="text" disabled value="{{ user.youtube_country }}" name="title" style="font-size: 9px;">
+                    </form>
+                </div>
+                <hr class="dotted-under"><br>
+                <div class="settings-module black">
+                    <span class="mid">Category: </span>
+                    <form action="/request/channel/title" id="title" class="mid inline-block right" method="POST">
+                        <input type="text" disabled value="{{ user.youtube_category }}" name="title" style="font-size: 9px;">
+                    </form>
+                </div>
+                <hr class="dotted-under"><br>
+                <span class="caption small">
+                    These settings cannot be changed.
+                </span>
+                <hr class="dotted-under"><br>
+                <div class="settings-module black">
+                    <span class="mid">Creation Date: </span>
+                    <form action="/request/channel/title" id="title" class="mid inline-block right" method="POST">
+                        <input type="text" disabled value="{{ user.account_created }}" name="title" style="font-size: 9px;">
+                    </form>
+                </div>
+                <hr class="dotted-under"><br>
+                <div class="settings-module black">
+                    <span class="mid">Last Login: </span>
+                    <form action="/request/channel/title" id="title" class="mid inline-block right" method="POST">
+                        <input type="text" disabled value="{{ user.last_login }}" name="title" style="font-size: 9px;">
+                    </form>
+                </div>
+                <hr class="dotted-under"><br>
+                <div class="settings-module black">
+                    <span class="mid">Email: </span>
+                    <form action="/request/channel/title" id="title" class="mid inline-block right" method="POST">
+                        <input type="text" disabled value="{{ user.youtube_email }}" name="title" style="font-size: 9px;">
+                    </form>
+                </div>
+                <hr class="dotted-under"><br>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -141,7 +141,7 @@ try {
 
         $format = new FFMpeg\Format\Video\X264();
         $format->on('progress', function ($video, $format, $percentage) {
-            echo "$percentage% transcoded<br>";
+            // todo : progress bar
         });
 
         $format
@@ -171,8 +171,12 @@ try {
         ]);
         $stmt = null;
 
-        echo "<a href='/watch?v=" . $configuration->request->video_id . "'>" . $configuration->request->video_id . "</a>";
+        $_SESSION['alert'] = (object) [
+            "message" => "Succesfully uploaded your video!",
+            "type" => 0,
+        ];
         $queue->set($configuration);
+        header("Location: /watch?v=" . $configuration->request->video_id);
     } else {
         $_SESSION['alert'] = (object) [
             "message" => $configuration->debug->stacktrace,

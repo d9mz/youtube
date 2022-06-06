@@ -12,23 +12,41 @@
 {% endblock %}
 
 {%- block site_content -%}
-    <div class="clearfix">
+    <div class="clearfix upload-page">
         <div class="section bold sign-up">
             Upload Video to YouTube
         </div>
-        <div class="outer-box" style="width: 500px;">
-            <div class="inner-box">
+        <div class="outer-box">
+            <div class="inner-box clearfix">
                 <form action="/request/upload_video" method="POST" enctype="multipart/form-data" autocorrect="off">
-                    video title>::::: <input class="" name="youtube-title" placeholder="Title" type="text"><br>
-                    description>::::: <textarea name="youtube-description" placeholder="Description"></textarea><br>
-                    tags>::::: <input class="" name="youtube-tags" placeholder="title" type="text"><br>
-                    category>:::::  <select name="youtube-category">
-                                    {% for category in categories %}
-                                        <option value="{{ category }}">{{ category }}</option>
-                                    {% endfor %}
-                                </select><br><br>
-                    FILE UPLOAD: <input class="" name="youtube-video" placeholder="" type="file" accept="video/mp4,video/x-m4v,video/*"><br>
-                    <input class="submit" type="submit" value="Upload">
+                    <div class="top-left">
+                        <label class="black" for="title">Video Title <span class="required">* required</span></label><br>
+                        <input class="ut-input" style="width: 90%;" required placeholder="Title" name="youtube-title" type="text"><br>
+                        <span class="input-caption" style="width: 90%;">Your title must be shorter than 40 characters. </span><br><br>
+                        
+                        <label class="black" for="username"> Video Description <span class="required">* required</span></label><br>
+                        <textarea name="youtube-description" style="width: 90%;" class="ut-input no-resize" placeholder="Description"></textarea><br>
+                        <span class="input-caption" style="width: 90%;">Your video's description must be shorter than 1000 characters. <br>Make sure your description follows the terms of service.</span><br><br>
+                    </div>
+                    <div class="top-right">
+                        <label class="black" for="username">Video Tags</label><br>
+                        <input class="ut-input" style="width: 90%;" placeholder="Video Tags" name="youtube-tags" type="text"><br>
+                        <span class="input-caption" style="width: 90%;">Video tags help users discover your videos in search queries and in their recommendations.</span><br><br>
+
+                        <label class="black" for="username">Video Category <span class="required">* required</span></label><br>
+                        <select name="youtube-category" class="ut-input">
+                            {% for category in categories %}
+                                <option value="{{ category }}">{{ category }}</option>
+                            {% endfor %}
+                        </select><br>
+                        <span class="input-caption" style="width: 90%;">The video category will help viewers understand what your video is about.</span><br><br>
+
+                        <label class="black" for="username">Video File <span class="required">* required</span></label><br>
+                        <input class="ut-input" style="width: 90%;" name="youtube-video" type="file"><br><br>
+                    </div>
+                    <div class="width-full clearfix">
+                        <input class="submit ut-button no-margin" type="submit" value="Upload Video">
+                    </div>
                 </form>
             </div>
         </div>

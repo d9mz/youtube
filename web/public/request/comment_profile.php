@@ -70,7 +70,7 @@ if($request->error->message == "") {
     $insert->send_notification( 
 		$request->comment_target, 
 		$_SESSION['youtube'], 
-		"New Comment",
+		"New Profile Comment",
 		$request->notification_body,
 	);
     header("Location: /user/" . $request->comment_target);

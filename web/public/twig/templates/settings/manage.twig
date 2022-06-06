@@ -1,0 +1,59 @@
+{% extends "base.twig" %}
+
+{% block page %}
+    {# page metadata #}
+
+    {% set page = page | merge({
+        "title"       : "UTue - Video Manager",
+        "description" : "Broadcast yourself"
+    }) %}    
+
+    {{ parent() }}
+{% endblock %}
+
+{%- block head -%}
+    {{ parent() }}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+{% endblock %}
+
+{%- block site_content -%}
+	<style>
+		.seperator {
+		    margin: 0 7px;
+		}
+	</style>
+	<div class="clearfix inbox-page">
+		<h1>My Account</h1>
+		<a href="/my/video_manager">Videos</a> <span class="seperator"></span>
+		<a href="/my/insight">Insight</a> <span class="seperator"></span>
+		<a href="/inbox/">Messages</a> <span class="seperator"></span>
+		<a href="/account" class="bold black">Settings</a>
+		<hr>
+	</div>
+    <div class="clearfix settings-page">
+        <div class="top-left">
+            <br>
+            <ul class="side-list">
+                <li class=""><a href="/account">Overview</a></li>
+                <li class="active"><a href="/manage_account">Manage Account</a></li>
+                <li class="height-expander">&nbsp;</li>
+            </ul>
+        </div>
+        <div class="top-right">
+            <h1 class="video-manager">Manage Account</h1>
+            <div class="padding">
+                <span class="caption small">
+                    These settings may require password confirmation.<br>
+                </span>
+                <hr class="dotted-under"><br>
+                <div class="settings-module black">
+                    <span class="mid">Delete Account: </span>
+                    <div class="mid inline-block right">
+                        <a href="/request/delete_account"><button class="ut-button no-margin" style="position: relative;bottom: 5px;">Delete</button></a>
+                    </div>
+                </div>
+                <hr class="dotted-under"><br>
+            </div>
+        </div>
+    </div>
+{% endblock %}
