@@ -88,6 +88,26 @@ const UTUE_PLAYER = function () {
           width: 100%;
         }
 
+        input[seekbar] {
+          -webkit-appearance: none;
+          margin-bottom: 1px;
+          width: 100%;
+          height: 3px;
+          -webkit-filter: contrast(300%);
+          -moz-filter: contrast(300%);
+          filter: contrast(300%);
+          transition: margin 0.4s var(--ease), height 0.4s var(--ease), filter 0.4s var(--ease);
+        }
+
+        :host([data-mousemove]) input[seekbar] {
+          margin-bottom: 4px;
+          height: 12px;
+          -webkit-filter: none;
+          -moz-filter: none;
+          filter: none;
+          transition: margin 0.1s, height 0.1s, filter 0.1s;
+        }
+
         bar::after {
           content: '';
           background:
@@ -121,23 +141,12 @@ const UTUE_PLAYER = function () {
             `;
 
           return replaceWhitespace(str).slice(0, -2);
-        })()}
-        }
-
-        input[seekbar] {
-          -webkit-appearance: none;
-          margin-bottom: 1px;
-          width: 100%;
-          height: 3px;
-          filter: contrast(200%);
-          transition: margin 0.4s var(--ease), height 0.4s var(--ease), filter 0.4s var(--ease);
-        }
-
-        :host([data-mousemove]) input[seekbar] {
-          margin-bottom: 4px;
-          height: 12px;
-          filter: none;
-          transition: margin 0.1s, height 0.1s, filter 0.1s;
+        })()};
+          width: 1000px;
+          height: 1000px;
+          position: absolute;
+          opacity: 0;
+          z-index: -9999;
         }
 
         input[seekbar]::-webkit-slider-thumb { /* can't select both sliders at once using a comma (yeah i have no clue why either) */
@@ -147,6 +156,8 @@ const UTUE_PLAYER = function () {
           background-position: center bottom;
           background-size: contain;
           background-repeat: no-repeat;
+          -webkit-filter: drop-shadow(0 0 1px #808080);
+          filter: drop-shadow(0 0 1px #808080);
           width: 16px;
           height: 0;
           transition: height 0.4s var(--ease);
@@ -160,6 +171,8 @@ const UTUE_PLAYER = function () {
           background-position: center bottom;
           background-size: contain;
           background-repeat: no-repeat;
+          -moz-filter: drop-shadow(0 0 1px #808080);
+          filter: drop-shadow(0 0 1px #808080);
           border: none;
           border-radius: 0;
           width: 16px;
@@ -374,6 +387,8 @@ const UTUE_PLAYER = function () {
           -webkit-appearance: none;
           appearance: none;
           background-image: url('${imageDir}/slider-thumb.svg');
+          -webkit-filter: drop-shadow(0 0 1px #bfbfbf);
+          filter: drop-shadow(0 0 1px #bfbfbf);
           width: 6px;
           height: 17px;
         }
@@ -384,6 +399,8 @@ const UTUE_PLAYER = function () {
           background-image: url('${imageDir}/slider-thumb.svg');
           border: none;
           border-radius: 0;
+          -moz-filter: drop-shadow(0 0 1px #bfbfbf);
+          filter: drop-shadow(0 0 1px #bfbfbf);
           width: 6px;
           height: 17px;
         }
@@ -477,17 +494,50 @@ const UTUE_PLAYER = function () {
       );
     }
 
-    function updateTrack(input, bg, color) {
-      const value = parseFloat(input.value) - (input.value - 50) / 100; // fix stupid alignment
-      input.style.background = `linear-gradient(to right, ${color} 0%, ${color} ${value}%, transparent ${value}%, transparent 100%), ${bg}`;
+    function decorateTrack(input, bg, entries) {
+      const entriesStr = entries.reduce((prev, cur) => prev += `linear-gradient(to ${cur.direction}, transparent ${cur.start}%, ${cur.color} ${cur.start}%, ${cur.color} ${cur.end}%, transparent ${cur.end}%), `, '');
+      input.style.background = entriesStr + bg;
     }
 
-    function updateSeekbarTrack(seekbar) {
-      updateTrack(seekbar, 'transparent', '#b03434');
+    function updateSeekbarTrack(seekbar, video) {
+      const buffered = video.buffered; //console.log(video.buffered.end(0) / video.duration)
+      let bars = [
+        {
+          start: 60,
+          end: 100,
+          color: '#00000015',
+          direction: 'bottom'
+        },
+        {
+          start: 0,
+          end: parseFloat(seekbar.value) - (seekbar.value - 50) / 100,
+          color: '#b63f3f',
+          direction: 'right'
+        }
+      ];
+
+      for (let i = 0; i < buffered.length; i++) {
+        bars.push({
+          start: buffered.start(i) / video.duration * 100,
+          end: buffered.end(i) / video.duration * 100,
+          color: '#b63f3f77',
+          direction: 'right'
+        });
+      }
+
+      decorateTrack(seekbar, '#8c9195', bars);
     }
 
     function updateVolumeTrack(volumeSlider) {
-      updateTrack(volumeSlider, `url('${imageDir}/slider-track.svg')`, '#e60000');
+      decorateTrack(
+        volumeSlider, `url('${imageDir}/slider-track.svg')`,
+        [{
+          start: 0,
+          end: volumeSlider.value,
+          color: '#e60000',
+          direction: 'right'
+        }]
+      );
     }
 
     function updateTime(video, seekbar, progressLabel) {
@@ -497,7 +547,7 @@ const UTUE_PLAYER = function () {
       const duration = new Date(video.duration * 1000).toISOString().substring(11, 19).slice(durationUnderHour).replace(/^0/, '');
 
       seekbar.value = video.currentTime / video.duration * 100;
-      updateSeekbarTrack(seekbar);
+      updateSeekbarTrack(seekbar, video);
 
       progressLabel.innerText =
         currentTime +
@@ -608,13 +658,14 @@ const UTUE_PLAYER = function () {
       video.addEventListener('play', () => container.setAttribute('data-playing', ''));
       video.addEventListener('pause', () => container.removeAttribute('data-playing'));
       video.addEventListener('timeupdate', () => updateTime(video, seekbar, progressLabel));
+      video.addEventListener('progress', () => updateSeekbarTrack(seekbar, video));
       video.addEventListener('canplay', () => updateTime(video, seekbar, progressLabel));
       video.addEventListener('contextmenu', e => e.preventDefault());
       video.addEventListener('dblclick', () => toggleFullscreen(container, fullscreenButton));
 
       seekbar.addEventListener('input', () => {
         video.currentTime = video.duration * seekbar.value / 100;
-        updateSeekbarTrack(seekbar);
+        updateSeekbarTrack(seekbar, video);
       });
       seekbar.addEventListener('keydown', e => sliderPreventDefault(e));
 

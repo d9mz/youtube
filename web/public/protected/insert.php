@@ -7,12 +7,12 @@ class Insert {
         $this->__db = $conn;
 	}
 
-    function send_notification(string $to_user, string $from, string $subject, string $message, string $video = "") {
+    function send_notification(string $to_user, string $from, string $subject, string $message, string $video = "", string $category = "Normal") {
 		$stmt = $this->__db->prepare(
 			"INSERT INTO inbox 
-				(inbox_message, inbox_author, inbox_subject, inbox_to, inbox_meta) 
+				(inbox_message, inbox_author, inbox_subject, inbox_to, inbox_meta, inbox_category) 
 			 VALUES 
-				(?, ?, ?, ?, ?)"
+				(?, ?, ?, ?, ?, ?)"
 		);
 		$return = $stmt->execute([
 			$message,
@@ -20,6 +20,7 @@ class Insert {
 			$subject,
 			$to_user,
 			$video,
+			$category,
 		]);
 		
 		return $return;

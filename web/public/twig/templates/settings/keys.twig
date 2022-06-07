@@ -1,0 +1,84 @@
+{% extends "base.twig" %}
+
+{% block page %}
+    {# page metadata #}
+
+    {% set page = page | merge({
+        "title"       : "UTue - Video Manager",
+        "description" : "Broadcast yourself"
+    }) %}    
+
+    {{ parent() }}
+{% endblock %}
+
+{%- block head -%}
+    {{ parent() }}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+{% endblock %}
+
+{%- block site_content -%}
+	<style>
+		.seperator {
+		    margin: 0 7px;
+		}
+	</style>
+	<div class="clearfix inbox-page">
+		<h1>My Account</h1>
+		<a href="/my/video_manager">Videos</a> <span class="seperator"></span>
+		<a href="/my/insight">Insight</a> <span class="seperator"></span>
+		<a href="/inbox/">Messages</a> <span class="seperator"></span>
+		<a href="/account" class="bold black">Settings</a>
+		<hr>
+	</div>
+    <div class="clearfix settings-page">
+        <div class="top-left">
+            <br>
+            <ul class="side-list">
+                <li class=""><a href="/account">Overview</a></li>
+                <li class=""><a href="/manage_account">Manage Account</a></li>
+                <li class="active"><a href="/my/keys">Referrals</a></li>
+                <li class="height-expander">&nbsp;</li>
+            </ul>
+        </div>
+        <div class="top-right">
+            <h1 class="video-manager">Referral Keys</h1>
+            <div class="padding">
+                <span class="caption small">
+                    You can use referral keys to invite other users to the uTue community.<br>
+                    Be wary on who you invite. If the user you invite gets terminated, you get terminated as well.<br>
+                    Have any questions? Join our <a href="https://discord.gg/A7sx2r55u7">Discord</a> to contact us.
+                </span>
+                <hr class="dotted-under"><br>
+                <a href="/request/key/new">
+                    <button class="ut-button no-margin">
+                        Create Referral Key
+                    </button>
+                </a>
+                <hr class="dotted-under"><br>
+                {% for key in referrals %}
+                    {% if key.id is defined %}
+                        <div class="black">
+                            <span class="black inline-block">
+                                {% if key.key_usedby == "" %}
+                                    <span style="color:green">
+                                        (not used)
+                                    </span>
+                                {% else %}
+                                    {{ key.key_usedby }}
+                                {% endif %}
+                                <br>
+                                <span class="small" style="color:#666;">
+                                    {{ key.key_created|timeago() }}
+                                </span>
+                            </span>
+                            <span class="inline-block right top">
+                                {{ key.key_code }}
+                            </span>
+                        </div>
+                        <hr class="dotted-under"><br>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

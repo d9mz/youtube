@@ -5,8 +5,10 @@ require("../../../app/vendor/autoload.php");
 require($_SERVER['DOCUMENT_ROOT'] . "/protected/config.inc.php");
 require($_SERVER['DOCUMENT_ROOT'] . "/protected/db.php");
 require($_SERVER['DOCUMENT_ROOT'] . "/protected/select.php");
+require($_SERVER['DOCUMENT_ROOT'] . "/protected/insert.php");
 
 $select = new \Database\Select($__db);
+$insert = new \Database\Insert($__db);
 
 $request = (object) [
     "pm_text"   => @$_POST['pm_message'],
@@ -52,21 +54,7 @@ if(!$select->user_exists($request->pm_to)) {
 }
 
 if($request->error->message == "") {
-    $stmt = $__db->prepare(
-        "INSERT INTO inbox 
-            (inbox_message, inbox_author, inbox_subject, inbox_to) 
-         VALUES 
-            (?, ?, ?, ?)"
-    );
-    $stmt->execute([
-        $request->pm_text,
-		$_SESSION['youtube'],
-        $request->pm_subject,
-        $request->pm_to,
-    ]);
-    $stmt = null;
-
-    // echo "<pre>" . print_r($request, true) . "</pre>";
+    $insert->send_notification($request->pm_to, $request->pm_author, $request->pm_subject, $request->pm_text);
     header("Location: /inbox/");
 } else {
     $_SESSION['alert'] = (object) [

@@ -328,7 +328,7 @@ $router->get('/my/video_manager', function() use ($twig, $__db, $select) {
 });
 
 $router->get('/inbox/', function() use ($twig, $__db, $select) { 
-	$inbox_search = $__db->prepare("SELECT * FROM inbox WHERE inbox_author = :author ORDER BY id DESC LIMIT 50");
+	$inbox_search = $__db->prepare("SELECT * FROM inbox WHERE inbox_to = :author ORDER BY id DESC LIMIT 50");
 	$inbox_search->bindParam(':author', $_SESSION['youtube'], PDO::PARAM_STR);
 	$inbox_search->execute();
 	
@@ -360,6 +360,24 @@ $router->get('/account', function() use ($twig, $__db, $select) {
     if(isset($_SESSION['youtube'])) {
         $user = $select->fetch_table_singlerow($_SESSION['youtube'], "users", "youtube_username");
         echo $twig->render('settings/settings.twig', array("user" => $user));
+    } else {
+        header("Location: /");
+    }
+});
+
+$router->get('/my/keys', function() use ($twig, $__db, $select) { 
+    if(isset($_SESSION['youtube'])) {
+        $user = $select->fetch_table_singlerow($_SESSION['youtube'], "users", "youtube_username");
+        $referral_search = $__db->prepare("SELECT * FROM referrals WHERE key_from = :key_from ORDER BY id DESC LIMIT 20");
+        $referral_search->bindParam(':key_from',  $_SESSION['youtube'], PDO::PARAM_STR);
+        $referral_search->execute();
+        while($key = $referral_search->fetch(PDO::FETCH_ASSOC)) { 
+            $referrals[] = $key;
+        }
+    
+        $referrals['rows'] = $referral_search->rowCount();
+        
+        echo $twig->render('settings/keys.twig', array("user" => $user, "referrals" => $referrals));
     } else {
         header("Location: /");
     }
