@@ -72,6 +72,8 @@ if($request->error->message == "") {
 		$_SESSION['youtube'], 
 		"New Profile Comment",
 		$request->notification_body,
+        "",
+        "Notification"
 	);
     header("Location: /user/" . $request->comment_target);
 } else {

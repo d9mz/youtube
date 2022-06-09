@@ -339,6 +339,18 @@ $router->get('/inbox/', function() use ($twig, $__db, $select) {
     echo $twig->render('inbox/inbox.twig', array("messages" => $messages));
 });
 
+$router->get('/inbox/comments', function() use ($twig, $__db, $select) { 
+	$inbox_search = $__db->prepare("SELECT * FROM inbox WHERE inbox_to = :author AND inbox_category = 'Notification' ORDER BY id DESC LIMIT 50");
+	$inbox_search->bindParam(':author', $_SESSION['youtube'], PDO::PARAM_STR);
+	$inbox_search->execute();
+	
+	while($message = $inbox_search->fetch(PDO::FETCH_ASSOC)) { 
+		$message["profile_picture"] = $select->fetch_user_pfp($message['inbox_author']);
+		$messages[] = $message;
+	}
+    echo $twig->render('inbox/comments.twig', array("messages" => $messages));
+});
+
 $router->get('/inbox/compose', function() use ($twig, $__db, $select) { 
     echo $twig->render('inbox/compose.twig', array());
 });
@@ -363,6 +375,36 @@ $router->get('/account', function() use ($twig, $__db, $select) {
     } else {
         header("Location: /");
     }
+});
+
+$router->get('/admin/', function() use ($twig, $__db, $select) { 
+    if(isset($_SESSION['youtube']) && $select->user_is_admin($_SESSION['youtube'])) {
+        $user = $select->fetch_table_singlerow($_SESSION['youtube'], "users", "youtube_username");
+        $referral_search = $__db->prepare("SELECT * FROM referrals ORDER BY id DESC LIMIT 20");
+        $referral_search->execute();
+        while($key = $referral_search->fetch(PDO::FETCH_ASSOC)) { 
+            $referrals[] = $key;
+        }
+    
+        $referrals['rows'] = $referral_search->rowCount();
+
+        echo $twig->render('admin/index.twig', array("user" => $user, "referrals" => $referrals));
+    } else {
+        header("Location: /");
+    }
+});
+
+$router->get('/admin/ban', function() use ($twig, $__db, $select) { 
+    if(isset($_SESSION['youtube']) && $select->user_is_admin($_SESSION['youtube'])) {
+        $user = $select->fetch_table_singlerow($_SESSION['youtube'], "users", "youtube_username");
+        echo $twig->render('admin/ban.twig', array("user" => $user));
+    } else {
+        header("Location: /");
+    }
+});
+
+$router->get('/videos', function() use ($twig, $__db, $select) { 
+    echo "i'll work on this soon be patient";
 });
 
 $router->get('/my/keys', function() use ($twig, $__db, $select) { 

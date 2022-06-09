@@ -34,6 +34,14 @@ class Select {
         return $stmt->rowCount() === 1;
     }
 
+    function user_is_admin($user) {
+        $user = $this->fetch_table_singlerow($user, "users", "youtube_username");
+        if($user["youtube_rank"] == 'a')
+            return true;
+        else
+            return false;
+    }
+
     function video_exists($id) {
         $stmt = $this->__db->prepare("SELECT video_id FROM videos WHERE video_id = :id");
         $stmt->bindParam(":id", $id);

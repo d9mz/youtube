@@ -4,7 +4,7 @@
     {# page metadata #}
 
     {% set page = page | merge({
-        "title"       : "YouTube - #{ video.video_title }",
+        "title"       : "UTue - #{ video.video_title }",
         "description" : "#{ video.video_description }"
     }) %}    
 
@@ -156,10 +156,8 @@
                         {% endif %}
                     {% endfor %}
                     {% if comments.rows == 0 %}
-                        <br>
-                        <hr class="dotted-under"><br>
-                        <b class="black">This video has no comments.</b><br>
-                        <span class="little">Post the first comment under this video!</span>
+                        <b class="">This video has no comments.</b><br>
+                        <span class="small">Post the first comment under this video!</span>
                     {% endif %}
                 </div>
             </div>

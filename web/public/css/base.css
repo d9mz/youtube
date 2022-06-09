@@ -1351,3 +1351,9 @@ button.ut-blue-button:focus {
 .upload-page .top-right {
     width: calc( 54% - 20px);
 }
+
+.ban-form input[type="text"],
+.ban-form input[type="date"],
+.ban-form textarea {
+    width: 265px;
+}

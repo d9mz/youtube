@@ -6,9 +6,13 @@ require($_SERVER['DOCUMENT_ROOT'] . "/protected/config.inc.php");
 require($_SERVER['DOCUMENT_ROOT'] . "/protected/db.php");
 require($_SERVER['DOCUMENT_ROOT'] . "/protected/select.php");
 require($_SERVER['DOCUMENT_ROOT'] . "/protected/insert.php");
+require($_SERVER['DOCUMENT_ROOT'] . "/protected/update.php");
 
+$update = new \Database\Update($__db);
 $insert = new \Database\Insert($__db);
 $select = new \Database\Select($__db);
+
+$video = $select->fetch_table_singlerow($_GET['v'], "videos", "video_id");
 
 $request = (object) [
     "comment_text"   => @$_POST['comment'],
@@ -66,15 +70,17 @@ if($request->error->message == "") {
     ]);
     $stmt = null;
 
-	$request->notification_body = "I commented on your video \"" . $request->comment_target . "\"!\n\"" . $request->comment_text . "\"";
+	$request->notification_body = "I commented on your video \"" . $video['video_title'] . "\"!\n\"" . $request->comment_text . "\"";
     $insert->send_notification( 
-		$request->comment_target, 
+		$video['video_author'], 
 		$_SESSION['youtube'], 
 		"New Video Comment",
 		$request->notification_body,
+        "",
+        "Notification"
 	);
 
-    // echo "<pre>" . print_r($request, true) . "</pre>";
+    $update->update_cooldown($_SESSION['youtube'], "last_comment");
     header("Location: /watch?v=" . $request->comment_target);
 } else {
     $_SESSION['alert'] = (object) [

@@ -1,0 +1,5 @@
+AhrefsBot
+Baiduspider
+Ezooms
+MJ12bot
+YandexBot

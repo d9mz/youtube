@@ -1,0 +1,64 @@
+{% extends "base.twig" %}
+
+{% block page %}
+    {# page metadata #}
+
+    {% set page = page | merge({
+        "title"       : "UTue - Video Manager",
+        "description" : "Broadcast yourself"
+    }) %}    
+
+    {{ parent() }}
+{% endblock %}
+
+{%- block head -%}
+    {{ parent() }}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+{% endblock %}
+
+{%- block site_content -%}
+	<style>
+		.seperator {
+		    margin: 0 7px;
+		}
+	</style>
+	<div class="clearfix inbox-page">
+		<h1>Moderation Panel</h1>
+		<a href="/my/video_manager">Videos</a> <span class="seperator"></span>
+		<a href="/my/insight">Insight</a> <span class="seperator"></span>
+		<a href="/inbox/">Messages</a> <span class="seperator"></span>
+		<a href="/account">Settings</a>
+		<hr>
+	</div>
+    <div class="clearfix inbox-page">
+        <div class="top-left">
+            <br>
+            <ul class="side-list">
+                <li class=""><a href="/admin/">Referrals</a></li>
+                <li class="active"><a href="/admin/ban">Ban Hammer</a></li>
+                <li class=""><a href="/admin/delete">Remove Items</a></li>
+                <li class=""><a href="/admin/comments">Comments</a></li>
+                <li class="height-expander">&nbsp;</li>
+            </ul>
+        </div>
+        <div class="top-right">
+            <h1 class="video-manager">Moderate User</h1>
+            <div style="padding:10px;">
+                <span class="caption small">
+                    This action is irreversible.<br>
+                    Misuse of the ban hammer may result in server explosion.
+                </span>
+                <hr class="dotted-under"><br>
+                <form action="/request/admin/ban" method="POST" class="ban-form">
+                    <span class="mid">Username: </span><br>
+                    <input type="text" value="" name="ban_username" style="font-size: 9px;"><br><br>
+                    <span class="mid">Reason: </span><br>
+                    <textarea class="no-resize" name="ban_reason"></textarea><br><br>
+                    <span class="mid">Expiration: </span><br>
+                    <input type="date" value="" name="ban_expire" style="font-size: 9px;"><br><br>
+                    <input type="submit" class="ut-button" value="Ban User">
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

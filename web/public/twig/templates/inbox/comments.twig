@@ -1,0 +1,99 @@
+{% extends "base.twig" %}
+
+{% block page %}
+    {# page metadata #}
+
+    {% set page = page | merge({
+        "title"       : "UTue - Video Manager",
+        "description" : "Broadcast yourself"
+    }) %}    
+
+    {{ parent() }}
+{% endblock %}
+
+{%- block head -%}
+    {{ parent() }}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+{% endblock %}
+
+{%- block site_content -%}
+	<style>
+		.seperator {
+		    margin: 0 7px;
+		}
+	</style>
+	<div class="clearfix inbox-page">
+		<h1>My Account</h1>
+		<a href="/my/video_manager">Videos</a> <span class="seperator"></span>
+		<a href="/my/insight">Insight</a> <span class="seperator"></span>
+		<a href="/inbox/" class="bold black">Messages</a> <span class="seperator"></span>
+		<a href="/account">Settings</a>
+		<hr>
+	</div>
+    <div class="clearfix inbox-page">
+        <div class="top-left">
+			<br>
+			<a href="/inbox/compose">
+				<button class="ut-button no-margin">
+					Compose
+				</button>
+			</a>
+            <br><br>
+            <ul class="side-list">
+                <li class=""><a href="/inbox/">Inbox</a></li>
+                <li class=""><a href="/inbox/">Personal Messages</a></li>
+                <li class=""><a href="/inbox/shared">Shared with You</a></li>
+                <li class="active"><a href="/inbox/comments">Comments</a></li>
+                <li class="height-expander">&nbsp;</li>
+            </ul>
+        </div>
+        <div class="top-right">
+            <h1 class="video-manager">Comments</h1>
+            <div class="inline-block mid">
+                <input type="checkbox">
+            </div>
+            <div class="padding inline-block" style="padding-left: 10px;">
+                <div class="inline-block mid">
+                    <button class="ut-button disabled">Delete</button>
+                </div>
+            </div>
+            <hr>
+            <div class="videos-list">
+                {% for message in messages %}
+                    {% if message.id is defined %}
+                        <input type="checkbox" class="top">
+                        <div class="video-item inline-block w-300 hover-video padding">
+                            <div class="inline-blocK">
+								<div class="inline-block" style="width: 58px;">
+									<img class="profile-picture double-line" style="width: 50px;height: 50px;" src="/v/p/{{ message.profile_picture }}"><br>
+									<a href="/user/{{ message.inbox_author }}">{{ message.inbox_author }}</a>
+								</div>
+								<div class="inbox-body inline-block black top">
+									<p class="message-subject" style="margin-top: 0px;">
+										{{ message.inbox_subject }}
+										<span class="right">
+											{{ message.inbox_sent }}
+										</span>
+									</p>
+									<p>
+										{{ message.inbox_message|nl2br }}
+									</p>
+									<a href="/inbox/compose?subject=RE: {{ message.inbox_subject }}&to={{ message.inbox_author }}">
+										<button class="ut-button start no-margin">
+											Reply
+										</button>
+									</a>
+									<a href="/request/inbox/delete?i={{ message.id }}">
+										<button class="ut-button end">
+											Delete
+										</button>
+									</a>
+								</div>
+							</div>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
