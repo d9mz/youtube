@@ -1,0 +1,51 @@
+{% extends "base.twig" %}
+
+{% block page %}
+    {# page metadata #}
+
+    {% set page = page | merge({
+        "title"       : "UTue - Videos",
+        "description" : "Broadcast yourself"
+    }) %}    
+
+    {{ parent() }}
+{% endblock %}
+
+{%- block head -%}
+    {{ parent() }}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+{% endblock %}
+
+{%- block site_content -%}
+    <div class="clearfix video-manager-page">
+        <div class="top-left">
+            <br>
+            <ul class="side-list">
+                {% for category in categories %}
+                    <li class="{% if cc == category %}active{% endif %}"><a href="/videos?c={{ category|url_encode }}">{{ category }}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="top-right">
+            <h1 class="video-manager">{{ cc }}</h1>
+            <div class="videos-list">
+                {% for video in videos %}
+                    {% if video.id is defined %}
+                        <div class="video-item inline-block w-115 hover-video padding" style="width:136px;">
+                            <a href="/watch?v={{ video.video_id }}">
+                                <div class="thumb-64 inline-block" style="background-image: url('/v/thumb/{{ video.video_thumbnail }}');">
+                                    <span class="timestamp">{{ video.video_duration|date('i:s') }}</span>
+                                </div>
+                            </a>
+                            <div class="video-meta" style="width: 112px;">
+                                <a href="/watch?v={{ video.video_id }}" class="video-author bigger">{{ video.video_title }}</a><br>
+                                <span class="small">{{ video.video_views }} views</span><br>
+                                <a style="width: 113px;" href="/user/{{ video.video_author }}" class="video-author">{{ video.video_author }}</a>
+                            </div>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

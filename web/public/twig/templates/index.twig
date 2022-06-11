@@ -42,11 +42,13 @@
                     </div>
                     {% for video in videos_ent %}
                         {% if video.id is defined %}
-                            <div class="thumb-128 inline-block"
-                                style="background-image: url('/v/thumb/{{ video.video_thumbnail }}');"
-                            >
-                                <span class="timestamp">{{ video.video_duration|date('i:s') }}</span>
-                            </div>
+                            <a href="/watch?v={{ video.video_id }}">
+                                <div class="thumb-128 inline-block"
+                                    style="background-image: url('/v/thumb/{{ video.video_thumbnail }}');"
+                                >
+                                    <span class="timestamp">{{ video.video_duration|date('i:s') }}</span>
+                                </div>
+                            </a>
                             <div class="video-meta">
                                 <a href="/watch?v={{ video.video_id }}">{{ video.video_title }}</a><br>
                                 <span class="small">{{ video.video_views }} views</span><br>
@@ -61,11 +63,13 @@
                     </div>
                     {% for video in videos_mus %}
                         {% if video.id is defined %}
-                            <div class="thumb-128 inline-block"
-                                style="background-image: url('/v/thumb/{{ video.video_thumbnail }}');"
-                            >
-                                <span class="timestamp">{{ video.video_duration|date('i:s') }}</span>
-                            </div>
+                            <a href="/watch?v={{ video.video_id }}">
+                                <div class="thumb-128 inline-block"
+                                    style="background-image: url('/v/thumb/{{ video.video_thumbnail }}');"
+                                >
+                                    <span class="timestamp">{{ video.video_duration|date('i:s') }}</span>
+                                </div>
+                            </a>
                             <div class="video-meta">
                                 <a href="/watch?v={{ video.video_id }}">{{ video.video_title }}</a><br>
                                 <span class="small">{{ video.video_views }} views</span><br>
@@ -80,11 +84,13 @@
                     </div>
                     {% for video in videos_gaming %}
                         {% if video.id is defined %}
-                            <div class="thumb-128 inline-block"
-                                style="background-image: url('/v/thumb/{{ video.video_thumbnail }}');"
-                            >
-                                <span class="timestamp">{{ video.video_duration|date('i:s') }}</span>
-                            </div>
+                            <a href="/watch?v={{ video.video_id }}">
+                                <div class="thumb-128 inline-block"
+                                    style="background-image: url('/v/thumb/{{ video.video_thumbnail }}');"
+                                >
+                                    <span class="timestamp">{{ video.video_duration|date('i:s') }}</span>
+                                </div>
+                            </a>
                             <div class="video-meta">
                                 <a href="/watch?v={{ video.video_id }}">{{ video.video_title }}</a><br>
                                 <span class="small">{{ video.video_views }} views</span><br>
@@ -99,11 +105,13 @@
                     </div>
                     {% for video in videos_film %}
                         {% if video.id is defined %}
-                            <div class="thumb-128 inline-block"
-                                style="background-image: url('/v/thumb/{{ video.video_thumbnail }}');"
-                            >
-                                <span class="timestamp">{{ video.video_duration|date('i:s') }}</span>
-                            </div>
+                            <a href="/watch?v={{ video.video_id }}">
+                                <div class="thumb-128 inline-block"
+                                    style="background-image: url('/v/thumb/{{ video.video_thumbnail }}');"
+                                >
+                                    <span class="timestamp">{{ video.video_duration|date('i:s') }}</span>
+                                </div>
+                            </a>
                             <div class="video-meta">
                                 <a href="/watch?v={{ video.video_id }}">{{ video.video_title }}</a><br>
                                 <span class="small">{{ video.video_views }} views</span><br>
@@ -118,11 +126,13 @@
                     </div>
                     {% for video in videos_sports %}
                         {% if video.id is defined %}
-                            <div class="thumb-128 inline-block"
-                                style="background-image: url('/v/thumb/{{ video.video_thumbnail }}');"
-                            >
-                                <span class="timestamp">{{ video.video_duration|date('i:s') }}</span>
-                            </div>
+                            <a href="/watch?v={{ video.video_id }}">
+                                <div class="thumb-128 inline-block"
+                                    style="background-image: url('/v/thumb/{{ video.video_thumbnail }}');"
+                                >
+                                    <span class="timestamp">{{ video.video_duration|date('i:s') }}</span>
+                                </div>
+                            </a>
                             <div class="video-meta">
                                 <a href="/watch?v={{ video.video_id }}">{{ video.video_title }}</a><br>
                                 <span class="small">{{ video.video_views }} views</span><br>
@@ -137,11 +147,13 @@
                     </div>
                     {% for video in videos_diy %}
                         {% if video.id is defined %}
-                            <div class="thumb-128 inline-block"
-                                style="background-image: url('/v/thumb/{{ video.video_thumbnail }}');"
-                            >
-                                <span class="timestamp">{{ video.video_duration|date('i:s') }}</span>
-                            </div>
+                            <a href="/watch?v={{ video.video_id }}">
+                                <div class="thumb-128 inline-block"
+                                    style="background-image: url('/v/thumb/{{ video.video_thumbnail }}');"
+                                >
+                                    <span class="timestamp">{{ video.video_duration|date('i:s') }}</span>
+                                </div>
+                            </a>
                             <div class="video-meta">
                                 <a href="/watch?v={{ video.video_id }}">{{ video.video_title }}</a><br>
                                 <span class="small">{{ video.video_views }} views</span><br>
@@ -156,11 +168,13 @@
                     </div>
                     {% for video in videos_sci %}
                         {% if video.id is defined %}
-                            <div class="thumb-128 inline-block"
-                                style="background-image: url('/v/thumb/{{ video.video_thumbnail }}');"
-                            >
-                                <span class="timestamp">{{ video.video_duration|date('i:s') }}</span>
-                            </div>
+                            <a href="/watch?v={{ video.video_id }}">
+                                <div class="thumb-128 inline-block"
+                                    style="background-image: url('/v/thumb/{{ video.video_thumbnail }}');"
+                                >
+                                    <span class="timestamp">{{ video.video_duration|date('i:s') }}</span>
+                                </div>
+                            </a>
                             <div class="video-meta">
                                 <a href="/watch?v={{ video.video_id }}">{{ video.video_title }}</a><br>
                                 <span class="small">{{ video.video_views }} views</span><br>
@@ -175,11 +189,13 @@
                     </div>
                     {% for video in videos_travel %}
                         {% if video.id is defined %}
-                            <div class="thumb-128 inline-block"
-                                style="background-image: url('/v/thumb/{{ video.video_thumbnail }}');"
-                            >
-                                <span class="timestamp">{{ video.video_duration|date('i:s') }}</span>
-                            </div>
+                            <a href="/watch?v={{ video.video_id }}">
+                                <div class="thumb-128 inline-block"
+                                    style="background-image: url('/v/thumb/{{ video.video_thumbnail }}');"
+                                >
+                                    <span class="timestamp">{{ video.video_duration|date('i:s') }}</span>
+                                </div>
+                            </a>
                             <div class="video-meta">
                                 <a href="/watch?v={{ video.video_id }}">{{ video.video_title }}</a><br>
                                 <span class="small">{{ video.video_views }} views</span><br>
@@ -205,9 +221,11 @@
                 {% for video in videos_new %}
                     {% if video.id is defined %}
                         <div class="video-item inline-block w-300 hover-video padding">
-                            <div class="thumb-64 inline-block" style="background-image: url('/v/thumb/{{ video.video_thumbnail }}');">
-                                <span class="timestamp">{{ video.video_duration|date('i:s') }}</span>
-                            </div>
+                            <a href="/watch?v={{ video.video_id }}">
+                                <div class="thumb-64 inline-block" style="background-image: url('/v/thumb/{{ video.video_thumbnail }}');">
+                                    <span class="timestamp">{{ video.video_duration|date('i:s') }}</span>
+                                </div>
+                            </a>
                             <div class="video-meta">
                                 <a href="/watch?v={{ video.video_id }}" class="video-author bigger">{{ video.video_title }}</a><br>
                                 <span class="small">{{ video.video_views }} views</span><br>
@@ -224,9 +242,11 @@
                 {% for video in videos_featured %}
                     {% if video.id is defined %}
                         <div class="video-item inline-block w-300 hover-video padding">
-                            <div class="thumb-64 inline-block" style="background-image: url('/v/thumb/{{ video.video_thumbnail }}');">
-                                <span class="timestamp">{{ video.video_duration|date('i:s') }}</span>
-                            </div>
+                            <a href="/watch?v={{ video.video_id }}">
+                                <div class="thumb-64 inline-block" style="background-image: url('/v/thumb/{{ video.video_thumbnail }}');">
+                                    <span class="timestamp">{{ video.video_duration|date('i:s') }}</span>
+                                </div>
+                            </a>
                             <div class="video-meta">
                                 <a href="/watch?v={{ video.video_id }}" class="video-author bigger">{{ video.video_title }}</a><br>
                                 <span class="small">{{ video.video_views }} views</span><br>
@@ -239,8 +259,8 @@
             <div class="section black">
                 What's New
             </div>
-            <a href="#"><b>UTue.net/Porn</b></a><br><br>
-            Your place to start watching pornographic content on uTue. Releasing in 48 hours!<br>
+            <a href="#"><b>Site Release</b></a><br><br>
+            The site has officially released! Make sure to enjoy and join our <a href="https://discord.gg/A7sx2r55u7">Discord</a> to see updates.<br>
             <a href="#">Learn more</a>
         </div>
     </div>

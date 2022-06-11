@@ -328,15 +328,19 @@ $router->get('/my/video_manager', function() use ($twig, $__db, $select) {
 });
 
 $router->get('/inbox/', function() use ($twig, $__db, $select) { 
-	$inbox_search = $__db->prepare("SELECT * FROM inbox WHERE inbox_to = :author ORDER BY id DESC LIMIT 50");
-	$inbox_search->bindParam(':author', $_SESSION['youtube'], PDO::PARAM_STR);
-	$inbox_search->execute();
-	
-	while($message = $inbox_search->fetch(PDO::FETCH_ASSOC)) { 
-		$message["profile_picture"] = $select->fetch_user_pfp($message['inbox_author']);
-		$messages[] = $message;
-	}
-    echo $twig->render('inbox/inbox.twig', array("messages" => $messages));
+    if(isset($_SESSION['youtube'])) {
+        $inbox_search = $__db->prepare("SELECT * FROM inbox WHERE inbox_to = :author ORDER BY id DESC LIMIT 50");
+        $inbox_search->bindParam(':author', $_SESSION['youtube'], PDO::PARAM_STR);
+        $inbox_search->execute();
+        
+        while($message = $inbox_search->fetch(PDO::FETCH_ASSOC)) { 
+            $message["profile_picture"] = $select->fetch_user_pfp($message['inbox_author']);
+            $messages[] = $message;
+        }
+        echo $twig->render('inbox/inbox.twig', array("messages" => $messages));
+    } else {
+        header("Location: /");
+    }
 });
 
 $router->get('/inbox/comments', function() use ($twig, $__db, $select) { 
@@ -404,7 +408,53 @@ $router->get('/admin/ban', function() use ($twig, $__db, $select) {
 });
 
 $router->get('/videos', function() use ($twig, $__db, $select) { 
-    echo "i'll work on this soon be patient";
+    if(!isset($_GET['c']) || @$_GET['c'] == "None") {
+        $query = "SELECT * FROM videos ORDER BY id DESC LIMIT 40";
+        $current_category = "None";
+
+        $videos_search = $__db->prepare($query);
+        $videos_search->execute();
+    } else {
+        $query = "SELECT * FROM videos WHERE video_category = :category ORDER BY id DESC LIMIT 40";
+        $current_category = $_GET['c'];
+
+        $videos_search = $__db->prepare($query);
+        $videos_search->bindParam(':category',  $current_category, PDO::PARAM_STR);
+        $videos_search->execute();
+    }
+
+    
+    $i = 0;
+    while($video = $videos_search->fetch(PDO::FETCH_ASSOC)) { 
+        $views_search = $__db->prepare("SELECT id FROM views WHERE view_video = :view_target");
+        $views_search->bindParam(':view_target',  $video['video_id'], PDO::PARAM_STR);
+        $views_search->execute();
+        $videos[] = $video;
+        $videos[$i]["video_views"] = $views_search->rowCount();
+        $i++;
+    }
+
+    $videos['rows'] = $videos_search->rowCount();
+    $categories = [
+        "None", 
+        "Film & Animation", 
+        "Autos & Vehicles", 
+        "Music", 
+        "Pets & Animals", 
+        "Sports", 
+        "Travel & Events", 
+        "Gaming", 
+        "People & Blogs", 
+        "Comedy", 
+        "Entertainment", 
+        "News & Politics", 
+        "Howto & Style", 
+        "Education", 
+        "Science & Technology", 
+        "Nonprofits & Activism"
+    ];
+
+    echo $twig->render('videos.twig', array("videos" => $videos, "categories" => $categories, "cc" => $current_category));
 });
 
 $router->get('/my/keys', function() use ($twig, $__db, $select) { 
@@ -497,10 +547,10 @@ $router->get('/watch', function() use ($twig, $__db, $select) {
         
         $views_search = $__db->prepare("SELECT id FROM views WHERE view_video = :view_target AND view_ip = :view_ip");
         $views_search->bindParam(':view_target',  $_GET['v'], PDO::PARAM_STR);
-        $views_search->bindParam(':view_ip',     $_SERVER["REMOTE_ADDR"], PDO::PARAM_STR);
+        $views_search->bindParam(':view_ip',     $_SERVER["HTTP_CF_CONNECTING_IP"], PDO::PARAM_STR);
         $views_search->execute();
         $view = $views_search->fetch();
-        if(!isset($view['id'])) {
+        if(!isset($view['id']) && isset($_SERVER["HTTP_CF_CONNECTING_IP"])) {
             $stmt = $__db->prepare(
                 "INSERT INTO views 
                     (view_video, view_ip) 
@@ -509,7 +559,7 @@ $router->get('/watch', function() use ($twig, $__db, $select) {
             );
             $stmt->execute([
                 $_GET['v'],
-                $_SERVER["REMOTE_ADDR"],
+                $_SERVER["HTTP_CF_CONNECTING_IP"],
             ]);
         }
 
@@ -653,8 +703,12 @@ $router->get('/sign_up', function() use ($twig, $__db) {
 });
 
 $router->get('/upload_video', function() use ($twig, $__db) { 
-    $categories = ["None", "Film & Animation", "Autos & Vehicles", "Music", "Pets & Animals", "Sports", "Travel & Events", "Gaming", "People & Blogs", "Comedy", "Entertainment", "News & Politics", "Howto & Style", "Education", "Science & Technology", "Nonprofits & Activism"];
-    echo $twig->render('upload_video.twig', array("categories" => $categories));
+    if(isset($_SESSION['youtube'])) {
+        $categories = ["None", "Film & Animation", "Autos & Vehicles", "Music", "Pets & Animals", "Sports", "Travel & Events", "Gaming", "People & Blogs", "Comedy", "Entertainment", "News & Politics", "Howto & Style", "Education", "Science & Technology", "Nonprofits & Activism"];
+        echo $twig->render('upload_video.twig', array("categories" => $categories));
+    } else {
+        header("Location: /sign_in");
+    }
 });
 
 $router->set404(function() use ($twig) {

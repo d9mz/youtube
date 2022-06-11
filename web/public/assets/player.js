@@ -93,9 +93,9 @@ const UTUE_PLAYER = function () {
           margin-bottom: 1px;
           width: 100%;
           height: 3px;
-          -webkit-filter: contrast(300%);
-          -moz-filter: contrast(300%);
-          filter: contrast(300%);
+          -webkit-filter: contrast(200%);
+          -moz-filter: contrast(200%);
+          filter: contrast(200%);
           transition: margin 0.4s var(--ease), height 0.4s var(--ease), filter 0.4s var(--ease);
         }
 
@@ -520,7 +520,7 @@ const UTUE_PLAYER = function () {
         bars.push({
           start: buffered.start(i) / video.duration * 100,
           end: buffered.end(i) / video.duration * 100,
-          color: '#b63f3f77',
+          color: '#b63f3f44',
           direction: 'right'
         });
       }
@@ -579,7 +579,7 @@ const UTUE_PLAYER = function () {
         root = container.attachShadow({ mode: 'open' });
       } catch (error) {
         container.style = 'background-color: #110000; display: flex; width: 640px; height: 390px; align-items: center; justify-content: center;';
-        container.innerHTML = '<div style="font: 24px sans-serif; text-align: center; line-height: 1.5em; color: #fff;">Due to a skill issue, your browser does not support the HTML5 player.<br><br>😈</div>'
+        container.innerHTML = '<div style="font: 24px sans-serif; text-align: center; line-height: 1.5em; color: #fff;">Due to skill issues, your browser does not support the HTML5 player.<br><br>😈</div>';
       }
 
       // insert player markup
@@ -600,88 +600,95 @@ const UTUE_PLAYER = function () {
       const volumeSlider = root.querySelector('input[volume]');
       const progressLabel = root.querySelector('progress-label');
 
-      // hotkeys
-
-      container.addEventListener('keydown', e => {
-        switch (e.code) {
-
-          // playback
-          case 'Space': case 'KeyK':
-            togglePlayback(container, video, playButton);
-            e.preventDefault();
-            break;
-
-          // seek
-          case 'ArrowRight':
-            video.currentTime += seekSpeed;
-            break;
-          case 'ArrowLeft':
-            video.currentTime -= seekSpeed;
-            break;
-          case 'KeyL':
-            video.currentTime += seekSpeedFast;
-            break;
-          case 'KeyJ':
-            video.currentTime -= seekSpeedFast;
-            break;
-
-          // volume
-          case 'ArrowUp':
-            volumeSlider.value = parseInt(volumeSlider.value) + volumeChangeSpeed;
-            setVolume(container, video, volumeButton, volumeSlider)
-            break;
-          case 'ArrowDown':
-            volumeSlider.value -= volumeChangeSpeed;
-            setVolume(container, video, volumeButton, volumeSlider)
-            break;
-
-          // mute
-          case 'KeyM':
-            toggleMute(container, video, volumeButton, volumeSlider);
-            break;
-
-          // fullscreen
-          case 'KeyF':
-            toggleFullscreen(container, root);
-            break;
-
-          // theater
-          case 'KeyT':
-            toggleTheater(container, theaterButton);
-        }
-      });
-
-      // other event listeners
-
-      container.addEventListener('mousemove', () => expandSeekbar(container));
+      // event listeners
 
       video.addEventListener('play', () => container.setAttribute('data-playing', ''));
       video.addEventListener('pause', () => container.removeAttribute('data-playing'));
-      video.addEventListener('timeupdate', () => updateTime(video, seekbar, progressLabel));
-      video.addEventListener('progress', () => updateSeekbarTrack(seekbar, video));
-      video.addEventListener('canplay', () => updateTime(video, seekbar, progressLabel));
-      video.addEventListener('contextmenu', e => e.preventDefault());
-      video.addEventListener('dblclick', () => toggleFullscreen(container, fullscreenButton));
 
-      seekbar.addEventListener('input', () => {
-        video.currentTime = video.duration * seekbar.value / 100;
-        updateSeekbarTrack(seekbar, video);
+      video.addEventListener('canplay', () => {
+
+        // hotkeys
+
+        container.addEventListener('keydown', e => {
+          switch (e.code) {
+
+            // playback
+            case 'Space': case 'KeyK':
+              togglePlayback(container, video, playButton);
+              e.preventDefault();
+              break;
+
+            // seek
+            case 'ArrowRight':
+              video.currentTime += seekSpeed;
+              break;
+            case 'ArrowLeft':
+              video.currentTime -= seekSpeed;
+              break;
+            case 'KeyL':
+              video.currentTime += seekSpeedFast;
+              break;
+            case 'KeyJ':
+              video.currentTime -= seekSpeedFast;
+              break;
+
+            // volume
+            case 'ArrowUp':
+              volumeSlider.value = parseInt(volumeSlider.value) + volumeChangeSpeed;
+              setVolume(container, video, volumeButton, volumeSlider)
+              break;
+            case 'ArrowDown':
+              volumeSlider.value -= volumeChangeSpeed;
+              setVolume(container, video, volumeButton, volumeSlider)
+              break;
+
+            // mute
+            case 'KeyM':
+              toggleMute(container, video, volumeButton, volumeSlider);
+              break;
+
+            // fullscreen
+            case 'KeyF':
+              toggleFullscreen(container, root);
+              break;
+
+            // theater
+            case 'KeyT':
+              toggleTheater(container, theaterButton);
+          }
+        });
+
+        // other event listeners
+
+        container.addEventListener('mousemove', () => expandSeekbar(container));
+
+        video.addEventListener('timeupdate', () => updateTime(video, seekbar, progressLabel));
+        video.addEventListener('progress', () => updateSeekbarTrack(seekbar, video));
+        video.addEventListener('canplay', () => updateTime(video, seekbar, progressLabel));
+        video.addEventListener('contextmenu', e => e.preventDefault());
+        video.addEventListener('dblclick', () => toggleFullscreen(container, fullscreenButton));
+
+        seekbar.addEventListener('input', () => {
+          video.currentTime = video.duration * seekbar.value / 100;
+          updateSeekbarTrack(seekbar, video);
+        });
+        seekbar.addEventListener('keydown', e => sliderPreventDefault(e));
+
+        Array.from(root.querySelectorAll('[play]')).forEach(cur => {
+          cur.addEventListener('click', () => togglePlayback(container, video, playButton));
+        });
+
+        volumeButton.addEventListener('click', () => toggleMute(container, video, volumeButton, volumeSlider));
+
+        volumeSlider.addEventListener('input', () => setVolume(container, video, volumeButton, volumeSlider));
+        volumeSlider.addEventListener('keydown', e => sliderPreventDefault(e));
+
+        fullscreenButton.addEventListener('click', () => toggleFullscreen(container, fullscreenButton));
+        theaterButton.addEventListener('click', () => toggleTheater(container, theaterButton));
+
+        document.addEventListener('fullscreenchange', () => checkFullscreen(container, fullscreenButton));
+
       });
-      seekbar.addEventListener('keydown', e => sliderPreventDefault(e));
-
-      Array.from(root.querySelectorAll('[play]')).forEach(cur => {
-        cur.addEventListener('click', () => togglePlayback(container, video, playButton));
-      });
-
-      volumeButton.addEventListener('click', () => toggleMute(container, video, volumeButton, volumeSlider));
-
-      volumeSlider.addEventListener('input', () => setVolume(container, video, volumeButton, volumeSlider));
-      volumeSlider.addEventListener('keydown', e => sliderPreventDefault(e));
-
-      fullscreenButton.addEventListener('click', () => toggleFullscreen(container, fullscreenButton));
-      theaterButton.addEventListener('click', () => toggleTheater(container, theaterButton));
-
-      document.addEventListener('fullscreenchange', () => checkFullscreen(container, fullscreenButton));
 
       // retrieve previous volume and mute settings from localStorage
 

@@ -26,9 +26,11 @@
 		{% for video in videos %}
 			{% if video.id is defined %}
 				<div class="video-item inline-block w-300 hover-video padding">
-					<div class="thumb-64 inline-block"  style="background-image: url('/v/thumb/{{ video.video_thumbnail }}');">
-						<span class="timestamp">{{ video.video_duration|date('i:s') }}</span>
-					</div>
+					<a href="/watch?v={{ video.video_id }}">
+						<div class="thumb-64 inline-block"  style="background-image: url('/v/thumb/{{ video.video_thumbnail }}');">
+							<span class="timestamp">{{ video.video_duration|date('i:s') }}</span>
+						</div>
+					</a>
 					<div class="video-meta">
 						<a href="/watch?v={{ video.video_id }}" class="video-author bigger">{{ video.video_title }}</a><br>
 						<span class="small"> 

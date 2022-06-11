@@ -68,7 +68,7 @@
                     <div class="js_mixed_content"></div>
                 </div>
                 <div class="watch-description long-description hidden">
-                    <div class="small">Uploaded by <a href="/user/{{ video.video_author }}">{{ video.video_author }}</a> on Apr 12, 2022</div>
+                    <div class="small">Uploaded by <a href="/user/{{ video.video_author }}">{{ video.video_author }}</a> on {{ video.video_added|date("M d, Y") }}</div>
                     <div class="black" style="margin-top: 5px">
                         {{ video.video_description|nl2br }}
                     </div>
@@ -76,11 +76,11 @@
                         <b>Category:</b><br>
                         <a href="#">{{ video.video_category }}</a><br>
                         <b>Tags:</b><br>
-                        <a href="#" class="tag">{{ video.video_tag }}</a><br>
+                        <a href="#" class="tag">{{ video.video_tags }}</a><br>
                     </div>
                 </div>
                 <div class="watch-description short-description">
-                    <div class="small">Uploaded by <a href="/user/{{ video.video_author }}">{{ video.video_author }}</a> on Apr 12, 2022</div>
+                    <div class="small">Uploaded by <a href="/user/{{ video.video_author }}">{{ video.video_author }}</a> on {{ video.video_added|date("M d, Y") }}</div>
                     <div class="black" style="margin-top: 5px">
                         {{ video.video_description|nl2br }}
                     </div>
@@ -110,6 +110,12 @@
                     </div>
                 {% endif %}
                 <div class="comments">
+                    <div class="comment hidden" id="ajax_comment">
+                        <a href="/user/{{ session.youtube }}">{{ session.youtube }}</a> &nbsp;&nbsp; <span class="small gray">a few seconds ago</span>
+                        <div class="comment-text black">
+                            test
+                        </div>
+                    </div>
                     {% set comment_i = 0 %}
                     {% for comment in comments %}
                         {% if comment.id is defined %}
@@ -167,9 +173,11 @@
                 {% for video in videos_rec %}
                     {% if video.id is defined %}
                         <div class="video-item inline-block w-300 hover-video padding">
-                            <div class="thumb-64 inline-block"  style="background-image: url('/v/thumb/{{ video.video_thumbnail }}');">
-                                <span class="timestamp">{{ video.video_duration|date('i:s') }}</span>
-                            </div>
+                            <a href="/watch?v={{ video.video_id }}">
+                                <div class="thumb-64 inline-block"  style="background-image: url('/v/thumb/{{ video.video_thumbnail }}');">
+                                    <span class="timestamp">{{ video.video_duration|date('i:s') }}</span>
+                                </div>
+                            </a>
                             <div class="video-meta small">
                                 <a href="/watch?v={{ video.video_id }}" class="video-author bigger">{{ video.video_title }}</a><br>
                                 <span class="small">{{ video.video_views }} views</span><br>
@@ -182,6 +190,23 @@
         </div>
     </div>
     <script>
+        $('.comment-box form').submit(function(e) {
+            e.preventDefault();
+            var form = $(this);
+            var action = form.attr('action');
+
+            $.ajax({
+                type: "POST",
+                url: action,
+                data: form.serialize(),
+                success: function(data) {
+                    $("#ajax_comment").removeClass("hidden");
+                    $("#ajax_comment .comment-text").text($('.comment-box form textarea').val());
+                    alert(data);
+                }
+            });
+        });
+
         $('.js_open_description').click(function() {
             var long_description = $(".long-description");
             var short_description = $(".short-description");
@@ -283,9 +308,9 @@
                 var player = $('.utue-player')[0];
 
                 if(player.hasAttribute('data-theater')) 
-                    right.css('margin-top', '530px');
-                else 
                     right.css('margin-top', '65px');
+                else 
+                    right.css('margin-top', '530px');
             });
         });
     </script>

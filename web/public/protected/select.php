@@ -49,4 +49,12 @@ class Select {
 
         return $stmt->rowCount() === 1;
     }
+
+    function comment_cooldown($user) {
+        $stmt = $this->__db->prepare("SELECT * FROM users WHERE youtube_username = :username AND last_comment >= NOW() - INTERVAL 1 MINUTE");
+        $stmt->bindParam(":username", $user);
+        $stmt->execute();
+        
+        return $stmt->rowCount() === 1;
+    }
 }

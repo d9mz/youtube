@@ -1,50 +1,41 @@
-/* base.css */
-
-
-/* don't edit these unless 
-   you know what you're doing */
-
 body,
 html {
-    padding: 0px;
-    margin: 0px;
+    padding: 0;
+    margin: 0;
     color: #666;
     font: 12px arial, sans-serif;
-    height: 100%;
-    word-wrap: break-word;
+    word-wrap: break-word
 }
 
 .site {
     width: 970px;
-    margin: auto;
+    margin: auto
 }
 
 .footer a {
-    margin-right: 23px;
+    margin-right: 23px
 }
 
 .footer {
-    height: 200px;
+    height: 200px
+}
+
+.footer .big {
+    padding-top: 20px
 }
 
 .clearfix {
-    overflow: auto;
+    margin: 16px 0 32px;
+    overflow: hidden
 }
 
 .promo-grey-big {
-    background: #f0f0f0;
-    background-image: -moz-linear-gradient(center bottom, #d9d9d9 0, #f0f0f0 40%);
-    background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0, #d9d9d9), color-stop(0.4, #f0f0f0));
-    -ms-filter: 'progid:DXImageTransform.Microsoft.Gradient(startColorStr=#F0F0F0, endColorStr=#D9D9D9)';
-    filter: progid: DXImageTransform.Microsoft.Gradient(startColorStr=#f0f0f0, endColorStr=#d9d9d9);
-    -moz-box-shadow: 0 1px 2px #838383;
-    -webkit-box-shadow: 0 1px 2px #838383;
+    background-color: #f0f0f0;
+    background-image: linear-gradient(0deg, #d9d9d9 0, #f0f0f0 100%);
     box-shadow: 0 1px 2px #838383;
-    font-weight: bold;
+    font-weight: 700;
     font-size: 13px;
-    padding: 7px 5px;
-    padding-left: 13px;
-    overflow: hidden;
+    padding: 7px 5px 7px 13px
 }
 
 .section {
@@ -52,180 +43,166 @@ html {
     font-size: 15px;
     border-bottom: 1px solid #ccc;
     padding-bottom: 5px;
-    margin-bottom: 5px;
+    margin-bottom: 5px
 }
 
 .video-item.w-310 {
-    width: 310px;
+    width: 315px
 }
 
 .video-item.w-300 {
-    width: 300px;
+    width: 300px
 }
 
 .video-manager-page .video-item {
-    width: 700px;
+    width: 700px
 }
 
 .watch-page .top-right {
-    margin-top: 65px;
+    margin-top: 65px
 }
 
 .w-310 .timestamp {
     position: relative;
-    top: 67px;
-    left: 84px;
+    top: 58px;
+    left: 92px
 }
 
 .timestamp {
     padding: 0 4px;
-    font-weight: bold;
+    font-weight: 700;
     font-size: 11px;
-    -moz-border-radius: 3px;
-    -webkit-border-radius: 3px;
     border-radius: 3px;
     background-color: #000;
-    color: #fff!important;
+    color: #fff;
     height: 14px;
     line-height: 14px;
-    opacity: 0.75;
-    filter: alpha(opacity=75);
-    display: -moz-inline-stack;
+    opacity: .75;
     display: inline-block;
-    *display: inline;
-    vertical-align: top;
-    zoom: 1;
-    position: absolute;
+    vertical-align: top
 }
 
 .hover-video:hover {
-    background-color: #d1e1fa;
-    ;
+    background-color: #d1e1fa
 }
 
 .dotted-under {
     border-bottom: 1px dotted;
+    border-top: 0
+}
+
+.thumb-128,
+.thumb-64 {
+    background-image: url(/v/thumb/default.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: #fff;
+    border: 1px solid #d3d3d3;
+    border-radius: 3px
 }
 
 .thumb-128 {
-    width: 119px;
-    height: 82px;
-    background-image: url("/v/thumb/default.png");
-    background-size: 100% 100%;
-    border: 1px solid #d3d3d3;
-    padding: 4px;
-    border-radius: 3px;
+    width: 128px;
+    height: 72px;
+    background-size: 128px 72px;
+    padding: 4px
 }
 
 .thumb-64 {
-    width: 106px;
-    height: 64px;
-    background-image: url("/v/thumb/default.png");
-    background-size: 100% 100%;
-    border: 1px solid #d3d3d3;
-    padding: 4px;
-    border-radius: 3px;
+    width: 104px;
+    height: 62px;
+    background-size: 96px 53px
 }
 
 button.ut-blue-button {
-    font-weight: bold;
+    font-weight: 700;
     height: 2em;
     padding: 0 20px;
-    border-color: #36c;
-    -moz-border-radius: 5px;
-    -webkit-border-radius: 5px;
     border-radius: 5px;
-    color: white;
-    background: #83a1d1;
-    background-image: -moz-linear-gradient(top, #83a1d1, #2b59b2);
-    background-image: -webkit-gradient(linear, left top, left bottom, from(#83a1d1), to(#2b59b2));
+    color: #fff;
+    background-color: #83a1d1;
+    background-image: linear-gradient(180deg, #83a1d1 0, #2b59b2 100%);
     font-size: 1.2em;
-    border: 1px solid #36c;
+    border: 1px solid #36c
 }
 
 .ut-button.start {
-    border-top-right-radius: 0px;
-    border-bottom-right-radius: 0px;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0
 }
 
 .ut-button.end {
-    border-bottom-left-radius: 0px;
-    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0;
+    border-top-left-radius: 0
 }
 
 .watch-sparkbar-likes {
     float: left;
     height: 4px;
     border-right: 1px solid #fff;
-    background: #060;
-}
-
-.watch-page .top-right .video-item .thumb-64 {
-    border: 0px solid black;
+    background-color: #060
 }
 
 .outer-box {
-    margin-left: 0%;
-    margin-right: 0%;
     border: 1px solid #c3d9ff;
     padding: 5px;
-    margin: 15px;
+    margin: 15px
 }
 
 .inner-box {
-    border-color: #CCCCCC;
+    border-color: #ccc;
     border-style: solid;
     border-width: 1px;
     background-color: #e8eefa;
-    padding: 5px;
+    padding: 5px
 }
 
 .comment-section .section {
     color: unset;
-    font-size: 13px;
+    font-size: 13px
 }
 
 .sign-up.section {
     font-size: 19px;
-    color: black;
+    color: #000
 }
 
 .alert {
     padding: 5px;
     border: 1px solid #ffffffbe;
-    font-weight: bold;
-    color: white;
+    font-weight: 700
 }
 
+.alert,
 .alert a {
-    color: white;
+    color: #fff
 }
 
 .alert-success {
-    background-color: #060;
+    background-color: #060
 }
 
 .alert-error {
-    background-color: rgb(151, 0, 0);
+    background-color: #970000
 }
 
 .watch-sparkbar-dislikes {
     float: right;
     height: 4px;
     margin-right: -1px;
-    background: #c00;
+    background-color: #c00
 }
 
 .tag {
-    margin-right: 15px;
+    margin-right: 15px
 }
 
 .width-full {
-    width: 100%;
+    width: 100%
 }
 
 .views {
-    width: calc( 28% - 20px) !important;
+    width: calc(28% - 20px)!important
 }
 
 .watch-sparkbars {
@@ -233,107 +210,103 @@ button.ut-blue-button {
     margin: 2px 0;
     border: 1px solid #ccc;
     overflow: hidden;
-    -webkit-border-radius: 3px;
-    -moz-border-radius: 3px;
-    border-radius: 3px;
+    border-radius: 3px
 }
 
 .watch-description {
     margin-top: 8px;
-    line-height: 1.4;
+    line-height: 1.4
 }
 
 .watch-description a {
-    color: #4272db;
+    color: #4272db
 }
 
 .no-margin {
-    margin: 0px !important;
+    margin: 0!important
 }
 
 .dislike {
     position: relative;
-    right: 5px;
+    right: 5px
 }
 
-.black {
-    color: black;
+.black,
+.side-list li.active a {
+    color: #000
 }
 
 .promo-grey-big.ut-alert.rounded .black {
-    font-weight: normal;
-    margin-left: 10px;
+    font-weight: 400;
+    margin-left: 10px
 }
 
 .promo-grey-big.ut-alert.rounded a {
-    font-weight: bold;
+    font-weight: 700
 }
 
 .ut-alert {
     position: relative;
     margin: 5px 0;
-    overflow: hidden;
-    zoom: 1;
+    overflow: hidden
 }
 
 .rounded {
-    border-radius: 5px;
+    border-radius: 5px
 }
 
 .top-right {
     float: right;
-    width: calc( 34% - 20px);
+    width: 315px
 }
 
 .top-left {
     float: left;
-    width: calc( 67.5% - 20px);
+    width: calc(67.7% - 16px)
 }
 
 .padding {
-    padding: 5px;
+    padding: 5px
 }
 
 .padding-top {
-    padding-top: 5px;
+    padding-top: 5px
 }
 
 .small {
-    font-size: 11px;
+    font-size: 11px
 }
 
-.comment-text {
-    margin-top: 3px;
+.comment-text,
+form .ut-input {
+    margin-top: 3px
 }
 
 .comments {
-    margin-top: 20px;
+    margin-top: 20px
 }
 
 .comment {
-    border-bottom: 1px solid #EBEBEB;
-    padding-top: 16px;
-    padding-bottom: 10px;
+    border-bottom: 1px solid #ebebeb;
+    padding: 5px 0;
 }
 
-.comment.first {
-    padding-top: 0px;
-}
+.comment.first {}
 
 .footer .inline-block.small.padding-top a {
-    margin-left: 15px;
+    margin-left: 15px
 }
 
 .footer .inline-block.small.padding-top {
-    margin-top: 5px;
+    margin-top: 5px
 }
 
 .big {
-    font-size: 13px;
+    font-size: 13px
 }
 
 .inherit-color {
-    color: inherit;
+    color: inherit
 }
 
 .inline-block {
@@ -341,135 +314,149 @@ button.ut-blue-button {
 }
 
 .float-right {
-    float: right;
+    float: right
 }
 
 .header .logo {
-    vertical-align: middle;
+    vertical-align: middle
 }
 
-.header form input[type="text"] {
+.header form input[type=text] {
     border: 1px solid #fff;
     padding: 2px 4px 3px;
     margin: 0;
     border-color: #8c8c8c #999 #ccc #8c8c8c;
     height: 17px;
-    width: 80%;
+    width: 80%
 }
 
-.header form input[type="submit"] {
+.header form input[type=submit],
+.ut-button {
     vertical-align: top;
-    background-image: -webkit-gradient(linear, left top, left bottom, from(#ffffff), to(#efefef));
+    background-image: linear-gradient(180deg, #fff 0, #efefef 100%);
+    height: 24px;
+    padding: 3px 6px;
+    font-size: 12px
+}
+
+.header form input[type=submit] {
     border: 1px solid #8c8c8c;
     border-top-right-radius: 3px;
     border-bottom-right-radius: 3px;
-    padding: 3px;
-    padding-left: 6px;
-    height: 24px;
-    padding-right: 6px;
-    margin-left: -5px;
-    font-size: 12px;
+    margin-left: -5px
 }
 
-.header form input[type="submit"]:active {
-    background: #ddd;
-    background-image: -moz-linear-gradient(top, #cccccc, #ffffff);
-    background-image: -webkit-gradient(linear, left top, left bottom, from(#cccccc), to(#ffffff));
+.header form input[type=submit]:active {
+    background-color: #ddd;
+    background-image: linear-gradient(180deg, #ccc 0, #fff 100%)
 }
 
 .ut-button {
-    vertical-align: top;
-    background-image: -webkit-gradient(linear, left top, left bottom, from(#ffffff), to(#efefef));
-    border: 1px solid #cccccc;
-    border-radius: 3px;
-    padding: 3px;
-    padding-left: 6px;
-    height: 24px;
-    padding-right: 6px;
-    margin-left: -5px;
-    font-size: 12px;
+    border: 1px solid #ccc;
+    border-radius: 3px
+}
+
+.ut-button:hover {
+    box-shadow: 0 0 3px #aaa;
+    cursor: pointer
 }
 
 .video-watch-meta .ut-button {
-    margin-left: 5px;
+    margin-left: 5px
 }
 
 .comment-reply {
-    margin-left: 50px;
+    margin-left: 50px
 }
 
 .comment-reply textarea {
     width: 73%;
-    height: 70px;
+    height: 70px
 }
 
-.ut-button:active,
-.ut-button.active {
-    background: #ddd;
-    background-image: -moz-linear-gradient(top, #cccccc, #ffffff);
-    background-image: -webkit-gradient(linear, left top, left bottom, from(#cccccc), to(#ffffff));
+.ut-button.active,
+.ut-button:active {
+    background-color: #ddd;
+    background-image: linear-gradient(180deg, #ccc 0, #fff 100%)
 }
 
 .header form {
-    width: 424px;
+    width: 420px;
+    margin-right: -10px
 }
 
 .loading .inline-block {
     position: relative;
-    bottom: 6px;
+    bottom: 6px
 }
 
 .header a.divider {
-    padding: 0.1em 0.8em;
-    border-left: 1px solid #ccc;
+    padding: .1em .8em;
+    border-left: 1px solid #ccc
 }
 
 .hidden {
-    display: none;
+    display: none
 }
 
 .mixed-content-attach {
     margin-top: 10px;
     border-radius: 5px;
     padding: 10px;
-    border: 1px solid #ccc;
+    border: 1px solid #ccc
 }
 
 .w-115 {
-    width: 109px;
+    width: 107px
 }
 
 .w-115 .video-meta .video-author.bigger {
     margin-top: 5px;
-    width: 100px;
+    width: 100px
 }
 
 .center {
-    text-align: center;
+    text-align: center
 }
 
 .header a:hover {
-    text-decoration: underline;
+    text-decoration: underline
 }
 
 .header a.divider.end {
-    padding: 0.1em 0.8em;
-    border-left: 0px;
-    margin-left: 35px;
+    padding: .1em .8em;
+    border-left: 0;
+    margin-left: 35px
 }
 
 a,
 a:visited {
     text-decoration: none;
-    color: #03c;
+    color: #03c
+}
+
+button.ut-blue-button:hover {
+    cursor: pointer
+}
+
+.black a:hover,
+.ut-dropdown button:hover,
+a:hover {
+    text-decoration: underline;
+    cursor: pointer
+}
+
+.promo-grey-big a,
+button.ut-blue-button:hover {
+    text-decoration: none!important
 }
 
 .header {
-    font-size: 13px;
+    font-size: 13px
 }
 
 .header .user-panel-bar {
-    margin-top: 5px;
+    margin-top: 8px
 }
 
 h1,
@@ -477,297 +464,300 @@ h2,
 h3,
 h4,
 h5 {
-    padding: 0px;
-    margin: 0px;
-    color: black;
+    padding: 0;
+    margin: 0;
+    color: #000
 }
 
 .no-padding {
-    padding: 0px;
+    padding: 0
 }
 
 .icon {
     display: inline-block;
-    vertical-align: middle;
+    vertical-align: middle
 }
 
 .bg-author_videos_watch {
     width: 16px;
     height: 16px;
-    background: url('/img/sprite_vfl36B3d_Rp.png') -10px -10px;
+    background: url(/img/sprite_vfl36B3d_Rp.png)-10px -10px;
+    vertical-align: top!important
+}
+
+.active .bg-author_videos_watch {
+    transform: rotate(180deg)
 }
 
 .bg-add_to {
     width: 11px;
-    height: 11px;
-    background: url('/img/css_sprites_4.png') -45px -35px;
+    height: 13px;
+    background: url(/img/css_sprites_4.png)-45px -35px
 }
 
 .bg-analytics {
     width: 16px;
     height: 14px;
-    background: url('/img/css_sprites_4.png') -25px -35px;
+    background: url(/img/css_sprites_4.png)-25px -35px
 }
 
 .bg-dislike_button {
     width: 16px;
     height: 18px;
-    background: url('/img/css_sprites_4.png') -62px -2px;
+    background: url(/img/css_sprites_4.png)-62px -2px
 }
 
 .bg-flag {
     width: 19px;
     height: 17px;
-    background: url('/img/css_sprites_4.png') -2px -35px;
+    background: url(/img/css_sprites_4.png)-2px -35px
 }
 
 .bg-warning {
     width: 32px;
     height: 29px;
-    background: url('/img/css_sprites_4.png') -2px -2px;
+    background: url(/img/css_sprites_4.png)-2px -2px
 }
 
 .bg-like_button {
     width: 16px;
     height: 18px;
-    background: url('/img/css_sprites_4.png') -62px -24px;
+    background: url(/img/css_sprites_4.png)-62px -24px
 }
 
 .bg-liked_button {
-    width: 20px;
-    height: 22px;
-    background: url('/img/css_sprites_4.png') -38px -2px;
+    width: 16px;
+    height: 20px;
+    background: url(/img/css_sprites_4.png)-40px -3px;
     position: relative;
-    bottom: 2px;
+    bottom: 2px
 }
 
 .author {
-    font-size: 14px;
+    font-size: 14px
 }
 
 .video-player {
     width: 640px;
     height: 390px;
     display: block;
-    background-color: black;
+    background-color: #000
 }
 
 .bold {
-    font-weight: bold;
+    font-weight: 700
 }
 
 .video-watch-meta {
-    font-size: 13px;
+    font-size: 13px
 }
 
 .video-watch-title {
-    margin-bottom: 5px;
+    margin-bottom: 5px
 }
 
 .video-author-videos {
-    padding: 2px;
-    margin-left: 10px;
+    padding: 3px 5px;
+    margin-left: 3px;
     border-radius: 3px;
-    border: 1px solid #eaeaea;
+    border: 1px solid #eaeaea
 }
 
 .video-author-videos:hover {
     background-color: #d1e1fa;
-    border-color: #b6d0f7;
+    border-color: #b6d0f7
 }
 
+.video-meta a,
 .video-watch-author {
     font-weight: bolder;
-    font-size: 13px;
+    font-size: 13px
 }
 
 .no-border {
-    border: 0px solid black;
+    border: 0
 }
 
 h1 {
-    font-size: 20px;
+    font-size: 20px
 }
 
 .comment-box.signedout {
-    background: #eee;
+    background-color: #eee;
     padding: 5px;
     height: 34px;
-    border: 1px solid #ccc;
+    border: 1px solid #ccc
 }
 
 .video-meta {
     display: inline-block;
     vertical-align: top;
-    padding-left: 3px;
+    padding-left: 3px
 }
 
 .mid {
-    vertical-align: middle;
+    vertical-align: middle
 }
 
 .top {
-    vertical-align: top;
+    vertical-align: top
 }
 
 .video-meta a {
     color: #03c;
     display: inline-block;
-    margin-bottom: 5px;
-    font-weight: bolder;
+    margin-bottom: 3px;
     font-size: 15px;
-    width: 170px;
+    width: 170px
 }
 
 .video-author {
-    font-size: 12px !important;
-    font-weight: normal !important;
+    font-size: 12px!important;
+    font-weight: 400!important
 }
 
 .thumb-64 .timestamp {
     position: relative;
-    top: 50px;
-    left: 70px;
+    top: 44px;
+    left: 65px
 }
 
 .comment .small {
-    color: #a4a4a4 !important;
+    color: #a4a4a4!important
 }
 
 .comment-box form textarea {
     width: 75%;
     height: 60px;
-    resize: vertical;
+    resize: vertical
 }
 
 .utue-player {
-    left: 0px;
-    transition: width 0.3s, height 0.3s;
+    left: 0;
+    transition: width .3s, height .3s
 }
 
 .utue-player[data-theater] {
     width: 970px;
-    height: 450px;
+    height: 450px
 }
 
 .top-left .utue-player[data-theater]~.top-right {
-    margin-top: 470px;
+    margin-top: 470px
 }
 
 .video-manager-page .top-left {
     float: left;
-    width: calc( 24.5% - 20px);
+    width: calc(24.5% - 20px);
     border-right: 1px solid #aaa;
-    height: 100%;
+    height: 100%
 }
 
 .edit-video-page .top-right {
     float: right;
-    width: calc( 79.51% - 20px);
+    width: calc(79.54% - 20px)
 }
 
 .edit-video-page .top-left {
     float: left;
-    width: calc( 24.5% - 20px);
+    width: calc(24.5% - 20px);
     border-right: 1px solid #aaa;
-    height: 100%;
+    height: 100%
 }
 
 .user-page .top-right {
     float: right;
-    width: calc( 65.5% - 20px);
+    width: 605px
 }
 
 .user-page .top-left {
     float: left;
-    width: calc( 37.5% - 20px);
-    height: 100%;
+    width: 340px
 }
 
 .featured-video .top-right {
     float: right;
-    width: calc( 30.5% - 20px);
+    width: 280px;
+    margin-bottom: 0
 }
 
 .featured-video .top-left {
     float: left;
-    width: calc( 73.5% - 20px);
-    height: 100%;
+    width: 640px
 }
 
 .clearfix.edit-video-page {
     position: relative;
     bottom: 11px;
-    width: 99.5%;
+    width: 99.5%
 }
 
 .video-manager-page .top-right {
     float: right;
-    width: calc( 79.51% - 20px);
+    width: calc(79.54% - 20px)
 }
 
 h1.video-manager {
     background-color: #f0f0f0;
     padding: 10px;
-    border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid #ddd
 }
 
 .clearfix.video-manager-page {
     position: relative;
     bottom: 11px;
-    width: 99.5%;
+    width: 99.5%
 }
 
-hr {
-    border-top: 0px solid #aaa;
-    border-bottom: 1px solid #aaa;
+.header.padding hr:not(.dotted-under) {
+    border-top: 0;
+    border-bottom: 1px solid #f2f2f2;
+    width: 99.8%;
+    position: absolute;
+    left: 0
 }
 
 .height-expander {
-    height: 600px;
+    height: 600px
 }
 
 ul.side-list {
     list-style: none;
-    padding: 0px;
-    margin: 0px;
+    padding: 0;
+    margin: 0
 }
 
 .side-list li {
     padding: 5px 10px;
-    width: 150px;
+    width: 150px
 }
 
 .side-list li.active {
     background-color: #ddd;
     border-radius: 5px;
-    color: black;
+    color: #000
 }
 
-.side-list li.active a {
-    color: black;
-}
-
-input[type="checkbox"] {
+input[type=checkbox] {
     background-color: initial;
     cursor: default;
     appearance: auto;
     box-sizing: border-box;
     margin: 3px 3px 3px 4px;
     padding: initial;
-    border: initial;
+    border: initial
 }
 
 .seperator {
     border-left: 1px solid #ccc;
     margin: 0 3px;
-    height: 12px;
+    height: 12px
 }
 
 .video-manager-page .video-item .video-meta {
-    width: 460px;
+    width: 470px;
     word-break: break-all;
-    word-wrap: break-word;
+    word-wrap: break-word
 }
 
 .video-description-meta {
@@ -776,19 +766,19 @@ input[type="checkbox"] {
     display: inline-block;
     white-space: nowrap;
     overflow: hidden;
-    vertical-align: bottom;
+    vertical-align: bottom
 }
 
 .video-manager-page .video-meta a {
-    width: 300px;
+    width: 300px
 }
 
-.video-manager-page input[type="checkbox"] {
-    margin-left: 10px;
+.video-manager-page input[type=checkbox] {
+    margin-left: 10px
 }
 
 .right {
-    float: right;
+    float: right
 }
 
 .video-info {
@@ -796,145 +786,141 @@ input[type="checkbox"] {
     height: 74px;
     font-size: 11px;
     line-height: 14px;
-    padding-left: 10px;
+    padding-left: 10px
 }
 
 .edit-video button {
-    border-radius: 0px;
+    border-radius: 0;
     width: 300px;
     text-align: left;
-    font-weight: bold;
+    font-weight: 700
 }
 
 .padding.edit-video {
-    padding: 5px;
-    padding-left: 10px;
+    padding: 5px 5px 5px 10px
 }
 
 .edit-video .padding {
-    border: 1px solid #cccccc;
+    border: 1px solid #ccc;
     width: 288px;
-    border-top: 0px;
-    font-size: 11px;
+    border-top: 0;
+    font-size: 11px
 }
 
 .edit-video button,
-.edit-video input[type="submit"] {
-    margin-left: 0px;
+.edit-video input[type=submit] {
+    margin-left: 0
 }
 
 .edit-video .thumbnail {
     width: 91px;
-    border: 1px solid #8c8c8c;
+    border: 1px solid #8c8c8c
 }
 
 .edit-video .thumbnail.big {
-    width: 98.3%;
+    width: 98.3%
 }
 
 .edit-video .padding form {
-    line-height: 25px;
+    line-height: 25px
 }
 
 .edit-video .padding hr {
-    border-top: 0px dotted #aaa;
-    border-bottom: 1px dotted #aaa;
+    border-top: 0 dotted #aaa;
+    border-bottom: 1px dotted #aaa
 }
 
-.edit-video .padding form input[type="text"],
+.edit-video .padding form input[type=text],
 .edit-video .padding form textarea {
-    width: 97%;
+    width: 97%
 }
 
 .unbold {
-    font-weight: normal !important;
+    font-weight: 400!important
 }
 
-.padding form textarea[name="youtube_description"] {
+.padding form textarea[name=youtube_description] {
     resize: vertical;
-    height: 153px;
+    height: 153px
 }
 
 .ut-button.disabled {
-    color: #b3b3b3;
+    color: #b3b3b3
 }
 
 .ut-button.disabled:active {
     vertical-align: top;
-    background-image: -webkit-gradient(linear, left top, left bottom, from(#ffffff), to(#efefef));
-    border: 1px solid #cccccc;
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#efefef));
+    border: 1px solid #ccc;
     border-radius: 3px;
-    padding: 3px;
-    padding-left: 6px;
     height: 24px;
-    padding-right: 6px;
+    padding: 3px 6px;
     margin-left: -5px;
-    font-size: 12px;
+    font-size: 12px
 }
 
 .ut-dropbutton {
-    background-color: #04AA6D;
-    color: white;
+    background-color: #04aa6d;
+    color: #fff;
     padding: 16px;
     font-size: 16px;
-    border: none;
-    cursor: pointer;
+    border: 0;
+    cursor: pointer
 }
 
-.ut-dropbutton:hover,
-.ut-dropbutton:focus {
-    background-color: #3e8e41;
+.ut-dropbutton:focus,
+.ut-dropbutton:hover {
+    background-color: #3e8e41
 }
 
 .ut-dropdown {
     position: relative;
     display: inline-block;
-    margin-right: 10px;
-    margin-left: 50px;
+    margin-left: 50px
 }
 
 .ut-dropdown button {
-    border: 0px;
-    background: none;
+    border: 0;
+    background-color: transparent
 }
 
 .ut-dropdown-content {
     display: none;
     position: absolute;
     background-color: #fff;
-    min-width: 100px;
+    min-width: 189px;
     overflow: auto;
     border: 1px solid #999;
-    border-bottom-left-radius: 3px;
-    border-bottom-right-radius: 3px;
     right: 0;
-    z-index: 1;
+    z-index: 1
 }
 
 .ut-dropdown-content a {
-    color: black;
+    color: #000;
     padding: 5px;
     text-decoration: none;
-    display: block;
+    display: inline-block;
     border: 1px solid #eaeaea;
+    width: 83px;
+    margin-inline-end: -5px
 }
 
 .ut-dropdown a:hover {
-    background-color: #eaeaea;
+    background-color: #eaeaea
 }
 
 .show {
-    display: block;
+    display: block
 }
 
 .comment-positive {
     color: #090;
-    margin-left: 20px;
+    margin-left: 20px
 }
 
 .comment-negative {
-    color: rgb(151, 0, 0);
-    margin-left: 20px;
+    color: #970000;
+    margin-left: 20px
 }
 
 .ut-input,
@@ -942,287 +928,278 @@ textarea.ut-input {
     border-radius: 3px;
     border: 1px solid #ccc;
     padding: 5px;
-    background: rgb(245, 245, 245);
-    background: linear-gradient(0deg, rgb(247, 247, 247) 0%, rgb(255, 255, 255) 100%);
+    background-color: #f5f5f5;
+    background: linear-gradient(0deg, #f7f7f7 0, #fff 100%)
 }
 
 .share-panel .ut-input {
     margin-top: 5px;
     font-size: 15px;
-    width: 97%;
+    width: 97%
 }
 
 .share-panel hr {
-    border-bottom: 1px solid #ccc;
+    border-bottom: 1px solid #ccc
 }
 
 .no-resize {
-    resize: none;
+    resize: none
 }
 
 .sprite {
     background-image: url(/img/spritesheet.png);
     background-repeat: no-repeat;
-    display: inline-block;
+    display: inline-block
 }
 
 .sprite-digg {
     width: 32px;
     height: 32px;
-    background-position: -2px -2px;
+    background-position: -2px -2px
 }
 
-.sprite-facebook {
-    width: 32px;
-    height: 32px;
-    background-position: -38px -2px;
-}
-
+.sprite-facebook,
 .sprite-reddit {
     width: 32px;
     height: 32px;
-    background-position: -2px -38px;
+    background-position: -38px -2px
 }
 
-.sprite-tumblr {
-    width: 32px;
-    height: 32px;
-    background-position: -38px -38px;
+.sprite-reddit {
+    background-position: -2px -38px
 }
 
+.sprite-tumblr,
 .sprite-twitter {
     width: 32px;
     height: 32px;
-    background-position: -74px -2px;
+    background-position: -38px -38px
+}
+
+.sprite-twitter {
+    background-position: -74px -2px
 }
 
 .user-page {
-    background-color: #999999;
-    padding: 10px;
+    background-color: #ccc;
+    padding: 8px;
     border-radius: 5px;
-}
-
-.user-page .panel {
-    background-color: #eeeeff;
-    padding: 10px;
-    border-radius: 5px;
-    line-height: 14px;
-}
-
-.user-bar-channel {
-    background-color: #eeeeff;
-    padding: 3px;
-    border-radius: 3px;
-}
-
-.user-sub-bar-channel {
-    background-color: #cccccc;
-    padding: 6px;
-    border-radius: 3px;
-    min-width: 33%;
-    margin: 2px;
-    max-width: 60%;
-    display: inline-block;
+    margin: 0;
 }
 
 .user-page-corner-tab {
     width: 0;
     height: 0;
-    border: 1px solid #CCCCCC;
-    border-width: 23px 0 23px 12px;
+    border: 1px solid #ccc;
+    border-width: 21px 0 21px 12px;
     border-top-color: transparent;
     border-bottom-color: transparent;
-    font-size: 0;
-    line-height: 0;
     display: inline-block;
     vertical-align: middle;
     position: relative;
-    right: 6px;
+    right: 6px
+}
+
+.user-page .panel {
+    background-color: #eef;
+    padding: 10px;
+    border-radius: 5px;
+    line-height: 14px
+}
+
+.panel.clearfix {
+    margin: 0;
+    padding-top: 0;
+}
+
+.user-bar-channel {
+    background-color: #eef;
+    padding: 3px;
+    border-radius: 3px
+}
+
+.user-sub-bar-channel {
+    background-color: #ccc;
+    padding: 5px;
+    border-radius: 3px;
+    width: fit-content;
+    margin: 2px;
+    display: inline-block
 }
 
 .profile-picture {
-    width: 32px;
-    height: 32px;
-    border: 1px solid black;
+    width: 30px;
+    height: 30px;
+    border: 1px solid #000
 }
 
 .user .profile-picture {
-    border-color: #0000cc;
+    border-color: #00c;
     width: 60px;
-    height: 60px;
+    height: 60px
 }
 
 .user-sub-bar-channel h1 {
-    margin-left: 10px;
-    font-size: 16px;
+    margin-left: 4px;
+    font-size: 16px
 }
 
 .user-sub-bar-channel .ut-button {
-    margin-left: 5px;
+    margin-left: 5px
 }
 
 .double-line {
-    border: 4px double #0000cc;
+    border: 3px double #00c
 }
 
 .user-information {
-    margin-left: 10px;
+    margin: 3px 0 0 5px;
 }
 
 .short-description {
     text-overflow: ellipsis;
     height: 50px;
-    overflow: hidden;
-}
-
-form .ut-input {
-    margin-top: 3px;
+    overflow: hidden
 }
 
 .auth-form {
-    width: 190px;
+    width: 190px
 }
 
 .required {
     font-size: 11px;
-    color: rgb(151, 0, 0);
+    color: #970000
 }
 
 .input-caption {
     font-size: 11px;
     width: 190px;
-    display: inline-block;
+    display: inline-block
 }
 
 .comment .profile-picture {
-    width: 46px;
-    height: 46px;
-    border: 0px solid black;
+    width: 48px;
+    height: 48px;
+    border: 0
 }
 
 .comment-side-user {
-    margin-left: 5px;
+    margin-left: 5px
 }
 
 .user-page .comments {
-    padding: 0.4em;
+    padding: 0 .4em;
     border: 1px solid #999;
 }
 
 .user {
     display: inline-block;
-    width: 13.79%;
-    vertical-align: top;
+    width: 85px;
+    margin: 0 0 10px -5px;
 }
 
-button.ut-blue-button:hover,
+button.ut-blue-button:active,
+button.ut-blue-button:hover {
+    box-shadow: 0 0 3px #999
+}
+
 button.ut-blue-button:active {
-    box-shadow: 0 0 3px #999;
+    background-image: linear-gradient(to top, #9abdf5, #2b59b2)
 }
 
-button.ut-blue-button:active {
-    background-image: linear-gradient(to top, #9abdf5, #2b59b2);
+button.ut-blue-button:focus,
+button.ut-blue-button:hover {
+    background-image: linear-gradient(to bottom, #9abdf5, #2b59b2)
 }
 
-button.ut-blue-button:hover,
-button.ut-blue-button:focus {
-    background-image: linear-gradient(to bottom, #9abdf5, #2b59b2);
-}
-
-.header form input[type="submit"]:hover,
-.header form input[type="submit"]:focus,
-.ut-button:hover,
-.ut-button:focus {
+.header form input[type=submit]:focus,
+.header form input[type=submit]:hover,
+.ut-button:focus,
+.ut-button:hover {
     box-shadow: 0 0 3px #999;
     background-image: linear-gradient(to bottom, #fff, #ebebeb);
     border-color: #999;
-    outline: 0;
+    outline: 0
 }
 
 .channel-customization {
-    background-color: #ffffff;
+    background-color: #fff;
     border: 1px solid #d4d4d4;
-    border-radius: 0px;
+    border-radius: 0
 }
 
 .channel-customization-bar button {
-    border-radius: 0px;
+    border-radius: 0;
     font-size: 13px;
     color: #444;
-    font-weight: bold;
+    font-weight: 700;
     height: 31px;
-    padding: 8px 12px 0 12px;
-    background: rgb(204, 204, 204);
-    background: linear-gradient(0deg, rgb(217, 217, 217) 0%, rgb(213, 213, 213) 27%, rgb(255, 255, 255) 53%, rgb(255, 255, 255) 100%);
+    padding: 8px 12px 0;
+    background: #ccc;
+    background: linear-gradient(0deg, #d9d9d9 0, #d5d5d5 27%, #fff 53%, #fff 100%)
 }
 
 .channel-customization-bar button.first {
-    margin-left: 3px;
-    margin-right: 6px;
+    margin: 0 3px 0 6px
 }
 
 .channel-customization .top-left,
 .channel-customization .top-right {
-    width: calc(51% - 20px);
+    width: calc(51% - 20px)
 }
 
 .channel-customization .top-right {
-    border-left: 1px dotted #bbbbbb;
+    border-left: 1px dotted #bbb;
     padding-left: 10px;
-    min-height: 171px;
+    min-height: 171px
 }
 
 .customization-module .input-caption {
     font-size: 9px;
     color: #666;
-    width: unset;
+    width: unset
 }
 
 .customization-module textarea {
     width: 356px;
     height: 62px;
-    resize: none;
+    resize: none
 }
 
 .comment-side-user.inline-block {
-    width: 516px;
+    width: 510px
 }
 
 .box {
-    padding: 0.4em;
-    border: 1px solid #999999;
+    padding: .4em;
+    border: 1px solid #999
 }
 
 .user-page .top.inline-block.vertical-align {
     width: 92%;
-    padding-left: 5px;
+    padding-left: 5px
 }
 
 .user-page-container {
-    background-color: #ccc;
-    height: 2000px;
+    background-color: #ccc
 }
 
 .user-page-container .container {
     width: 970px;
-    margin: auto;
+    margin: auto
 }
 
 .user-page .utue-player {
     width: 640px;
-    height: 385px;
-}
-
-.user-page .video-item.w-300 {
-    width: 258px;
+    height: 385px
 }
 
 .user-page .video-meta {
-    width: 135px;
+    width: 135px
 }
 
 .user-page .video-meta a {
-    width: 133px;
+    width: 164px
 }
 
 .user-side-list {
@@ -1231,129 +1208,112 @@ button.ut-blue-button:focus {
 }
 
 .inbox-page .video-item {
-    width: 700px;
+    width: 700px
 }
 
 .inbox-page .top-left {
     float: left;
-    width: calc( 24.5% - 20px);
+    width: calc(24.5% - 20px);
     border-right: 1px solid #aaa;
-    height: 100%;
+    height: 100%
 }
 
 .inbox-page .top-right {
     float: right;
-    width: calc( 79.51% - 20px);
+    width: calc(79.51% - 20px)
 }
 
 .inbox-page hr,
+.settings-page hr,
 .video-manager-page hr {
-    margin: 0px;
-    margin-top: 10px;
+    margin: 10px 0 0
 }
 
-.inbox-page h1,
-.video-manager-page h1 {
-    margin-bottom: 5px;
+.inbox-page h1 {
+    margin-bottom: 5px
 }
 
-.inbox-page h1.video-manager {
+.inbox-page h1.video-manager,
+.settings-page h1.video-manager {
     background-color: unset;
-    border-bottom: 1px solid #aaa;
+    border-bottom: 1px solid #aaa
 }
 
 .inbox-message {
     resize: none;
     width: 600px;
-    height: 260px;
+    height: 260px
 }
 
 .compose-form {
-    margin-left: 70px;
-    margin-top: 25px;
+    margin: 75px 0 0 25px
 }
 
 .inbox-body {
-    margin-left: 14px;
-    width: 600px;
-    margin-top: 10px;
+    margin: 10px 0 0 15px;
+    width: 600px
 }
 
 .comment-bulletin {
     min-height: 64px;
     border: 1px solid #c9c9c9;
-    padding: 8px;
+    padding: 8px
 }
 
 .search-videos .video-item {
-    width: 950px;
+    width: 950px
 }
 
 .search-videos .video-meta a {
     font-size: unset;
-    font-weight: normal;
-    width: unset;
+    font-weight: 400;
+    width: unset
 }
 
 .search-videos .video-item .video-meta .seperator {
-    margin: 0 7px;
-    margin-right: 7px;
+    margin: 0 7px
 }
 
-.search-videos .video-description-meta {
-    margin-bottom: 5px;
+.search-videos .video-description-meta,
+.settings-page h1,
+.video-manager-page h1 {
+    margin-bottom: 5px
 }
 
 .settings-page .video-item {
-    width: 700px;
+    width: 700px
 }
 
 .settings-page .top-left {
     float: left;
-    width: calc( 24.5% - 20px);
+    width: calc(24.5% - 20px);
     border-right: 1px solid #aaa;
-    height: 100%;
+    height: 100%
 }
 
 .settings-page .top-right {
     float: right;
-    width: calc( 79.51% - 20px);
-}
-
-.settings-page hr,
-.video-manager-page hr {
-    margin: 0px;
-    margin-top: 10px;
-}
-
-.settings-page h1,
-.video-manager-page h1 {
-    margin-bottom: 5px;
-}
-
-.settings-page h1.video-manager {
-    background-color: unset;
-    border-bottom: 1px solid #aaa;
+    width: calc(79.51% - 20px)
 }
 
 .settings-page .top-right .padding {
-    padding: 10px;
+    padding: 10px
 }
 
 .settings-module {
-    width: 400px;
+    width: 400px
 }
 
 .upload-page .top-left {
-    width: calc( 49.5% - 20px);
+    width: calc(49.5% - 20px)
 }
 
 .upload-page .top-right {
-    width: calc( 54% - 20px);
+    width: calc(54% - 20px)
 }
 
-.ban-form input[type="text"],
-.ban-form input[type="date"],
+.ban-form input[type=date],
+.ban-form input[type=text],
 .ban-form textarea {
-    width: 265px;
+    width: 265px
 }

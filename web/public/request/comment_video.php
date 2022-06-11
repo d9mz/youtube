@@ -13,6 +13,7 @@ $insert = new \Database\Insert($__db);
 $select = new \Database\Select($__db);
 
 $video = $select->fetch_table_singlerow($_GET['v'], "videos", "video_id");
+$user = $select->fetch_table_singlerow($_SESSION['youtube'], "users", "youtube_username");
 
 $request = (object) [
     "comment_text"   => @$_POST['comment'],
@@ -21,11 +22,6 @@ $request = (object) [
     "error"          => (object) [
         "message"    => "",
         "type"       => 0,
-        /*
-            0 - success
-            1 - error
-            2 - warning
-        */
     ],
 ];
 
@@ -56,6 +52,11 @@ if(!$select->video_exists($_GET['v'])) {
     $request->error->message = "This video does not exist.";
 }
 
+if($select->comment_cooldown($_SESSION['youtube'])) {
+    $request->error->type    = 1;
+    $request->error->message = "You are under a cooldown!";
+}
+
 if($request->error->message == "") {
     $stmt = $__db->prepare(
         "INSERT INTO comment 
@@ -81,11 +82,6 @@ if($request->error->message == "") {
 	);
 
     $update->update_cooldown($_SESSION['youtube'], "last_comment");
-    header("Location: /watch?v=" . $request->comment_target);
 } else {
-    $_SESSION['alert'] = (object) [
-        "message" => $request->error->message,
-        "type" => $request->error->type,
-    ];
-    header("Location: /watch?v=" . $request->comment_target);
+    echo $request->error->message;
 }
