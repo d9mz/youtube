@@ -1374,6 +1374,9 @@ button.ut-blue-button:focus,button.ut-blue-button:hover {
     padding: 5px;
     background-color: #e0e0e0;
     border-radius: 3px;
+    display: flex;
+    align-items: center;
+    gap: 2px;
 }
 
 .mini-profile-picture {
@@ -1383,6 +1386,9 @@ button.ut-blue-button:focus,button.ut-blue-button:hover {
 
 .mini-status {
     width: 125px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
 }
 
 .activity-buttons button {
