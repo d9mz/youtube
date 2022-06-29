@@ -72,7 +72,6 @@ $configuration->hardcoded->categories = [
 $configuration->hardcoded->allowed_vtype = [
     ".mp4",
     ".mov",
-    ".wmv",
     ".avi",
     ".webm",
 ];
