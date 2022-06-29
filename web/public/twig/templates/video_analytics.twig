@@ -1,0 +1,96 @@
+{% extends "base.twig" %}
+
+{% block page %}
+    {# page metadata #}
+
+    {% set page = page | merge({
+        "title"       : "UTue - Video Manager",
+        "description" : "Broadcast yourself"
+    }) %}    
+
+    {{ parent() }}
+{% endblock %}
+
+{%- block head -%}
+    {{ parent() }}
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+{% endblock %}
+
+{%- block site_content -%}
+	<br>
+	<style>
+		.seperator {
+		    margin: 0 7px;
+		}
+	</style>
+	<div class="clearfix video-manager-page">
+		<h1>My Account</h1>
+		<a href="/my/video_manager" class="bold black">Videos</a> <span class="seperator"></span>
+		<a href="/my/insight">Insight</a> <span class="seperator"></span>
+		<a href="/inbox/">Messages</a> <span class="seperator"></span>
+		<a href="/account">Settings</a>
+		<hr>
+	</div>
+    <div class="clearfix video-manager-page">
+        <div class="top-left">
+            <br>
+            <ul class="side-list">
+                <li class=""><a href="/my/video_history">History</a></li>
+                <li class=""><a href="/my/video_manager">Uploaded</a></li>
+                <li class=""><a href="#">Purchased</a></li>
+                <li class=""><a href="/my/video_liked">Liked</a></li>
+                <li class=""><a href="#">Content ID Matches</a></li>
+                <li class=""><br><b class="black">Playlists</b></li>
+                <li class=""><a href="#">Favorites</a></li>
+                <li class=""><a href="#">Playlist #342</a></li>
+                <li class=""><a href="#">Playlist #222</a></li>
+                <li class=""><a href="#">Playlist #146</a></li>
+                <li class=""><a href="#">Playlist #733</a></li>
+                <li class="height-expander">&nbsp;</li>
+            </ul>
+        </div>
+        <div class="top-right">
+            <h1 class="video-manager">Video Analytics</h1>
+            <div class="top-left" style="width: calc(43.5% - 20px);border-right:0px;">
+                <div style="padding:10px;">
+                    <div class="edit-video window">
+                        <button class="ut-button">Video Information</button>
+                        <div class="padding">
+                            {{ video.comments }} comments<br>
+                            {{ video.video_views }} views<br>
+                        </div>
+                    </div><br>
+
+                    <div class="edit-video window">
+                        <button class="ut-button">Video Creation</button>
+                        <div class="padding">
+                            Uploaded on {{ video.video_added|date("M d, Y") }} <br>
+                            Last updated on {{ video.video_update|date("M d, Y") }} <br>
+                        </div>
+                    </div>
+
+                    <div class="edit-video window">
+                        <button class="ut-button">Video Creation</button>
+                        <div class="padding">
+                            <script src="/assets/player.js"></script>
+                            <div class="utue-player" style="width: 289px;height: 247px;" data-src="/v/{{ video.video_id }}{{ video.video_ext }}"></div><br>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="top-right" style="width: calc(61.54% - 20px)">
+                <div style="padding:10px;">
+                    <div class="edit-video window">
+                        <button class="ut-button">Video Views</button>
+                        <div class="padding">
+                            {% for view in views %}
+                                View from <a href="/watch?v={{ view.view_referral }}">{{ view.view_referral }}</a><br>{{ view.view_date|timeago() }}<hr class="dotted-under">
+                            {% endfor %}
+                        </div>
+                    </div><br>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

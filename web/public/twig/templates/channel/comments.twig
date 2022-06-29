@@ -4,6 +4,14 @@
 		<div class="comment-box black signedout">
 			<a href="/sign_in">Sign In</a> or <a href="/sign_up">Sign Up</a> now to post a comment!
 		</div>
+	{% elseif user.blocked == true %}
+		<div class="comment-box black signedout">
+			You have been blocked by this user.
+		</div>
+	{% elseif user.blocked_recieving == true %}
+		<div class="comment-box black signedout">
+			You have blocked this user. <a href="/request/block?u={{ user.youtube_username }}">Block</a>
+		</div>
 	{% else %}
 		<div class="comment-box black">
 			<form action="/request/comment_profile?u={{ user.youtube_username }}" method="POST">
@@ -18,7 +26,9 @@
 		{% for comment in comments %}
 			{% if comment.id is defined %}
 				<div class="comment {% if comment_i == 0 %}first{% endif %}">
-					<img class="profile-picture" src="/v/p/{{ comment.profile_picture }}">
+					<a href="/user/{{ comment.comment_author }}">
+						<img class="profile-picture" src="/v/p/{{ comment.profile_picture }}">
+					</a>
 					<div class="comment-side-user inline-block top">
 						<a class="bold" href="/user/{{ comment.comment_author }}">{{ comment.comment_author }}</a> &nbsp;&nbsp; 
 						<span class="gray">({{ comment.comment_creation|timeago }})</span>

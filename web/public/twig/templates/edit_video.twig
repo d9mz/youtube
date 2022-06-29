@@ -42,12 +42,15 @@
                     <div class="edit-video window">
                         <button class="ut-button">Video Information</button>
                         <div class="padding">
-                            <form method="POST" action="/request/edit_video?v={{ video.video_id }}">
+                            <form method="POST" enctype='multipart/form-data' action="/request/edit_video?v={{ video.video_id }}">
                                 <b class="black">Title:</b><br>
-                                <input type="text" value="{{ video.video_title }}" name="youtube_title" placeholder="YouTube Title">
+                                <input type="text" value="{{ video.video_title }}" class="ut-input" name="youtube_title" placeholder="YouTube Title">
                                 <hr>
                                 <b class="black">Title:</b><br>
-                                <textarea name="youtube_description">{{ video.video_description }}</textarea>
+                                <textarea class="ut-input"  name="youtube_description">{{ video.video_description }}</textarea>
+                                <hr>
+                                <b class="black">Thumbnail:</b><br>
+                                <input type="file" class="ut-input" name="youtube_thumbnail">
                                 <hr>
                                 <input class="ut-button" type="submit" value="Edit Video">
                             </form>

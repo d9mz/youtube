@@ -1,0 +1,29 @@
+<div class="panel">
+	<h2 class="unbold">Friends ({{ friends_to.rows }})</h2><br>
+	<div class="users-list">
+		{% for friend in friends_to %}
+			{% if friend.id is defined %}
+				<div class="user">
+					<center>
+						<a href="/user/{{ friend.friend_by }}">
+							<img class="profile-picture" src="/v/p/{{ friend.profile_picture }}">
+							{{ friend.friend_by }}
+						</a>
+					</center>
+				</div>
+			{% endif %}
+		{% endfor %}
+		{% for friend in friends_by %}
+			{% if friend.id is defined %}
+				<div class="user">
+					<center>
+						<a href="/user/{{ friend.friend_to }}">
+							<img class="profile-picture" src="/v/p/{{ friend.profile_picture }}">
+							{{ friend.friend_to }}
+						</a>
+					</center>
+				</div>
+			{% endif %}
+		{% endfor %}
+	</div>
+</div><br>

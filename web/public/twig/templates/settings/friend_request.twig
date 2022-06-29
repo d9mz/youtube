@@ -1,0 +1,121 @@
+{% extends "base.twig" %}
+
+{% block page %}
+    {# page metadata #}
+
+    {% set page = page | merge({
+        "title"       : "UTue - Friend Requests",
+        "description" : "Broadcast yourself"
+    }) %}    
+
+    {{ parent() }}
+{% endblock %}
+
+{%- block head -%}
+    {{ parent() }}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+{% endblock %}
+
+{%- block site_content -%}
+	<style>
+		.seperator {
+		    margin: 0 7px;
+		}
+	</style>
+	<div class="clearfix inbox-page" style="margin-bottom: -9px;">
+		<h1>My Account</h1>
+		<a href="/my/video_manager">Videos</a> <span class="seperator"></span>
+		<a href="/my/insight">Insight</a> <span class="seperator"></span>
+		<a href="/inbox/">Messages</a> <span class="seperator"></span>
+		<a href="/account" class="bold black">Settings</a>
+		<hr>
+	</div>
+    <div class="clearfix settings-page">
+        <div class="top-left">
+            <br>
+            <ul class="side-list">
+                <li class=""><a href="/account">Overview</a></li>
+                <li class=""><a href="/manage_account">Manage Account</a></li>
+                <li class=""><a href="/my/keys">Referrals</a></li>
+                <li class="active"><a href="/my/friends">Friend Requests</a></li>
+                <li class="height-expander">&nbsp;</li>
+            </ul>
+        </div>
+        <div class="top-right">
+            <h1 class="video-manager">Incoming Friend Requests</h1>
+            <div class="padding">
+                {% for friend in recieving_friends %}
+                    {% if friend.id is defined %}
+                    	<div class="comment">
+                            <a href="/user/{{ friend.friend_by }}">
+                                <img class="profile-picture" src="/v/p/{{ friend.profile_picture }}">
+                            </a>
+                            <div class="comment-side-user inline-block top">
+                                <a class="bold" href="/user/{{ friend.friend_by }}">{{ friend.friend_by }}</a> &nbsp;&nbsp; 
+                                <span class="gray">({{ friend.friend_sent|timeago }})</span>
+                                <div class="comment-text black">
+                                    {% if friend.friend_status == "u" %}
+                                        <span class="grey small">
+                                            Friend Request Pending
+                                        </span><br>
+                                        <a href="/request/accept_friend?u={{ friend.friend_by }}">
+                                            <button class="ut-button">Accept</button>
+                                        </a>
+                                        <a href="/request/deny_friend?u={{ friend.friend_by }}">
+                                            <button class="ut-button">Deny</button>
+                                        </a>
+                                    {% elseif friend.friend_status == "a" %}
+                                        <span class="grey small">
+                                            Friend Request Accepted
+                                        </span><br>
+                                        <a href="/request/deny_friend?u={{ friend.friend_by }}">
+                                            <button class="ut-button">Remove</button>
+                                        </a>
+                                    {% else %}
+                                        <span class="grey small">
+                                            Friend Request Denied
+                                        </span>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+            <h1 class="video-manager">Outgoing Friend Requests</h1>
+            <div class="padding">
+                {% for friend in sent_friends %}
+                    {% if friend.id is defined %}
+                    	<div class="comment">
+                            <a href="/user/{{ friend.friend_to }}">
+                                <img class="profile-picture" src="/v/p/{{ friend.profile_picture }}">
+                            </a>
+                            <div class="comment-side-user inline-block top">
+                                <a class="bold" href="/user/{{ friend.friend_to }}">{{ friend.friend_to }}</a> &nbsp;&nbsp; 
+                                <span class="gray">({{ friend.friend_sent|timeago }})</span>
+                                <div class="comment-text black">
+                                    {% if friend.friend_status == "u" %}
+                                        <span class="grey small">
+                                            Friend Request Pending
+                                        </span><br>
+                                    {% elseif friend.friend_status == "a" %}
+                                        <span class="grey small">
+                                            Friend Request Accepted
+                                        </span><br>
+                                        <a href="/request/deny_friend?u={{ friend.friend_to }}">
+                                            <button class="ut-button">Remove</button>
+                                        </a>
+                                    {% else %}
+                                        <span class="grey small">
+                                            Friend Request Denied
+                                        </span>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

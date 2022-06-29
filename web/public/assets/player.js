@@ -16,7 +16,8 @@ const UTUE_PLAYER = function () {
 
     function generatePlayerHTML(videoSrc) {
       return `
-      <video play tabindex="-1" src="${videoSrc}"></video>
+      <video play preload="metadata" tabindex="-1" src="${encodeURI(videoSrc)}"></video>
+      <largeicon buffering></largeicon>
       <bar tabindex="-1">
         <input seekbar type="range" value="0" step="0.01" tabindex="-1" title="Seek">
         <controls>
@@ -65,6 +66,29 @@ const UTUE_PLAYER = function () {
 
         :host(:not([data-mousemove])) {
           cursor: none;
+        }
+
+        largeicon[buffering] {
+          background: url('${imageDir}/buffering.svg');
+          -webkit-filter: drop-shadow(0 0 4px #000);
+          -moz-filter: drop-shadow(0 0 4px #000);
+          filter: drop-shadow(0 0 4px #000);
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          width: 32px;
+          height: 32px;
+          transform: translate(-50%, -50%);
+          transition: opacity 0.2s;
+          opacity: 0;
+        }
+
+        :host([data-buffering]) largeicon[buffering] {
+          opacity: 1;
+        }
+
+        ::-webkit-slider-thumb, ::-moz-range-thumb {
+          cursor: pointer;
         }
 
         video {
@@ -500,7 +524,7 @@ const UTUE_PLAYER = function () {
     }
 
     function updateSeekbarTrack(seekbar, video) {
-      const buffered = video.buffered; //console.log(video.buffered.end(0) / video.duration)
+      const buffered = video.buffered;
       let bars = [
         {
           start: 60,
@@ -567,7 +591,13 @@ const UTUE_PLAYER = function () {
     })();
 
     // why isn't there a method for removing shadow DOMs
-    Array.from(document.getElementsByClassName('utue-player')).forEach(container => container.outerHTML = container.outerHTML);
+    Array.from(document.getElementsByClassName('utue-player')).forEach(container => {
+      for (const cur in container.dataset) {
+        if (cur === 'src') continue;
+        delete container.dataset[cur];
+      }
+      container.outerHTML = container.outerHTML;
+    });
 
     Array.from(document.getElementsByClassName('utue-player')).forEach((container, containerId) => {
 
@@ -600,12 +630,47 @@ const UTUE_PLAYER = function () {
       const volumeSlider = root.querySelector('input[volume]');
       const progressLabel = root.querySelector('progress-label');
 
-      // event listeners
+      // timers and event listeners
 
-      video.addEventListener('play', () => container.setAttribute('data-playing', ''));
+      (() => {
+        const checkInterval = 60;
+        let iteration = 0;
+        let lastPos = video.currentTime;
+
+        function loop() {
+
+          if (!(iteration % checkInterval)) {
+            if (lastPos === video.currentTime && !video.paused) {
+              container.setAttribute('data-buffering', '');
+            } else {
+              container.removeAttribute('data-buffering');
+            }
+            lastPos = video.currentTime;
+          }
+
+          iteration++;
+          requestAnimationFrame(loop);
+        }
+
+        requestAnimationFrame(loop);
+      })();
+
       video.addEventListener('pause', () => container.removeAttribute('data-playing'));
 
-      video.addEventListener('canplay', () => {
+      container.addEventListener('mousemove', () => expandSeekbar(container));
+
+      volumeButton.addEventListener('click', () => toggleMute(container, video, volumeButton, volumeSlider));
+      volumeSlider.addEventListener('input', () => setVolume(container, video, volumeButton, volumeSlider));
+      volumeSlider.addEventListener('keydown', e => sliderPreventDefault(e));
+
+      fullscreenButton.addEventListener('click', () => toggleFullscreen(container, fullscreenButton));
+      document.addEventListener('fullscreenchange', () => checkFullscreen(container, fullscreenButton));
+
+      theaterButton.addEventListener('click', () => toggleTheater(container, theaterButton));
+
+      video.addEventListener('canplay', function initialLoad() {
+
+        updateTime(video, seekbar, progressLabel)
 
         // hotkeys
 
@@ -660,11 +725,11 @@ const UTUE_PLAYER = function () {
 
         // other event listeners
 
-        container.addEventListener('mousemove', () => expandSeekbar(container));
-
-        video.addEventListener('timeupdate', () => updateTime(video, seekbar, progressLabel));
+        video.addEventListener('timeupdate', () => {
+          container.setAttribute('data-playing', '');
+          updateTime(video, seekbar, progressLabel);
+        });
         video.addEventListener('progress', () => updateSeekbarTrack(seekbar, video));
-        video.addEventListener('canplay', () => updateTime(video, seekbar, progressLabel));
         video.addEventListener('contextmenu', e => e.preventDefault());
         video.addEventListener('dblclick', () => toggleFullscreen(container, fullscreenButton));
 
@@ -678,15 +743,7 @@ const UTUE_PLAYER = function () {
           cur.addEventListener('click', () => togglePlayback(container, video, playButton));
         });
 
-        volumeButton.addEventListener('click', () => toggleMute(container, video, volumeButton, volumeSlider));
-
-        volumeSlider.addEventListener('input', () => setVolume(container, video, volumeButton, volumeSlider));
-        volumeSlider.addEventListener('keydown', e => sliderPreventDefault(e));
-
-        fullscreenButton.addEventListener('click', () => toggleFullscreen(container, fullscreenButton));
-        theaterButton.addEventListener('click', () => toggleTheater(container, theaterButton));
-
-        document.addEventListener('fullscreenchange', () => checkFullscreen(container, fullscreenButton));
+        video.removeEventListener('canplay', initialLoad);
 
       });
 

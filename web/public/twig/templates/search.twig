@@ -32,6 +32,7 @@
 						</div>
 					</a>
 					<div class="video-meta">
+						{% set search = args.q %}
 						<a href="/watch?v={{ video.video_id }}" class="video-author bigger">{{ video.video_title }}</a><br>
 						<span class="small"> 
 							<span class="video-description-meta">

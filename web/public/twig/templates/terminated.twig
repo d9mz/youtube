@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <!-- UTue 404 page - all css is packed into one twig file. no external css needed -->
+        <title>404 Not Found</title>
+        <style>
+            body {
+                font: 12px arial,sans-serif;
+            }
+        </style>
+        <meta name="viewport" contnet="width=device-width, initial-scale=1">
+        <link href="/css/base.css" rel="stylesheet">
+    </head>
+    <body>
+        <div style="width:650px;margin:auto;">
+            <div style="border: 1px solid #FFCC05;background-color: #FFC;margin-top: 50px;padding: 12px 0;text-align: center;font-weight: bold;color: #666;">
+                Your account has been terminated.
+            </div>
+            <div style="margin-top: 10px;padding: 15px 20px;border: 1px solid #CCC;">
+                <h3>Your ban will be lifed on: {{ ban.ban_expire }}</h3>
+                <span class="small">Banned by {{ ban.ban_by }}</span>
+                <p>
+                    <b>Reason:</b> <br>{{ ban.ban_reason|nl2br }}
+                    <br><br>
+                </p>
+            </div>
+        </div>
+    </body>
+</html> 

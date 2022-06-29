@@ -1,0 +1,114 @@
+{% extends "base.twig" %}
+
+{% block page %}
+    {# page metadata #}
+
+    {% set page = page | merge({
+        "title"       : "UTue - #{ user.youtube_username }",
+        "description" : "Broadcast yourself"
+    }) %}    
+
+    {{ parent() }}
+{% endblock %}
+
+{%- block head -%}
+    {{ parent() }}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <style>
+        .user-page-container {
+            background-color: {{ channel_colors.background_color }} !important;
+        }
+
+        .user-page .panel, .user-bar-channel {
+            background-color: {{ channel_colors.secondary_color }};
+        }
+
+        .user-page-container .user-page {
+            background-color: {{ channel_colors.primary_color }};
+        }
+
+        .user .profile-picture, .inline-block.profile-picture.mid, .box, .user-page .comments {
+            border: 1px solid {{ channel_colors.border_color }};
+        }
+
+        .inline-block.profile-picture.mid.double-line {
+            border: 4px double {{ channel_colors.border_color }};
+        }
+
+        .comment {
+            border-bottom: 1px solid {{ channel_colors.border_color }};
+        }
+
+        .comment-text {
+            color: {{ channel_colors.text_color }};
+        }
+
+        .unbold, .bold, b, b.black {
+            color: {{ channel_colors.bold_text_color }};
+        }
+
+        .user-page-container a {
+            color: {{ channel_colors.link_color }};
+        }
+
+        .user-information.top, .panel .right {
+            color: {{ channel_colors.grey_text_color }};
+        }
+
+        .user-sub-bar-channel {
+            background-color: {{ channel_colors.inset_color }};
+        }
+
+        .user-page-corner-tab {
+            border-color: {{ channel_colors.inset_color }};
+            border-top-color: transparent;
+            border-bottom-color: transparent;
+        }
+
+        .user-page-container {
+            background: url("/v/p/{{ channel_colors.background_image }}") center 0px repeat-y;
+        }
+    </style>
+{% endblock %}
+
+{%- block footer -%}
+{%- endblock footer -%}
+
+{%- block site_content -%}
+    </div></div></div></div>
+    <div class="user-page-container"><br>
+        <div class="container">
+            {% if user.youtube_banner != "" %}
+                <img src="/v/p/{{ user.youtube_banner }}" class="profile-banner">
+            {% endif %}
+            <div class="clearfix user-page">
+                <div class="user-bar-channel">
+                    <div class="user-sub-bar-channel">
+                        <img class="inline-block profile-picture mid" src="/v/p/{{ user.youtube_picture }}">
+                        <h1 class="inline-block unbold mid" id="channel-title-header">
+                            {% if user.youtube_nickname is empty %}
+                                {{ user.youtube_username }}'s Channel
+                            {% else %}
+                                {{ user.youtube_nickname }}
+                            {% endif %}
+                        </h1> 
+                        {% if user.subscribed == false %}
+                            <a href="/request/subscribe?u={{ user.youtube_username }}">
+                                <button class="ut-button mid">Subscribe</button>
+                            </a>
+                        {% else %}
+                            <a href="/request/subscribe?u={{ user.youtube_username }}">
+                                <button class="ut-button mid">Unsubscribe</button>
+                            </a>
+                        {% endif %}
+                    </div>
+                    <div class="user-page-corner-tab"></div>
+                </div>
+            </div><br>
+
+            <div class="clearfix user-page">
+                {% embed "channel/subscriptions.twig" %}{% endembed %}
+            </div><br>
+        </div>
+    </div>
+{% endblock %}

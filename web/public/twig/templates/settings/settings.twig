@@ -22,7 +22,7 @@
 		    margin: 0 7px;
 		}
 	</style>
-	<div class="clearfix inbox-page">
+	<div class="clearfix inbox-page" style="margin-bottom: -9px;">
 		<h1>My Account</h1>
 		<a href="/my/video_manager">Videos</a> <span class="seperator"></span>
 		<a href="/my/insight">Insight</a> <span class="seperator"></span>
@@ -37,6 +37,7 @@
                 <li class="active"><a href="/account">Overview</a></li>
                 <li class=""><a href="/manage_account">Manage Account</a></li>
                 <li class=""><a href="/my/keys">Referrals</a></li>
+                <li class=""><a href="/my/friends">Friend Requests</a></li>
                 <li class="height-expander">&nbsp;</li>
             </ul>
         </div>
@@ -44,7 +45,7 @@
             <h1 class="video-manager">Overview</h1>
             <div class="padding">
                 <span class="caption small">
-                    These settings can be changed in your channel customization module.<br>
+                    Some of these settings can be changed in your channel customization module.<br>
                     <a href="/user/{{ user.youtube_username }}">View customization module</a>
                 </span>
                 <hr class="dotted-under"><br>
@@ -68,6 +69,17 @@
                         <input type="text" disabled value="{{ user.youtube_category }}" name="title" style="font-size: 9px;">
                     </form>
                 </div>
+                <hr class="dotted-under"><br>
+                <div class="settings-module black">
+                    <span class="mid">Subscribe Button: </span><br>
+                    <form action="/request/channel/custom_sub" id="sub" class="mid inline-block" method="POST" enctype='multipart/form-data'>
+                        <input type="file" style="height:17px;" class="ut-button" name="subscribe_custom">
+                        <input type="submit" class="ut-button" value="Upload">
+                        {% if user.youtube_sub_button != "" %}
+                            <br><a href="/request/channel/subremove">Remove</a>
+                        {% endif %}
+                    </form>
+                </div><br>
                 <hr class="dotted-under"><br>
                 <span class="caption small">
                     These settings cannot be changed.

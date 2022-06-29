@@ -6,12 +6,16 @@ require($_SERVER['DOCUMENT_ROOT'] . "/protected/config.inc.php");
 require($_SERVER['DOCUMENT_ROOT'] . "/protected/db.php");
 require($_SERVER['DOCUMENT_ROOT'] . "/protected/queue.php");
 require($_SERVER['DOCUMENT_ROOT'] . "/protected/id.php");
+require($_SERVER['DOCUMENT_ROOT'] . "/protected/update.php");
+require($_SERVER['DOCUMENT_ROOT'] . "/protected/select.php");
 
 if(!isset($_SESSION['youtube'])) {
     header("Location: /sign_in");
 }
 
 $uID = new VideoIDGeneration();
+$select = new \Database\Select($__db);
+$update = new \Database\Update($__db);
 $id = $uID->GenerateVideoID();
 
 $configuration = (object) [
@@ -109,6 +113,13 @@ try {
         $queue->set($configuration);
     }
 
+    /*
+    if($select->upload_cooldown($_SESSION['youtube'])) {
+        $configuration->debug->stacktrace = "You are under a cooldown. This lasts 10 minutes.";
+        $queue->set($configuration);
+    }
+    */
+
     if($configuration->debug->stacktrace == "") {
         if(move_uploaded_file(
             $_FILES['youtube-video']['tmp_name'], 
@@ -136,19 +147,20 @@ try {
 
         $video
             ->filters()
-            ->resize(new FFMpeg\Coordinate\Dimension(640, 480))
+            ->resize(new FFMpeg\Coordinate\Dimension(480, 360))
             ->synchronize();
 
         $format = new FFMpeg\Format\Video\X264();
+        $format->setAdditionalParameters(['-movflags', '+faststart']);
+        
         $format->on('progress', function ($video, $format, $percentage) {
             // todo : progress bar
         });
-
         $format
-            ->setKiloBitrate(1500)
+            ->setKiloBitrate(1000)
             ->setAudioChannels(2)
             ->setAudioKiloBitrate(128);
-        
+
         $video->save($format, "../v/" . $configuration->request->video_id . $configuration->request->video_meta->video_file_type);
         unlink("../v/t/" . $configuration->request->video_id . $configuration->request->video_meta->video_file_type);
 
@@ -176,6 +188,7 @@ try {
             "type" => 0,
         ];
         $queue->set($configuration);
+        $update->update_cooldown($_SESSION['youtube'], "last_upload");
         header("Location: /watch?v=" . $configuration->request->video_id);
     } else {
         $_SESSION['alert'] = (object) [

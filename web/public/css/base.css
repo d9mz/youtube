@@ -1,23 +1,17 @@
-body,
-html {
-    padding: 0;
+body,html {
     margin: 0;
     color: #666;
-    font: 12px arial, sans-serif;
-    word-wrap: break-word
+    font: 12px arial,sans-serif;
+    word-wrap: break-word;
 }
 
 .site {
-    width: 970px;
+    width: 960px;
     margin: auto
 }
 
 .footer a {
-    margin-right: 23px
-}
-
-.footer {
-    height: 200px
+    margin-right: 24px
 }
 
 .footer .big {
@@ -25,13 +19,17 @@ html {
 }
 
 .clearfix {
-    margin: 16px 0 32px;
+    margin: 8px 0 32px;
     overflow: hidden
+}
+
+.float-right {
+    float: right;
 }
 
 .promo-grey-big {
     background-color: #f0f0f0;
-    background-image: linear-gradient(0deg, #d9d9d9 0, #f0f0f0 100%);
+    background-image: linear-gradient(0deg,#d9d9d9 0,#f0f0f0 100%);
     box-shadow: 0 1px 2px #838383;
     font-weight: 700;
     font-size: 13px;
@@ -47,11 +45,17 @@ html {
 }
 
 .video-item.w-310 {
-    width: 315px
+    width: 310px
 }
 
 .video-item.w-300 {
-    width: 300px
+    width: 310px;
+    padding: 5px;
+    margin-bottom: 0
+}
+
+.videos-list .user-side-list .video-item {
+    width: 275px
 }
 
 .video-manager-page .video-item {
@@ -64,8 +68,8 @@ html {
 
 .w-310 .timestamp {
     position: relative;
-    top: 58px;
-    left: 92px
+    top: 56px;
+    left: 90px
 }
 
 .timestamp {
@@ -82,7 +86,7 @@ html {
     vertical-align: top
 }
 
-.hover-video:hover {
+.hover-video:hover, .hover-video.active {
     background-color: #d1e1fa
 }
 
@@ -91,8 +95,7 @@ html {
     border-top: 0
 }
 
-.thumb-128,
-.thumb-64 {
+.thumb-128,.thumb-64 {
     background-image: url(/v/thumb/default.png);
     background-position: center;
     background-repeat: no-repeat;
@@ -121,7 +124,7 @@ button.ut-blue-button {
     border-radius: 5px;
     color: #fff;
     background-color: #83a1d1;
-    background-image: linear-gradient(180deg, #83a1d1 0, #2b59b2 100%);
+    background-image: linear-gradient(180deg,#83a1d1 0,#2b59b2 100%);
     font-size: 1.2em;
     border: 1px solid #36c
 }
@@ -170,11 +173,12 @@ button.ut-blue-button {
 .alert {
     padding: 5px;
     border: 1px solid #ffffffbe;
-    font-weight: 700
+    font-weight: 700;
+    width: 958px;
+    margin: 18px 0-5px -7px
 }
 
-.alert,
-.alert a {
+.alert,.alert a {
     color: #fff
 }
 
@@ -231,8 +235,7 @@ button.ut-blue-button {
     right: 5px
 }
 
-.black,
-.side-list li.active a {
+.black,.side-list li.active a {
     color: #000
 }
 
@@ -257,12 +260,12 @@ button.ut-blue-button {
 
 .top-right {
     float: right;
-    width: 315px
+    width: 310px
 }
 
 .top-left {
     float: left;
-    width: calc(67.7% - 16px)
+    width: calc(67.63% - 16px)
 }
 
 .padding {
@@ -277,21 +280,26 @@ button.ut-blue-button {
     font-size: 11px
 }
 
-.comment-text,
-form .ut-input {
-    margin-top: 3px
+.comment-text,form .ut-input {
+    margin-top: 0
 }
 
 .comments {
     margin-top: 20px
 }
 
-.comment {
-    border-bottom: 1px solid #ebebeb;
-    padding: 5px 0;
+.comments center {
+    padding: 18px
 }
 
-.comment.first {}
+.comment {
+    border-bottom: 1px solid #ebebeb;
+    padding: 3px 0
+}
+
+.comment-section .comment:hover {
+    background-color: #eee
+}
 
 .footer .inline-block.small.padding-top a {
     margin-left: 15px
@@ -310,15 +318,12 @@ form .ut-input {
 }
 
 .inline-block {
-    display: inline-block;
-}
-
-.float-right {
-    float: right
+    display: inline-block
 }
 
 .header .logo {
-    vertical-align: middle
+    vertical-align: middle;
+    padding-right: 12px;
 }
 
 .header form input[type=text] {
@@ -327,15 +332,14 @@ form .ut-input {
     margin: 0;
     border-color: #8c8c8c #999 #ccc #8c8c8c;
     height: 17px;
-    width: 80%
+    width: 335px
 }
 
-.header form input[type=submit],
-.ut-button {
+.header form input[type=submit],.ut-button {
     vertical-align: top;
-    background-image: linear-gradient(180deg, #fff 0, #efefef 100%);
+    background-image: linear-gradient(180deg,#fff 0,#efefef 100%);
     height: 24px;
-    padding: 3px 6px;
+    padding: 3px 5px;
     font-size: 12px
 }
 
@@ -344,11 +348,6 @@ form .ut-input {
     border-top-right-radius: 3px;
     border-bottom-right-radius: 3px;
     margin-left: -5px
-}
-
-.header form input[type=submit]:active {
-    background-color: #ddd;
-    background-image: linear-gradient(180deg, #ccc 0, #fff 100%)
 }
 
 .ut-button {
@@ -374,10 +373,9 @@ form .ut-input {
     height: 70px
 }
 
-.ut-button.active,
-.ut-button:active {
+.ut-button.active,.ut-button:active,.header form input[type=submit]:active {
     background-color: #ddd;
-    background-image: linear-gradient(180deg, #ccc 0, #fff 100%)
+    background-image: linear-gradient(180deg,#ccc 0,#fff 100%)!important
 }
 
 .header form {
@@ -391,7 +389,7 @@ form .ut-input {
 }
 
 .header a.divider {
-    padding: .1em .8em;
+    padding: .1em .5em .1em .8em;
     border-left: 1px solid #ccc
 }
 
@@ -429,41 +427,42 @@ form .ut-input {
     margin-left: 35px
 }
 
-a,
-a:visited {
+a,a:visited {
     text-decoration: none;
     color: #03c
 }
 
-button.ut-blue-button:hover {
+.video-item a,.video-item.w-300 a {
+    text-decoration: none!important
+}
+
+button.ut-blue-button,input[type=submit],.video-author-videos {
     cursor: pointer
 }
 
-.black a:hover,
-.ut-dropdown button:hover,
-a:hover {
+.black a:hover,.ut-dropdown button:hover,a:hover {
     text-decoration: underline;
     cursor: pointer
 }
 
-.promo-grey-big a,
-button.ut-blue-button:hover {
+.video-meta a:hover {
+    text-decoration: underline!important
+}
+
+.promo-grey-big a,button.ut-blue-button:hover {
     text-decoration: none!important
 }
 
 .header {
-    font-size: 13px
+    font-size: 13px;
+    padding-bottom: 12px
 }
 
 .header .user-panel-bar {
-    margin-top: 8px
+    margin-top: 8px;
 }
 
-h1,
-h2,
-h3,
-h4,
-h5 {
+h1,h2,h3,h4,h5 {
     padding: 0;
     margin: 0;
     color: #000
@@ -471,6 +470,13 @@ h5 {
 
 .no-padding {
     padding: 0
+}
+
+.user a, videos-list .video-meta a {
+    overflow: hidden!important;
+    text-overflow: ellipsis;
+    display: block;
+    white-space: nowrap;
 }
 
 .icon {
@@ -553,25 +559,21 @@ h5 {
 }
 
 .video-watch-title {
-    margin-bottom: 5px
+    margin-bottom: 5px;
+    color: #333
 }
 
 .video-author-videos {
     padding: 3px 5px;
     margin-left: 3px;
     border-radius: 3px;
-    border: 1px solid #eaeaea
+    border: 1px solid #eaeaea;
+    user-select: none
 }
 
 .video-author-videos:hover {
     background-color: #d1e1fa;
     border-color: #b6d0f7
-}
-
-.video-meta a,
-.video-watch-author {
-    font-weight: bolder;
-    font-size: 13px
 }
 
 .no-border {
@@ -607,8 +609,13 @@ h1 {
     color: #03c;
     display: inline-block;
     margin-bottom: 3px;
-    font-size: 15px;
-    width: 170px
+    width: 165px;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.top-right .video-meta a {
+    width: 190px
 }
 
 .video-author {
@@ -616,10 +623,14 @@ h1 {
     font-weight: 400!important
 }
 
+.top-left .video-author:not(.bigger),.top-right:not(.clearfix) .video-author:not(.bigger),.search-videos a:not(.bigger) {
+    color: #666!important
+}
+
 .thumb-64 .timestamp {
     position: relative;
-    top: 44px;
-    left: 65px
+    top: 43px;
+    left: 63px
 }
 
 .comment .small {
@@ -627,18 +638,18 @@ h1 {
 }
 
 .comment-box form textarea {
-    width: 75%;
-    height: 60px;
+    width: 474px;
+    height: 40px;
     resize: vertical
 }
 
 .utue-player {
     left: 0;
-    transition: width .3s, height .3s
+    transition: width .3s,height .3s
 }
 
 .utue-player[data-theater] {
-    width: 970px;
+    width: 960px;
     height: 450px
 }
 
@@ -646,33 +657,25 @@ h1 {
     margin-top: 470px
 }
 
-.video-manager-page .top-left {
+.video-manager-page .top-left,.edit-video-page .top-left,.inbox-page .top-left {
     float: left;
-    width: calc(24.5% - 20px);
-    border-right: 1px solid #aaa;
-    height: 100%
+    width: 194px;
+    border-right: 1px solid #aaa
 }
 
 .edit-video-page .top-right {
     float: right;
-    width: calc(79.54% - 20px)
-}
-
-.edit-video-page .top-left {
-    float: left;
-    width: calc(24.5% - 20px);
-    border-right: 1px solid #aaa;
-    height: 100%
+    width: 765px
 }
 
 .user-page .top-right {
     float: right;
-    width: 605px
+    width: 640px
 }
 
 .user-page .top-left {
     float: left;
-    width: 340px
+    width: 300px
 }
 
 .featured-video .top-right {
@@ -687,14 +690,13 @@ h1 {
 }
 
 .clearfix.edit-video-page {
-    position: relative;
-    bottom: 11px;
-    width: 99.5%
+    margin-top: -4px;
+    width: 960px
 }
 
 .video-manager-page .top-right {
     float: right;
-    width: calc(79.54% - 20px)
+    width: 765px
 }
 
 h1.video-manager {
@@ -704,12 +706,11 @@ h1.video-manager {
 }
 
 .clearfix.video-manager-page {
-    position: relative;
-    bottom: 11px;
-    width: 99.5%
+    margin: 0;
+    width: 960px
 }
 
-.header.padding hr:not(.dotted-under) {
+.header.padding hr,.footer hr {
     border-top: 0;
     border-bottom: 1px solid #f2f2f2;
     width: 99.8%;
@@ -807,8 +808,7 @@ input[type=checkbox] {
     font-size: 11px
 }
 
-.edit-video button,
-.edit-video input[type=submit] {
+.edit-video button,.edit-video input[type=submit] {
     margin-left: 0
 }
 
@@ -826,13 +826,12 @@ input[type=checkbox] {
 }
 
 .edit-video .padding hr {
-    border-top: 0 dotted #aaa;
+    border-top: 0;
     border-bottom: 1px dotted #aaa
 }
 
-.edit-video .padding form input[type=text],
-.edit-video .padding form textarea {
-    width: 97%
+.edit-video .padding form input[type=text],.edit-video .padding form textarea {
+    width: 273px
 }
 
 .unbold {
@@ -850,12 +849,11 @@ input[type=checkbox] {
 
 .ut-button.disabled:active {
     vertical-align: top;
-    background-image: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#efefef));
+    background-image: -webkit-gradient(linear,left top,left bottom,from(#fff),to(#efefef));
     border: 1px solid #ccc;
     border-radius: 3px;
     height: 24px;
     padding: 3px 6px;
-    margin-left: -5px;
     font-size: 12px
 }
 
@@ -868,8 +866,7 @@ input[type=checkbox] {
     cursor: pointer
 }
 
-.ut-dropbutton:focus,
-.ut-dropbutton:hover {
+.ut-dropbutton:focus,.ut-dropbutton:hover {
     background-color: #3e8e41
 }
 
@@ -923,13 +920,12 @@ input[type=checkbox] {
     margin-left: 20px
 }
 
-.ut-input,
-textarea.ut-input {
+.ut-input,textarea.ut-input {
     border-radius: 3px;
     border: 1px solid #ccc;
     padding: 5px;
     background-color: #f5f5f5;
-    background: linear-gradient(0deg, #f7f7f7 0, #fff 100%)
+    background: linear-gradient(0deg,#f7f7f7 0,#fff 100%)
 }
 
 .share-panel .ut-input {
@@ -958,8 +954,7 @@ textarea.ut-input {
     background-position: -2px -2px
 }
 
-.sprite-facebook,
-.sprite-reddit {
+.sprite-facebook,.sprite-reddit {
     width: 32px;
     height: 32px;
     background-position: -38px -2px
@@ -969,8 +964,7 @@ textarea.ut-input {
     background-position: -2px -38px
 }
 
-.sprite-tumblr,
-.sprite-twitter {
+.sprite-tumblr,.sprite-twitter {
     width: 32px;
     height: 32px;
     background-position: -38px -38px
@@ -982,16 +976,16 @@ textarea.ut-input {
 
 .user-page {
     background-color: #ccc;
-    padding: 8px;
+    padding: 7px;
     border-radius: 5px;
-    margin: 0;
+    margin: 0
 }
 
 .user-page-corner-tab {
     width: 0;
     height: 0;
     border: 1px solid #ccc;
-    border-width: 21px 0 21px 12px;
+    border-width: 24px 0 24px 12px;
     border-top-color: transparent;
     border-bottom-color: transparent;
     display: inline-block;
@@ -1002,50 +996,67 @@ textarea.ut-input {
 
 .user-page .panel {
     background-color: #eef;
-    padding: 10px;
+    padding: 12px 10px;
     border-radius: 5px;
+    margin-bottom: -7px;
     line-height: 14px
 }
 
-.panel.clearfix {
+.panel.featured-video.clearfix {
     margin: 0;
-    padding-top: 0;
+    padding-top: 7px
 }
 
 .user-bar-channel {
     background-color: #eef;
-    padding: 3px;
+    padding: 1px;
     border-radius: 3px
 }
 
 .user-sub-bar-channel {
     background-color: #ccc;
-    padding: 5px;
+    padding: 4px 5px;
     border-radius: 3px;
-    width: fit-content;
-    margin: 2px;
-    display: inline-block
+    margin: 1px;
+    display: inline-block;
 }
 
 .profile-picture {
-    width: 30px;
-    height: 30px;
-    border: 1px solid #000
+    width: 36px;
+    height: 36px
 }
 
 .user .profile-picture {
     border-color: #00c;
-    width: 60px;
-    height: 60px
+    width: 58px;
+    height: 58px;
+    display: block;
 }
 
 .user-sub-bar-channel h1 {
-    margin-left: 4px;
-    font-size: 16px
+    margin: 0 4px;
+    font-size: 14px;
+    max-width: 380px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
 }
 
-.user-sub-bar-channel .ut-button {
-    margin-left: 5px
+.user-sub-bar-channel .ut-button, .top-left .panel .ut-button {
+    background-image: linear-gradient(180deg,#fff9c1,#fed81c 100%)!important;
+    border-color: #ecc101;
+    min-width: 73px;
+    font-weight: 600;
+    border-radius: 2px;
+}
+
+.user-sub-bar-channel .ut-button:active, .top-left .panel .ut-button:active {
+    background-image: linear-gradient(0deg,#fff9c1,#fed81c 100%)!important
+}
+
+.user-sub-bar-channel .ut-button:hover, .top-left .panel .ut-button:hover {
+    border-color: #000;
+    box-shadow: 0 0 2px #333
 }
 
 .double-line {
@@ -1053,7 +1064,11 @@ textarea.ut-input {
 }
 
 .user-information {
-    margin: 3px 0 0 5px;
+    margin: 3px 0 0 5px
+}
+
+.user-information.top .unbold {
+    font-size: 16px
 }
 
 .short-description {
@@ -1088,38 +1103,39 @@ textarea.ut-input {
 }
 
 .user-page .comments {
-    padding: 0 .4em;
+    padding: 0 3px;
     border: 1px solid #999;
+    min-height: 50px
 }
 
 .user {
     display: inline-block;
-    width: 85px;
-    margin: 0 0 10px -5px;
+    width: 70px;
+    margin: 0 10px 10px 0;
 }
 
-button.ut-blue-button:active,
-button.ut-blue-button:hover {
+button.ut-blue-button:active,button.ut-blue-button:hover {
     box-shadow: 0 0 3px #999
 }
 
 button.ut-blue-button:active {
-    background-image: linear-gradient(to top, #9abdf5, #2b59b2)
+    background-image: linear-gradient(to top,#9abdf5,#2b59b2)
 }
 
-button.ut-blue-button:focus,
-button.ut-blue-button:hover {
-    background-image: linear-gradient(to bottom, #9abdf5, #2b59b2)
+button.ut-blue-button:focus,button.ut-blue-button:hover {
+    background-image: linear-gradient(to bottom,#9abdf5,#2b59b2)
 }
 
-.header form input[type=submit]:focus,
-.header form input[type=submit]:hover,
-.ut-button:focus,
-.ut-button:hover {
-    box-shadow: 0 0 3px #999;
-    background-image: linear-gradient(to bottom, #fff, #ebebeb);
+.header form input[type=submit]:focus,.header form input[type=submit]:hover,.ut-button:focus,.ut-button:hover {
+    box-shadow: 0 0 2px #999;
+    background-image: linear-gradient(to bottom,#fff,#ebebeb);
     border-color: #999;
     outline: 0
+}
+
+.js_open_description {
+    width: 638px;
+    margin-left: 1px!important
 }
 
 .channel-customization {
@@ -1136,19 +1152,56 @@ button.ut-blue-button:hover {
     height: 31px;
     padding: 8px 12px 0;
     background: #ccc;
-    background: linear-gradient(0deg, #d9d9d9 0, #d5d5d5 27%, #fff 53%, #fff 100%)
+    background: linear-gradient(0deg,#d9d9d9 0,#d5d5d5 27%,#fff 53%,#fff 100%)
 }
 
 .channel-customization-bar button.first {
     margin: 0 3px 0 6px
 }
 
-.channel-customization .top-left,
-.channel-customization .top-right {
+.channel-customization .top-left,.channel-customization .top-right {
     width: calc(51% - 20px)
 }
 
 .channel-customization .top-right {
+    border-left: 1px dotted #bbb;
+    padding-left: 10px;
+    min-height: 171px
+}
+
+.video-customization {
+    background-color: #c0dff1;
+    width: 970px;
+    margin: auto;
+    border-radius: 0
+}
+
+.video-customization-pre-container {
+    background-color: #b7d6e8;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.video-customization-bar button {
+    border-radius: 0;
+    font-size: 13px;
+    color: #444;
+    font-weight: 700;
+    height: 31px;
+    padding: 8px 12px 0;
+    background: #ccc;
+    background: linear-gradient(0deg,#d9d9d9 0,#d5d5d5 27%,#fff 53%,#fff 100%)
+}
+
+.video-customization-bar button.first {
+    margin: 0 3px 0 6px
+}
+
+.video-customization .top-left,.video-customization .top-right {
+    width: calc(51% - 20px)
+}
+
+.video-customization .top-right {
     border-left: 1px dotted #bbb;
     padding-left: 10px;
     min-height: 171px
@@ -1171,27 +1224,27 @@ button.ut-blue-button:hover {
 }
 
 .box {
-    padding: .4em;
+    padding: 3px;
     border: 1px solid #999
 }
 
 .user-page .top.inline-block.vertical-align {
-    width: 92%;
     padding-left: 5px
 }
 
 .user-page-container {
-    background-color: #ccc
+    background-color: #ccc;
+    margin-top: -10px
 }
 
 .user-page-container .container {
-    width: 970px;
+    width: 960px;
     margin: auto
 }
 
 .user-page .utue-player {
     width: 640px;
-    height: 385px
+    height: 360px
 }
 
 .user-page .video-meta {
@@ -1204,18 +1257,11 @@ button.ut-blue-button:hover {
 
 .user-side-list {
     overflow-x: hidden;
-    height: 595px;
+    max-height: 600px
 }
 
 .inbox-page .video-item {
     width: 700px
-}
-
-.inbox-page .top-left {
-    float: left;
-    width: calc(24.5% - 20px);
-    border-right: 1px solid #aaa;
-    height: 100%
 }
 
 .inbox-page .top-right {
@@ -1223,9 +1269,7 @@ button.ut-blue-button:hover {
     width: calc(79.51% - 20px)
 }
 
-.inbox-page hr,
-.settings-page hr,
-.video-manager-page hr {
+.inbox-page hr,.settings-page hr,.video-manager-page hr {
     margin: 10px 0 0
 }
 
@@ -1233,8 +1277,7 @@ button.ut-blue-button:hover {
     margin-bottom: 5px
 }
 
-.inbox-page h1.video-manager,
-.settings-page h1.video-manager {
+.inbox-page h1.video-manager,.settings-page h1.video-manager {
     background-color: unset;
     border-bottom: 1px solid #aaa
 }
@@ -1271,12 +1314,10 @@ button.ut-blue-button:hover {
 }
 
 .search-videos .video-item .video-meta .seperator {
-    margin: 0 7px
+    margin: 0 5px
 }
 
-.search-videos .video-description-meta,
-.settings-page h1,
-.video-manager-page h1 {
+.search-videos .video-description-meta,.settings-page h1,.video-manager-page h1 {
     margin-bottom: 5px
 }
 
@@ -1312,8 +1353,47 @@ button.ut-blue-button:hover {
     width: calc(54% - 20px)
 }
 
-.ban-form input[type=date],
-.ban-form input[type=text],
-.ban-form textarea {
+.ban-form input[type=date],.ban-form input[type=text],.ban-form textarea {
     width: 265px
+}
+
+.profile-banner {
+    text-align: center;
+    margin-top: 10px;
+    margin-bottom: 7px;
+    width: 960px;
+    height: 153px;
+}
+
+.custom-channel-icon {
+    width: 170px;
+    height: 25px;
+}
+
+.activities-homepage {
+    padding: 5px;
+    background-color: #e0e0e0;
+    border-radius: 3px;
+}
+
+.mini-profile-picture {
+    width: 35px;
+    height: 35px;
+}
+
+.mini-status {
+    width: 125px;
+}
+
+.activity-buttons button {
+    padding: 9px;
+    border: 0px solid black;
+    background-color: transparent;
+    border-radius: 3px;
+}
+
+.activity-buttons button.active {
+    background-color: #4d4d4c;
+    font-weight: bold;
+    color: white;
 }

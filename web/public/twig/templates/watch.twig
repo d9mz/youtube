@@ -17,178 +17,249 @@
 {% endblock %}
 
 {%- block site_content -%}
-    <div class="clearfix watch-page">
-        <div class="top-left">
-            <div class="video-watch-meta no-padding">
-                <h1 class="video-watch-title">{{ video.video_title }}</h1>
-                <a href="/user/{{ video.video_author }}" class="video-watch-author bold">{{ video.video_author }}</a>
-                <div class="video-author-videos inline-block">{{ video.author_videos }} videos <div class="bg-author_videos_watch inline-block mid"></div></div>
-                {% if video.author_subscribed == false %}
-                    <a href="/request/subscribe?u={{ video.video_author }}&v={{ video.video_id }}">
-                        <button class="ut-button">Subscribe</button>
-                    </a>
-                {% else %}
-                    <a href="/request/subscribe?u={{ video.video_author }}&v={{ video.video_id }}">
-                        <button class="ut-button">Unsubscribe</button>
-                    </a>
-                {% endif %}
-                <div class="js_mixed_watch_videos_page mixed-content-attach hidden">
-                    <span class="loading-content-ajax loading black ">
-                        <img src="/img/spinner.gif">
-                        <span class="mid inline-block">
-                            Loading...
-                        </span>
-                    </span>
-                    <div class="js_mixed_content"></div>
+    {% if video.video_author == session.youtube %}
+        </div>
+        <div class="video-customization-pre-container">
+            <form method="POST" enctype='multipart/form-data' action="/request/edit_video?v={{ video.video_id }}">
+                <div class="clearfix video-customization user-page" style="background:unset;">
+                    <input class="ut-blue-button ut-button no-margin start" type="submit" value="Save Changes">
+                    <button class="ut-button no-margin end" style="position: relative;left: -5px;" id="hide-customization" onclick=";return false;">
+                        Hide
+                    </button>
                 </div>
-            </div><br>
-            <script src="/assets/player.js"></script>
-            <div class="utue-player" data-src="/v/{{ video.video_id }}{{ video.video_ext }}"></div><br>
+                <div class="clearfix video-customization user-page" id="customization-module">
+                    <h3 class="unbold">Video Settings</h3>
+                    <div class="top-left clearfix">
+                        <div class="customization-module black">
+                            <span class="mid small">Video Title: </span>
+                            <div class="mid inline-block right">
+                                <input type="text" value="{{ video.video_title }}" name="youtube_title" style="font-size:9px;">
+                            </div>
+                        </div>
+                        <hr class="dotted-under">
+                        <div class="customization-module black">
+                            <span class="mid small">Video Description: </span>
+                            <div class="mid inline-block right">
+                                <textarea placeholder="Video Description" style="width:300px;height:50px;font-size:9px;resize:none;" name="youtube_description">{{ video.video_description }}</textarea>
+                            </div><br><br><br><br>
+                        </div>
+                        <hr class="dotted-under">
+                    </div>
+                    <div class="top-right clearfix" style="height:100px;min-height:unset;">
+                        <div class="customization-module black">
+                            <span class="mid small">Video Thumbnail: </span>
+                            <div class="mid inline-block right">
+                                <input type="file" name="youtube_thumbnail">
+                            </div><br><br>
+                        </div>
+                        <hr class="dotted-under">
+                        <a href="/request/delete_video?v={{ video.video_id }}">
+                            <button class="ut-button unbold" style="width:unset;" onclick=";window.href=this.href;return false;">Delete Video</button>
+                        </a>   
+                        <a href="#">
+                            <button class="ut-button unbold" style="width:unset;">Insights</button>
+                        </a>
+                        <hr class="dotted-under">
+                    </div>
+                </div>
+            </form>
+        </div>
+        <script>
+            $("#hide-customization").click(function() {
+                if($("#customization-module").hasClass("hidden")) {
+                    $("#hide-customization").text("Hide");
+                    $("#customization-module").fadeIn();
+                    $("#customization-module").removeClass("hidden");
+                } else {
+                    $("#hide-customization").text("Show");
+                    $("#customization-module").fadeOut();
+                    $("#customization-module").addClass("hidden");
+                }
+            });
+        </script>
+    {% endif %}
+    </div></div></div></div>
+    <div class="site padding">
+        <div class="clearfix watch-page">
             <div class="top-left">
                 <div class="video-watch-meta no-padding">
-                    <a href="/request/like_video?v={{ video.video_id }}&t=l">
-                        <button class="ut-button no-margin start js_like_button">
-                            <span class="{% if video.vote_liked == true %}bg-liked_button {% endif %} bg-like_button icon"></span> Like
-                        </button>
-                    </a>
-                    <a href="/request/like_video?v={{ video.video_id }}&t=d">
-                        <button class="ut-button no-margin end dislike js_dislike_button"><span class="bg-dislike_button icon"></span></button>
-                    </a>
-                    <button class="ut-button no-margin js_addto_button"><span class="bg-add_to icon"></span> &nbsp;Add To</button>
-                    <button class="ut-button no-margin js_share_button">Share</button>
-                    <button class="ut-button no-margin js_flag_button"><span class="bg-flag icon"></span></button>
-                </div>
-                <div class="js_mixed_watch_page mixed-content-attach hidden">
-                    <span class="loading-content-ajax loading black ">
-                        <img src="/img/spinner.gif">
-                        <span class="mid inline-block">
-                            Loading...
+                    <h1 class="video-watch-title">{{ video.video_title }}</h1>
+                    {% if user.youtube_sub_button == "" %}
+                        <a href="/user/{{ video.video_author }}" class="video-watch-author bold">{{ video.video_author }}</a>
+                    {% else %}
+                        <a href="/user/{{ video.video_author }}" class="video-watch-author">
+                            <img src="/v/p/{{ user.youtube_sub_button }}" class="mid custom-channel-icon">
+                        </a>
+                    {% endif %}
+                    <div class="video-author-videos inline-block">{{ video.author_videos }} videos <div class="bg-author_videos_watch inline-block mid"></div></div>       
+                    {% if video.author_subscribed == false %}
+                        <a href="/request/subscribe?u={{ video.video_author }}&v={{ video.video_id }}">
+                            <button class="ut-button mid">Subscribe</button>
+                        </a>
+                    {% else %}
+                        <a href="/request/subscribe?u={{ video.video_author }}&v={{ video.video_id }}">
+                            <button class="ut-button mid">Unsubscribe</button>
+                        </a>
+                    {% endif %}
+                    <div class="js_mixed_watch_videos_page mixed-content-attach hidden">
+                        <span class="loading-content-ajax loading black ">
+                            <img src="/img/spinner.gif">
+                            <span class="mid inline-block">
+                                Loading...
+                            </span>
                         </span>
-                    </span>
-                    <div class="js_mixed_content"></div>
-                </div>
-                <div class="watch-description long-description hidden">
-                    <div class="small">Uploaded by <a href="/user/{{ video.video_author }}">{{ video.video_author }}</a> on {{ video.video_added|date("M d, Y") }}</div>
-                    <div class="black" style="margin-top: 5px">
-                        {{ video.video_description|nl2br }}
+                        <div class="js_mixed_content"></div>
                     </div>
-                    <div class="small" style="margin-top: 5px">
-                        <b>Category:</b><br>
-                        <a href="#">{{ video.video_category }}</a><br>
-                        <b>Tags:</b><br>
-                        <a href="#" class="tag">{{ video.video_tags }}</a><br>
+                </div><br>
+                <script src="/assets/player.js"></script>
+                <div class="utue-player" data-src="/v/{{ video.video_id }}{{ video.video_ext }}"></div><br>
+                <div class="top-left">
+                    <div class="video-watch-meta no-padding">
+                        <a href="/request/like_video?v={{ video.video_id }}&t=l">
+                            <button class="ut-button no-margin start js_like_button">
+                                <span class="{% if video.vote_liked == true %}bg-liked_button {% endif %} bg-like_button icon"></span> Like
+                            </button>
+                        </a>
+                        <a href="/request/like_video?v={{ video.video_id }}&t=d">
+                            <button class="ut-button no-margin end dislike js_dislike_button"><span class="bg-dislike_button icon"></span></button>
+                        </a>
+                        <button class="ut-button no-margin js_addto_button"><span class="bg-add_to icon"></span> &nbsp;Add To</button>
+                        <button class="ut-button no-margin js_share_button">Share</button>
+                        <button class="ut-button no-margin js_flag_button"><span class="bg-flag icon"></span></button>
                     </div>
-                </div>
-                <div class="watch-description short-description">
-                    <div class="small">Uploaded by <a href="/user/{{ video.video_author }}">{{ video.video_author }}</a> on {{ video.video_added|date("M d, Y") }}</div>
-                    <div class="black" style="margin-top: 5px">
-                        {{ video.video_description|nl2br }}
+                    <div class="js_mixed_watch_page mixed-content-attach hidden">
+                        <span class="loading-content-ajax loading black ">
+                            <img src="/img/spinner.gif">
+                            <span class="mid inline-block">
+                                Loading...
+                            </span>
+                        </span>
+                        <div class="js_mixed_content"></div>
                     </div>
-                </div>
-            </div>
-            <div class="top-right no-margin views">
-                <h1 class="float-right">{{ video[0].video_views }}</h1><br><br>
-                <div class="watch-sparkbars">
-                    <div class="watch-sparkbar-likes" style="width: {{ video.likes_width }}%"></div>
-                    <div class="watch-sparkbar-dislikes" style="width: {{ video.dislikes_width }}%"></div>
-                </div>
-                <span class="likes small">{{ video.vote_likes }} likes, {{ video.vote_dislikes }} dislikes</span>
-            </div>
-            <button class="ut-button width-full no-margin js_open_description no-border" style="margin-top: 5px;">Show more</button><br><br>
-            <div class="comment-section">
-                <div class="section">All Comments ({{ comments.rows }})</div><br>
-                {% if session.youtube is not defined %}
-                    <div class="comment-box black signedout">
-                        <a href="/sign_in">Sign In</a> or <a href="/sign_up">Sign Up</a> now to post a comment!
-                    </div>
-                {% else %}
-                    <div class="comment-box black">
-                        <form action="/request/comment_video?v={{ video.video_id }}" method="POST">
-                            <textarea name="comment" class="comment-textbox"></textarea><br>
-                            <input type="submit" name="submit" class="ut-button no-margin" value="Publish">
-                        </form>
-                    </div>
-                {% endif %}
-                <div class="comments">
-                    <div class="comment hidden" id="ajax_comment">
-                        <a href="/user/{{ session.youtube }}">{{ session.youtube }}</a> &nbsp;&nbsp; <span class="small gray">a few seconds ago</span>
-                        <div class="comment-text black">
-                            test
+                    <div class="watch-description long-description hidden">
+                        <div class="small">Uploaded by <a href="/user/{{ video.video_author }}">{{ video.video_author }}</a> on {{ video.video_added|date("M d, Y") }}</div>
+                        <div class="black" style="margin-top: 5px">
+                            {{ video.video_description|nl2br }}
+                        </div>
+                        <div class="small" style="margin-top: 5px">
+                            <b>Category:</b><br>
+                            <a href="#">{{ video.video_category }}</a><br>
+                            <b>Tags:</b><br>
+                            {% for tag in video.video_tags %}
+                                <a href="/search_query?q={{ tag }}" class="tag">{{ tag }}</a>
+                            {% endfor %}
                         </div>
                     </div>
-                    {% set comment_i = 0 %}
-                    {% for comment in comments %}
-                        {% if comment.id is defined %}
-                            <div class="comment {% if comment.comment_target starts with '/reply/' %}comment-reply{% endif %} {% if comment_1 == 0 %}first{% endif %}">
-                                <a href="/user/{{ comment.comment_author }}">{{ comment.comment_author }}</a> &nbsp;&nbsp; <span class="small gray">{{ comment.comment_creation|timeago }}</span>
-                                {% set total = comment.vote_likes - comment.vote_dislikes %}
-                                {% if total > 0 %}
-                                    <span class="comment-positive">{{ total }} people like this</span>
-                                {% endif %}
-                                {% if total < 0 %}
-                                    <span class="comment-negative">{{ total|abs }} people dislike this</span>
-                                {% endif %}
-                                {% if session.youtube is defined %}
-                                    {% if not (comment.comment_target starts with '/reply/') %}
-                                        <a href="#" onclick=";document.getElementById('js_comment_reply_{{ comment.id }}').style.display = 'block';return false;">
-                                            <button class="ut-button right" style="margin-left: 15px;">Reply</button>
-                                        </a>
-                                        <a href="/request/like_comment?i={{ comment.id }}&t=l">
-                                            <button class="ut-button js_comment_like right no-margin end">like</button>
-                                        </a>
-                                        <a href="/request/like_comment?i={{ comment.id }}&t=d">
-                                            <button class="ut-button js_comment_dlslike right no-margin start">dislike</button>
-                                        </a>
-                                    {% endif %}
-                                {% endif %}
-                                <div class="comment-text black">
-                                    {{ comment.comment_text|nl2br }}
-                                </div>
-                                {% if not (comment.comment_target starts with '/reply/') %}
-                                    <div id="js_comment_reply_{{ comment.id }}" class="comment-reply hidden">
-                                        <form action="/request/comment_reply?i={{ comment.id }}" method="POST">
-                                            <textarea name="comment" class="comment-textbox"></textarea><br>
-                                            <input type="submit" name="submit" value="Reply">
-                                        </form>
-                                    </div>
-                                {% endif %}
+                    <div class="watch-description short-description">
+                        <div class="small">Uploaded by <a href="/user/{{ video.video_author }}">{{ video.video_author }}</a> on {{ video.video_added|date("M d, Y") }}</div>
+                        <div class="black" style="margin-top: 5px">
+                            {{ video.video_description|nl2br }}
+                        </div>
+                    </div>
+                </div>
+                <div class="top-right no-margin views">
+                    <h1 class="float-right">{{ video[0].video_views }}</h1><br><br>
+                    <div class="watch-sparkbars">
+                        <div class="watch-sparkbar-likes" style="width: {{ video.likes_width }}%"></div>
+                        <div class="watch-sparkbar-dislikes" style="width: {{ video.dislikes_width }}%"></div>
+                    </div>
+                    <span class="likes small">{{ video.vote_likes }} likes, {{ video.vote_dislikes }} dislikes</span>
+                </div>
+                <button class="ut-button width-full no-margin js_open_description no-border" style="margin-top: 5px;">Show more</button><br><br>
+                <div class="comment-section">
+                    <div class="section">All Comments ({{ comments.rows }})</div><br>
+                    {% if session.youtube is not defined %}
+                        <div class="comment-box black signedout">
+                            <a href="/sign_in">Sign In</a> or <a href="/sign_up">Sign Up</a> now to post a comment!
+                        </div>
+                    {% else %}
+                        <div class="comment-box black">
+                            <form action="/request/comment_video?v={{ video.video_id }}" method="POST">
+                                <textarea name="comment" class="comment-textbox"></textarea><br>
+                                <input type="submit" name="submit" class="ut-button no-margin" value="Publish">
+                            </form>
+                        </div>
+                    {% endif %}
+                    <div class="comments">
+                        <div class="comment hidden" id="ajax_comment">
+                            <a href="/user/{{ session.youtube }}">{{ session.youtube }}</a> &nbsp;&nbsp; <span class="small gray">a few seconds ago</span>
+                            <div class="comment-text black">
+                                test
                             </div>
-                            {% set comment_1 = comment_1 + 1 %}
-                            {% for comment in comments["replies"] %}
-                                {% if comment.id is defined %}
-                                    test{{comment.id}}
-                                {% endif %}
-                            {% endfor %}
+                        </div>
+                        {% set comment_i = 0 %}
+                        {% for comment in comments %}
+                            {% if comment.id is defined %}
+                                <div class="comment {% if comment.comment_target starts with '/reply/' %}comment-reply{% endif %} {% if comment_1 == 0 %}first{% endif %}">
+                                    <a href="/user/{{ comment.comment_author }}">{{ comment.comment_author }}</a> &nbsp;&nbsp; <span class="small gray">{{ comment.comment_creation|timeago }}</span>
+                                    {% set total = comment.vote_likes - comment.vote_dislikes %}
+                                    {% if total > 0 %}
+                                        <span class="comment-positive">{{ total }} people like this</span>
+                                    {% endif %}
+                                    {% if total < 0 %}
+                                        <span class="comment-negative">{{ total|abs }} people dislike this</span>
+                                    {% endif %}
+                                    {% if session.youtube is defined %}
+                                        {% if not (comment.comment_target starts with '/reply/') %}
+                                            <a href="#" onclick=";document.getElementById('js_comment_reply_{{ comment.id }}').style.display = 'block';return false;">
+                                                <button class="ut-button right" style="margin-left: 15px;">Reply</button>
+                                            </a>
+                                            <a href="/request/like_comment?i={{ comment.id }}&t=l">
+                                                <button class="ut-button js_comment_like right no-margin end">like</button>
+                                            </a>
+                                            <a href="/request/like_comment?i={{ comment.id }}&t=d">
+                                                <button class="ut-button js_comment_dlslike right no-margin start">dislike</button>
+                                            </a>
+                                        {% endif %}
+                                    {% endif %}
+                                    <div class="comment-text black">
+                                        {{ comment.comment_text|nl2br }}
+                                    </div>
+                                    {% if not (comment.comment_target starts with '/reply/') %}
+                                        <div id="js_comment_reply_{{ comment.id }}" class="comment-reply hidden">
+                                            <form action="/request/comment_reply?i={{ comment.id }}" method="POST">
+                                                <textarea name="comment" class="comment-textbox"></textarea><br>
+                                                <input type="submit" name="submit" value="Reply">
+                                            </form>
+                                        </div>
+                                    {% endif %}
+                                </div>
+                                {% set comment_1 = comment_1 + 1 %}
+                                {% for comment in comments["replies"] %}
+                                    {% if comment.id is defined %}
+                                        test{{comment.id}}
+                                    {% endif %}
+                                {% endfor %}
+                            {% endif %}
+                        {% endfor %}
+                        {% if comments.rows == 0 %}
+                            <b class="">This video has no comments.</b><br>
+                            <span class="small">Post the first comment under this video!</span>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <div class="top-right">
+                <div class="videos-list">
+                    {% for video in videos_rec %}
+                        {% if video.id is defined %}
+                            <div class="video-item inline-block w-300 hover-video padding">
+                                <a href="/watch?v={{ video.video_id }}">
+                                    <div class="thumb-64 inline-block"  style="background-image: url('/v/thumb/{{ video.video_thumbnail }}');">
+                                        <span class="timestamp">{{ video.video_duration|date('i:s') }}</span>
+                                    </div>
+                                </a>
+                                <div class="video-meta small">
+                                    <a href="/watch?v={{ video.video_id }}" class="video-author bigger">{{ video.video_title }}</a><br>
+                                    <span class="small">{{ video.video_views }} views</span><br>
+                                    <a href="/user/{{ video.video_author }}" class="video-author">{{ video.video_author }}</a>
+                                </div>
+                            </div>
                         {% endif %}
                     {% endfor %}
-                    {% if comments.rows == 0 %}
-                        <b class="">This video has no comments.</b><br>
-                        <span class="small">Post the first comment under this video!</span>
-                    {% endif %}
                 </div>
             </div>
         </div>
-        <div class="top-right">
-            <div class="videos-list">
-                {% for video in videos_rec %}
-                    {% if video.id is defined %}
-                        <div class="video-item inline-block w-300 hover-video padding">
-                            <a href="/watch?v={{ video.video_id }}">
-                                <div class="thumb-64 inline-block"  style="background-image: url('/v/thumb/{{ video.video_thumbnail }}');">
-                                    <span class="timestamp">{{ video.video_duration|date('i:s') }}</span>
-                                </div>
-                            </a>
-                            <div class="video-meta small">
-                                <a href="/watch?v={{ video.video_id }}" class="video-author bigger">{{ video.video_title }}</a><br>
-                                <span class="small">{{ video.video_views }} views</span><br>
-                                <a href="/user/{{ video.video_author }}" class="video-author">{{ video.video_author }}</a>
-                            </div>
-                        </div>
-                    {% endif %}
-                {% endfor %}
-            </div>
-        </div>
-    </div>
     <script>
         $('.comment-box form').submit(function(e) {
             e.preventDefault();
@@ -202,7 +273,9 @@
                 success: function(data) {
                     $("#ajax_comment").removeClass("hidden");
                     $("#ajax_comment .comment-text").text($('.comment-box form textarea').val());
-                    alert(data);
+                    if(data != "") {
+                        alert(data);
+                    }
                 }
             });
         });
@@ -308,9 +381,9 @@
                 var player = $('.utue-player')[0];
 
                 if(player.hasAttribute('data-theater')) 
-                    right.css('margin-top', '65px');
-                else 
                     right.css('margin-top', '530px');
+                else 
+                    right.css('margin-top', '65px');
             });
         });
     </script>

@@ -16,7 +16,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <style>
         .user-page-container {
-            background-color: {{ channel_colors.background_color }};
+            background-color: {{ channel_colors.background_color }} !important;
         }
 
         .user-page .panel, .user-bar-channel {
@@ -66,7 +66,7 @@
         }
 
         .user-page-container {
-            background-image: url("/v/p/{{ channel_colors.background_image }}");
+            background: url("/v/p/{{ channel_colors.background_image }}") center 0px repeat-y;
         }
     </style>
 {% endblock %}
@@ -81,11 +81,14 @@
     </div></div></div></div>
     <div class="user-page-container"><br>
         <div class="container">
+            {% if user.youtube_banner != "" %}
+                <img src="/v/p/{{ user.youtube_banner }}" class="profile-banner">
+            {% endif %}
             <div class="clearfix user-page">
                 <div class="user-bar-channel">
                     <div class="user-sub-bar-channel">
                         <img class="inline-block profile-picture mid" src="/v/p/{{ user.youtube_picture }}">
-                        <h1 class="inline-block unbold mid">
+                        <h1 class="inline-block unbold mid" id="channel-title-header">
                             {% if user.youtube_nickname is empty %}
                                 {{ user.youtube_username }}'s Channel
                             {% else %}
@@ -108,28 +111,36 @@
                     <br>
                     <div class="panel featured-video clearfix">
                         <div class="top-left clearfix">
-                            <script src="/assets/player.js"></script>
-                            <div class="utue-player" data-src="/v/{{ user.youtube_featured }}.mp4"></div><br>
-                            <h1 class="video-watch-title">{{ video.video_title }}</h1>
-                            <p>
-                                From: <a href="/user/{{ video.video_author }}">{{ video.video_author }}</a> | January 15, 2010 | {{ video.video_views }} views
-                            </p>
-                            <p>
-                                {{ video.video_description|nl2br }}
-                                <br><br>
-                                <a class="bold black" href="/watch?v={{ video.video_id }}">View comments, related videos, and more</a>
-                            </p>
+                            <span class="loading-content-ajax loading black hidden">
+                                <img src="/img/spinner.gif">
+                                <span class="mid inline-block">
+                                    Loading...
+                                </span>
+                            </span>
+                            <div class="js_mixed_content">
+                                <script src="/assets/player.js"></script>
+                                <div class="utue-player" data-src="/v/{{ user.youtube_featured }}.mp4"></div><br>
+                                <h1 class="video-watch-title">{{ video.video_title }}</h1>
+                                <p>
+                                    From: <a href="/user/{{ video.video_author }}">{{ video.video_author }}</a> | {{ video.video_added|date("M d, Y") }} | {{ video.video_views }} views
+                                </p>
+                                <p>
+                                    {{ video.video_description|nl2br }}
+                                    <br><br>
+                                    <a class="bold black" href="/watch?v={{ video.video_id }}">View comments, related videos, and more</a>
+                                </p>
+                            </div>
                         </div>
                         <div class="top-right clearfix">
                             <div class="videos-list user-side-list">
 								{% for video in side_videos %}
 									{% if video.id is defined %}
-										<div class="video-item inline-block w-300 hover-video padding">
+										<div class="video-item inline-block w-300 hover-video padding" video-featured-id="{{ video.video_id }}">
 											<div class="thumb-64 inline-block"  style="background-image: url('/v/thumb/{{ video.video_thumbnail }}');">
 												<span class="timestamp">{{ video.video_duration|date('i:s') }}</span>
 											</div>
 											<div class="video-meta">
-												<a href="/watch?v={{ video.video_id }}" class="video-author bigger">{{ video.video_title }}</a><br>
+												<a href="#" onclick=";return false;" video-id="{{ video.video_id }}" class="video-author bigger js_featured_video_switch">{{ video.video_title }}</a><br>
 												<span class="small">{{ video.video_views }} views</span><br>
 												<a href="/user/{{ video.video_author }}" class="video-author">{{ video.video_author }}</a>
 											</div>
@@ -139,6 +150,20 @@
 							</div>
                         </div>
                     </div>
+                    <script>
+                        $(".js_featured_video_switch").click(function() {
+                            var video_id = $(this).attr("video-id");
+                            var mixed_con = $(".js_mixed_content");
+                            var loading_dom = $(".loading-content-ajax");
+                            
+                            $(".videos-list.user-side-list .video-item").removeClass("active");
+
+                            $.get("/request/ajax/video_featured?v=" + video_id, function(data, status) {
+                                $('.js_featured_video_switch[video-id="' + video_id + '"]').parent().parent().addClass("active");
+                                mixed_con.html(data);
+                            });
+                        });
+                    </script>
                 {% endif %}
             </div><br>
 
@@ -155,6 +180,9 @@
 					{% endif %}
                 </div>
                 <div class="top-right">
+                	{% if user.youtube_modules.friends_mod == true %}
+						{% embed "channel/friends.twig" %}{% endembed %}
+					{% endif %}
 					{% if user.youtube_modules.subscribers_mod == true %}
 						{% embed "channel/subscribers.twig" %}{% endembed %}
 					{% endif %}

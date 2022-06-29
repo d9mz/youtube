@@ -11,6 +11,11 @@
     {{ parent() }}
 {% endblock %}
 
+{%- block head -%}
+    {{ parent() }}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+{% endblock %}
+
 {%- block site_content -%}
     <div class="clearfix">
         <div class="top-left">
@@ -24,187 +29,344 @@
                         Already have an account? <a href="/sign_in">Sign In</a>
                     </span>
                 </div><br>
+                
+                <div class="section">
+                    Recommended for You <span class="vertical-middle dotted-under small">Learn More</span>
+                </div>
+                <p class="padding" style="padding-top: 0px;">
+                    <b class="black">Personalized video recommendations</b><br>
+                    Getting personalized recommendations is really easy, all you have to do is watch some videos then come back to this page to see what videos YouTube has recommended just for you!
+                </p>
+                <div class="section">
+                    Most Popular
+                </div>
+                <div class="videos-list">
+                    <div class="video-item inline-block w-310">
+                        <div class="section no-border">
+                            <a href="/videos?c=Entertainment">
+                                Entertainment
+                            </a>
+                        </div>
+                        {% for video in videos_ent %}
+                            {% if video.id is defined %}
+                                <a href="/watch?v={{ video.video_id }}">
+                                    <div class="thumb-128 inline-block"
+                                        style="background-image: url('/v/thumb/{{ video.video_thumbnail }}');"
+                                    >
+                                        <span class="timestamp">{{ video.video_duration|date('i:s') }}</span>
+                                    </div>
+                                </a>
+                                <div class="video-meta">
+                                    <a href="/watch?v={{ video.video_id }}">{{ video.video_title }}</a><br>
+                                    <span class="small">{{ video.video_views }} views</span><br>
+                                    <a href="/user/{{ video.video_author }}" class="video-author">{{ video.video_author }}</a>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                    <div class="video-item inline-block w-310">
+                        <div class="section no-border">
+                            <a href="/videos?c=Music">
+                                Music
+                            </a>
+                        </div>
+                        {% for video in videos_mus %}
+                            {% if video.id is defined %}
+                                <a href="/watch?v={{ video.video_id }}">
+                                    <div class="thumb-128 inline-block"
+                                        style="background-image: url('/v/thumb/{{ video.video_thumbnail }}');"
+                                    >
+                                        <span class="timestamp">{{ video.video_duration|date('i:s') }}</span>
+                                    </div>
+                                </a>
+                                <div class="video-meta">
+                                    <a href="/watch?v={{ video.video_id }}">{{ video.video_title }}</a><br>
+                                    <span class="small">{{ video.video_views }} views</span><br>
+                                    <a href="/user/{{ video.video_author }}" class="video-author">{{ video.video_author }}</a>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div><br><br>
+                    <div class="video-item inline-block w-310">
+                        <div class="section no-border">
+                            <a href="/videos?c=Gaming">
+                                Gaming
+                            </a>
+                        </div>
+                        {% for video in videos_gaming %}
+                            {% if video.id is defined %}
+                                <a href="/watch?v={{ video.video_id }}">
+                                    <div class="thumb-128 inline-block"
+                                        style="background-image: url('/v/thumb/{{ video.video_thumbnail }}');"
+                                    >
+                                        <span class="timestamp">{{ video.video_duration|date('i:s') }}</span>
+                                    </div>
+                                </a>
+                                <div class="video-meta">
+                                    <a href="/watch?v={{ video.video_id }}">{{ video.video_title }}</a><br>
+                                    <span class="small">{{ video.video_views }} views</span><br>
+                                    <a href="/user/{{ video.video_author }}" class="video-author">{{ video.video_author }}</a>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                    <div class="video-item inline-block w-310">
+                        <div class="section no-border">
+                            <a href="/videos?c=Film%20%26%20Animation">
+                                Films & Animation
+                            </a>
+                        </div>
+                        {% for video in videos_film %}
+                            {% if video.id is defined %}
+                                <a href="/watch?v={{ video.video_id }}">
+                                    <div class="thumb-128 inline-block"
+                                        style="background-image: url('/v/thumb/{{ video.video_thumbnail }}');"
+                                    >
+                                        <span class="timestamp">{{ video.video_duration|date('i:s') }}</span>
+                                    </div>
+                                </a>
+                                <div class="video-meta">
+                                    <a href="/watch?v={{ video.video_id }}">{{ video.video_title }}</a><br>
+                                    <span class="small">{{ video.video_views }} views</span><br>
+                                    <a href="/user/{{ video.video_author }}" class="video-author">{{ video.video_author }}</a>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div><br><br>
+                    <div class="video-item inline-block w-310">
+                        <div class="section no-border">
+                            <a href="/videos?c=Sports">
+                                Sports
+                            </a>
+                        </div>
+                        {% for video in videos_sports %}
+                            {% if video.id is defined %}
+                                <a href="/watch?v={{ video.video_id }}">
+                                    <div class="thumb-128 inline-block"
+                                        style="background-image: url('/v/thumb/{{ video.video_thumbnail }}');"
+                                    >
+                                        <span class="timestamp">{{ video.video_duration|date('i:s') }}</span>
+                                    </div>
+                                </a>
+                                <div class="video-meta">
+                                    <a href="/watch?v={{ video.video_id }}">{{ video.video_title }}</a><br>
+                                    <span class="small">{{ video.video_views }} views</span><br>
+                                    <a href="/user/{{ video.video_author }}" class="video-author">{{ video.video_author }}</a>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                    <div class="video-item inline-block w-310">
+                        <div class="section no-border">
+                            <a href="/videos?c=Howto%20%26%20Style">
+                                Howto & Style
+                            </a>
+                        </div>
+                        {% for video in videos_diy %}
+                            {% if video.id is defined %}
+                                <a href="/watch?v={{ video.video_id }}">
+                                    <div class="thumb-128 inline-block"
+                                        style="background-image: url('/v/thumb/{{ video.video_thumbnail }}');"
+                                    >
+                                        <span class="timestamp">{{ video.video_duration|date('i:s') }}</span>
+                                    </div>
+                                </a>
+                                <div class="video-meta">
+                                    <a href="/watch?v={{ video.video_id }}">{{ video.video_title }}</a><br>
+                                    <span class="small">{{ video.video_views }} views</span><br>
+                                    <a href="/user/{{ video.video_author }}" class="video-author">{{ video.video_author }}</a>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div><br><br>
+                    <div class="video-item inline-block w-310">
+                        <div class="section no-border">
+                            <a href="/videos?c=Science%20%26%20Technology">
+                                Science & Technology
+                            </a>
+                        </div>
+                        {% for video in videos_sci %}
+                            {% if video.id is defined %}
+                                <a href="/watch?v={{ video.video_id }}">
+                                    <div class="thumb-128 inline-block"
+                                        style="background-image: url('/v/thumb/{{ video.video_thumbnail }}');"
+                                    >
+                                        <span class="timestamp">{{ video.video_duration|date('i:s') }}</span>
+                                    </div>
+                                </a>
+                                <div class="video-meta">
+                                    <a href="/watch?v={{ video.video_id }}">{{ video.video_title }}</a><br>
+                                    <span class="small">{{ video.video_views }} views</span><br>
+                                    <a href="/user/{{ video.video_author }}" class="video-author">{{ video.video_author }}</a>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                    <div class="video-item inline-block w-310">
+                        <div class="section no-border">
+                            <a href="/videos?c=Travel%20%26%20Events">
+                                Travel & Events
+                            </a>
+                        </div>
+                        {% for video in videos_travel %}
+                            {% if video.id is defined %}
+                                <a href="/watch?v={{ video.video_id }}">
+                                    <div class="thumb-128 inline-block"
+                                        style="background-image: url('/v/thumb/{{ video.video_thumbnail }}');"
+                                    >
+                                        <span class="timestamp">{{ video.video_duration|date('i:s') }}</span>
+                                    </div>
+                                </a>
+                                <div class="video-meta">
+                                    <a href="/watch?v={{ video.video_id }}">{{ video.video_title }}</a><br>
+                                    <span class="small">{{ video.video_views }} views</span><br>
+                                    <a href="/user/{{ video.video_author }}" class="video-author">{{ video.video_author }}</a>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div><br><br>
+                    <div class="video-item inline-block w-310">
+                        <div class="section no-border">
+                            <a href="/videos?c=People%20%26%20Blogs">
+                                People & Blogs
+                            </a>
+                        </div>
+                        {% for video in videos_people %}
+                            {% if video.id is defined %}
+                                <a href="/watch?v={{ video.video_id }}">
+                                    <div class="thumb-128 inline-block"
+                                        style="background-image: url('/v/thumb/{{ video.video_thumbnail }}');"
+                                    >
+                                        <span class="timestamp">{{ video.video_duration|date('i:s') }}</span>
+                                    </div>
+                                </a>
+                                <div class="video-meta">
+                                    <a href="/watch?v={{ video.video_id }}">{{ video.video_title }}</a><br>
+                                    <span class="small">{{ video.video_views }} views</span><br>
+                                    <a href="/user/{{ video.video_author }}" class="video-author">{{ video.video_author }}</a>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                    <div class="video-item inline-block w-310">
+                        <div class="section no-border">
+                            <a href="/videos?c=Comedy">
+                                Comedy
+                            </a>
+                        </div>
+                        {% for video in videos_comedy %}
+                            {% if video.id is defined %}
+                                <a href="/watch?v={{ video.video_id }}">
+                                    <div class="thumb-128 inline-block"
+                                        style="background-image: url('/v/thumb/{{ video.video_thumbnail }}');"
+                                    >
+                                        <span class="timestamp">{{ video.video_duration|date('i:s') }}</span>
+                                    </div>
+                                </a>
+                                <div class="video-meta">
+                                    <a href="/watch?v={{ video.video_id }}">{{ video.video_title }}</a><br>
+                                    <span class="small">{{ video.video_views }} views</span><br>
+                                    <a href="/user/{{ video.video_author }}" class="video-author">{{ video.video_author }}</a>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div><br><br>
+                </div>
+            {% else %}
+                <div class="activities-homepage">
+                    <div class="mini-status inline-block">
+                        <img class="mini-profile-picture" src="/v/p/{{ homepage.profile_picture }}">
+                        <span class="top inline-block" style="padding-left:5px;">
+                            <span class="big">{{ session.youtube }}</span><br>
+                            <span class="small gray">
+                                <img class="mid" src="https://cdn.discordapp.com/attachments/960300952261361686/991159651934687232/comment.png">
+                                5
+                                <img style="height: 12px;width: 16px;" class="mid" src="https://cdn.discordapp.com/attachments/960300952261361686/991157583798870136/unknown.png">
+                                {{ homepage.unread_inbox }}
+                            </span>
+                        </span>
+                    </div>
+                    <div class="activity-buttons inline-block top">
+                        <button class="active" id="activity-button">All Activity</button>
+                        <button class="" id="subscriptions-button">Subscriptions</button>
+                        <button class="" id="recommendation-button">Recommendations</button>
+                    </div>
+                </div><br>
+                <div class="promo-grey-big ut-alert rounded">
+                    <h1>Welcome to your new homepage!</h1><br>
+                    <span class="black" style="margin-left: 0px;">If there are issues with styling on this page, clear your cache.</span>
+                </div><br>
+                <div class="search-videos"><br>
+                    {% for video in videos %}
+                        {% if video.id is defined %}
+                            <img class="icon" src="/img/feed.png"> 
+                            <span class="mid">
+                                <b>Uploaded</b> by <a href="/user/{{ video.video_author }}">{{ video.video_author }}</a>
+                                <span class="caption">({{ video.video_added|timeago() }})</span>
+                            </span>
+                            <br>
+                            <div class="video-item inline-block w-300 hover-video padding" style="width: 623px;">
+                                <a href="/watch?v={{ video.video_id }}">
+                                    <div class="thumb-128 inline-block"
+                                        style="background-image: url('/v/thumb/{{ video.video_thumbnail }}');"
+                                    >
+                                        <span class="timestamp" style="position: relative;top: 55px;left: 89px;">{{ video.video_duration|date('i:s') }}</span>
+                                    </div>
+                                </a>
+                                <div class="video-meta">
+                                    {% set search = args.q %}
+                                    <a href="/watch?v={{ video.video_id }}" class="video-author bigger">{{ video.video_title }}</a><br>
+                                    <span class="small"> 
+                                        <span class="video-description-meta">
+                                            {% if video.video_description is not empty %} 
+                                                {{ video.video_description }}
+                                            {% else %}
+                                                <i>This video has no description.</i>
+                                            {% endif %}
+                                        </span>
+                                    </span><br>
+                                    by <a href="/user/{{ video.video_author }}">{{ video.video_author }}</a> <span class="seperator"></span> {{ video.video_added|timeago() }} <span class="seperator"></span> <b>{{ video.video_views }} views</b>
+                                </div>
+                            </div><br>
+                            <hr class="dotted-under" style="border-bottom: 1px solid #ededed;">
+                        {% endif %}
+                    {% endfor %}
+                </div>
+                <script>
+                    $("#subscriptions-button").click(function() {
+                        var data_dom = $(".search-videos");
+                        $("#activity-button").removeClass("active");
+                        $("#subscriptions-button").addClass("active");
+                        $("#recommendation-button").removeClass("active");
+                        $.get("/request/ajax/subscriptions_homepage", function(data, status) {
+                            data_dom.html(data);
+                            console.log(data);
+                        });
+                    });
+
+                    $("#activity-button").click(function() {
+                        var data_dom = $(".search-videos");
+                        $("#activity-button").addClass("active");
+                        $("#subscriptions-button").removeClass("active");
+                        $("#recommendation-button").removeClass("active");
+                        $.get("/request/ajax/homepage", function(data, status) {
+                            data_dom.html(data);
+                            console.log(data);
+                        });
+                    });
+
+                    $("#recommendation-button").click(function() {
+                        var data_dom = $(".search-videos");
+                        $("#activity-button").removeClass("active");
+                        $("#subscriptions-button").removeClass("active");
+                        $("#recommendation-button").addClass("active");
+                        $.get("/request/ajax/recommendations_homepage", function(data, status) {
+                            data_dom.html(data);
+                            console.log(data);
+                        });
+                    });
+                </script>
             {% endif %}
-            <div class="section">
-                Recommended for You <span class="vertical-middle dotted-under small">Learn More</span>
-            </div>
-            <p class="padding" style="padding-top: 0px;">
-                <b class="black">Personalized video recommendations</b><br>
-                Getting personalized recommendations is really easy, all you have to do is watch some videos then come back to this page to see what videos YouTube has recommended just for you!
-            </p>
-            <div class="section">
-                Most Popular
-            </div>
-            <div class="videos-list">
-                <div class="video-item inline-block w-310">
-                    <div class="section no-border">
-                        Entertainment
-                    </div>
-                    {% for video in videos_ent %}
-                        {% if video.id is defined %}
-                            <a href="/watch?v={{ video.video_id }}">
-                                <div class="thumb-128 inline-block"
-                                    style="background-image: url('/v/thumb/{{ video.video_thumbnail }}');"
-                                >
-                                    <span class="timestamp">{{ video.video_duration|date('i:s') }}</span>
-                                </div>
-                            </a>
-                            <div class="video-meta">
-                                <a href="/watch?v={{ video.video_id }}">{{ video.video_title }}</a><br>
-                                <span class="small">{{ video.video_views }} views</span><br>
-                                <a href="/user/{{ video.video_author }}" class="video-author">{{ video.video_author }}</a>
-                            </div>
-                        {% endif %}
-                    {% endfor %}
-                </div>
-                <div class="video-item inline-block w-310">
-                    <div class="section no-border">
-                        Music
-                    </div>
-                    {% for video in videos_mus %}
-                        {% if video.id is defined %}
-                            <a href="/watch?v={{ video.video_id }}">
-                                <div class="thumb-128 inline-block"
-                                    style="background-image: url('/v/thumb/{{ video.video_thumbnail }}');"
-                                >
-                                    <span class="timestamp">{{ video.video_duration|date('i:s') }}</span>
-                                </div>
-                            </a>
-                            <div class="video-meta">
-                                <a href="/watch?v={{ video.video_id }}">{{ video.video_title }}</a><br>
-                                <span class="small">{{ video.video_views }} views</span><br>
-                                <a href="/user/{{ video.video_author }}" class="video-author">{{ video.video_author }}</a>
-                            </div>
-                        {% endif %}
-                    {% endfor %}
-                </div><br><br>
-                <div class="video-item inline-block w-310">
-                    <div class="section no-border">
-                        Gaming
-                    </div>
-                    {% for video in videos_gaming %}
-                        {% if video.id is defined %}
-                            <a href="/watch?v={{ video.video_id }}">
-                                <div class="thumb-128 inline-block"
-                                    style="background-image: url('/v/thumb/{{ video.video_thumbnail }}');"
-                                >
-                                    <span class="timestamp">{{ video.video_duration|date('i:s') }}</span>
-                                </div>
-                            </a>
-                            <div class="video-meta">
-                                <a href="/watch?v={{ video.video_id }}">{{ video.video_title }}</a><br>
-                                <span class="small">{{ video.video_views }} views</span><br>
-                                <a href="/user/{{ video.video_author }}" class="video-author">{{ video.video_author }}</a>
-                            </div>
-                        {% endif %}
-                    {% endfor %}
-                </div>
-                <div class="video-item inline-block w-310">
-                    <div class="section no-border">
-                        Films & Animation
-                    </div>
-                    {% for video in videos_film %}
-                        {% if video.id is defined %}
-                            <a href="/watch?v={{ video.video_id }}">
-                                <div class="thumb-128 inline-block"
-                                    style="background-image: url('/v/thumb/{{ video.video_thumbnail }}');"
-                                >
-                                    <span class="timestamp">{{ video.video_duration|date('i:s') }}</span>
-                                </div>
-                            </a>
-                            <div class="video-meta">
-                                <a href="/watch?v={{ video.video_id }}">{{ video.video_title }}</a><br>
-                                <span class="small">{{ video.video_views }} views</span><br>
-                                <a href="/user/{{ video.video_author }}" class="video-author">{{ video.video_author }}</a>
-                            </div>
-                        {% endif %}
-                    {% endfor %}
-                </div><br><br>
-                <div class="video-item inline-block w-310">
-                    <div class="section no-border">
-                        Sports
-                    </div>
-                    {% for video in videos_sports %}
-                        {% if video.id is defined %}
-                            <a href="/watch?v={{ video.video_id }}">
-                                <div class="thumb-128 inline-block"
-                                    style="background-image: url('/v/thumb/{{ video.video_thumbnail }}');"
-                                >
-                                    <span class="timestamp">{{ video.video_duration|date('i:s') }}</span>
-                                </div>
-                            </a>
-                            <div class="video-meta">
-                                <a href="/watch?v={{ video.video_id }}">{{ video.video_title }}</a><br>
-                                <span class="small">{{ video.video_views }} views</span><br>
-                                <a href="/user/{{ video.video_author }}" class="video-author">{{ video.video_author }}</a>
-                            </div>
-                        {% endif %}
-                    {% endfor %}
-                </div>
-                <div class="video-item inline-block w-310">
-                    <div class="section no-border">
-                        Howto & Style
-                    </div>
-                    {% for video in videos_diy %}
-                        {% if video.id is defined %}
-                            <a href="/watch?v={{ video.video_id }}">
-                                <div class="thumb-128 inline-block"
-                                    style="background-image: url('/v/thumb/{{ video.video_thumbnail }}');"
-                                >
-                                    <span class="timestamp">{{ video.video_duration|date('i:s') }}</span>
-                                </div>
-                            </a>
-                            <div class="video-meta">
-                                <a href="/watch?v={{ video.video_id }}">{{ video.video_title }}</a><br>
-                                <span class="small">{{ video.video_views }} views</span><br>
-                                <a href="/user/{{ video.video_author }}" class="video-author">{{ video.video_author }}</a>
-                            </div>
-                        {% endif %}
-                    {% endfor %}
-                </div><br><br>
-                <div class="video-item inline-block w-310">
-                    <div class="section no-border">
-                        Science & Technology
-                    </div>
-                    {% for video in videos_sci %}
-                        {% if video.id is defined %}
-                            <a href="/watch?v={{ video.video_id }}">
-                                <div class="thumb-128 inline-block"
-                                    style="background-image: url('/v/thumb/{{ video.video_thumbnail }}');"
-                                >
-                                    <span class="timestamp">{{ video.video_duration|date('i:s') }}</span>
-                                </div>
-                            </a>
-                            <div class="video-meta">
-                                <a href="/watch?v={{ video.video_id }}">{{ video.video_title }}</a><br>
-                                <span class="small">{{ video.video_views }} views</span><br>
-                                <a href="/user/{{ video.video_author }}" class="video-author">{{ video.video_author }}</a>
-                            </div>
-                        {% endif %}
-                    {% endfor %}
-                </div>
-                <div class="video-item inline-block w-310">
-                    <div class="section no-border">
-                        Travel & Events
-                    </div>
-                    {% for video in videos_travel %}
-                        {% if video.id is defined %}
-                            <a href="/watch?v={{ video.video_id }}">
-                                <div class="thumb-128 inline-block"
-                                    style="background-image: url('/v/thumb/{{ video.video_thumbnail }}');"
-                                >
-                                    <span class="timestamp">{{ video.video_duration|date('i:s') }}</span>
-                                </div>
-                            </a>
-                            <div class="video-meta">
-                                <a href="/watch?v={{ video.video_id }}">{{ video.video_title }}</a><br>
-                                <span class="small">{{ video.video_views }} views</span><br>
-                                <a href="/user/{{ video.video_author }}" class="video-author">{{ video.video_author }}</a>
-                            </div>
-                        {% endif %}
-                    {% endfor %}
-                </div><br><br>
-            </div>
         </div>
         <div class="top-right">
             <div class="section black">
@@ -259,9 +421,10 @@
             <div class="section black">
                 What's New
             </div>
+            <a href="#"><b>Banners, banners, banners, and bug fixes</b></a><br><br>
+            We have added banners that you could add to your profile! The resolution for these banners are 960x153. You can find a .pdn template in our Discord server!<br><br>
             <a href="#"><b>Site Release</b></a><br><br>
-            The site has officially released! Make sure to enjoy and join our <a href="https://discord.gg/A7sx2r55u7">Discord</a> to see updates.<br>
-            <a href="#">Learn more</a>
+            The site has officially released! Make sure to enjoy and join our <a href="https://discord.gg/A7sx2r55u7">Discord</a> to see updates.<br><br>
         </div>
     </div>
 {% endblock %}

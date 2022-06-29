@@ -1,4 +1,8 @@
 <?php
+if(isset($_POST['remove_items']) && $_POST['remove_items'] == "y") {
+    ini_set('session.gc_maxlifetime', 3600 * 48);
+    session_set_cookie_params(3600 * 48, "/");
+}
 session_start();
 
 require("../../app/vendor/autoload.php");

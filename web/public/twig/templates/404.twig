@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <!-- UTue 404 page - all css is packed into one twig file. no external css needed -->
+        <title>404 Not Found</title>
+        <style>
+            body {
+                font: 12px arial,sans-serif;
+            }
+        </style>
+        <meta name="viewport" contnet="width=device-width, initial-scale=1">
+        <link href="/css/base.css" rel="stylesheet">
+    </head>
+    <body>
+        <div style="width:650px;margin:auto;">
+            <div style="border: 1px solid #FFCC05;background-color: #FFC;margin-top: 50px;padding: 12px 0;text-align: center;font-weight: bold;color: #666;">
+                We're sorry, the page you requested cannot be found.
+            </div>
+            <div style="margin-top: 10px;padding: 15px 20px;border: 1px solid #CCC;">
+                <img src="/img/utue_logo.png" style="padding-right: 20px;margin-right: 20px;border-right: 1px solid #CCC;">
+                <div class="user-panel-bar top inline-block">
+                    <form class="inline-block" action="/search_query" method="GET" autocomplete="off" style="position: relative;top: 10px;">
+                        <input name="q" type="text" style="width: 420px;" class="search_bar">
+                        <input name="submit" type="submit" value="Search">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </body>
+</html> 

@@ -16,11 +16,15 @@
 					</a>
 				{% endif %}
 				<br><br>
-				<a href="#">Add as Friend</a> 
+				{% if user.friend["id"] is not defined %}
+					<a href="/request/friend?u={{ user.youtube_username }}">Add as Friend</a> 
+				{% else %}
+					<a href="/request/friend?u={{ user.youtube_username }}">Cancel Pending Request</a> 
+				{% endif %}
 				<span class="seperator"></span> 
-				<a href="#">Block User</a> 
+				<a href="/request/block?u={{ user.youtube_username }}">Block User</a> 
 				<span class="seperator"></span>
-				<a href="#">Send Message</a>
+				<a href="/inbox/compose?to={{ user.youtube_username }}">Send Message</a>
 			{% endif %}
 		</p>
 	</div>

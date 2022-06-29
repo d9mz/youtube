@@ -1,12 +1,16 @@
 <div class="panel">
-	<h2 class="unbold">Subscriptions ({{ subscriptions.rows }})</h2><br>
+	<h2 class="unbold inline-block">Subscriptions ({{ subscriptions.rows }})</h2>
+	<a style="float:right;" href="/user_subscriptions/jackd">view all</a>
+	<br><br>
 	<div class="users-list">
 		{% for subscription in subscriptions %}
 			{% if subscription.id is defined %}
 				<div class="user">
 					<center>
-						<img class="profile-picture" src="/v/p/{{ subscription.profile_picture }}">
-						<a href="/user/{{ subscription.subscription_to }}">{{ subscription.subscription_to }}</a>
+						<a href="/user/{{ subscription.subscription_to }}">
+							<img class="profile-picture" src="/v/p/{{ subscription.profile_picture }}">
+							{{ subscription.subscription_to }}
+						</a>
 					</center>
 				</div>
 			{% endif %}
