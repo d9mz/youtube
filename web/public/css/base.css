@@ -20,7 +20,12 @@ body,html {
 
 .clearfix {
     margin: 8px 0 32px;
-    overflow: hidden
+}
+
+.clearfix::after {
+    content: "";
+    display: table;
+    clear: both;
 }
 
 .float-right {
@@ -137,6 +142,51 @@ button.ut-blue-button {
 .ut-button.end {
     border-bottom-left-radius: 0;
     border-top-left-radius: 0
+}
+
+.ut-tooltip {
+    position: relative;
+}
+
+.ut-tooltip::before {
+    content: ""attr(aria-label)"";
+    display: inline-block;
+    box-shadow: 0 0 3px #333;
+    background-color: rgba(0,0,0,0.85);
+    position: absolute;
+    left: 50%;
+    top: -33px;
+    opacity: 0;
+    transition: visibility linear 0.2s, opacity 0.2s linear;
+    color: #fff;
+    transform: translateX(-50%);
+    white-space: nowrap;
+    visibility: hidden;
+    width: max-content;
+    border: 1px solid #ccc;
+    padding: 0.5em;
+    border-radius: 5px;
+}
+
+.ut-tooltip::after {
+    border: 1px solid transparent;
+    border-width: 5px 5px 0 5px;
+    top: -6px;
+    opacity: 0;
+    left: 50%;
+    transition: visibility linear 0.2s, opacity 0.2s linear;
+    visibility: hidden;
+    transform: translateX(-50%);
+    content: '';
+    position: absolute;
+    border-top-color: rgba(0,0,0,0.85);
+    display: inline-block;
+}
+
+.ut-tooltip:hover::before,
+.ut-tooltip:hover::after {
+    visibility: visible;
+    opacity: 1;
 }
 
 .watch-sparkbar-likes {
