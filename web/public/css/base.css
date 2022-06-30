@@ -374,7 +374,7 @@ button.ut-blue-button {
 .header .logo {
     vertical-align: middle;
     display: inline-block;
-    background-image: url('/img/utue-logo.svg');
+    background-image: url('/img/utue_logo.svg');
     height: 40px;
     background-repeat: no-repeat;
     width: 65px;
