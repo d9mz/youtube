@@ -94,7 +94,7 @@
                     <div class="video-author-videos inline-block">{{ video.author_videos }} videos <div class="bg-author_videos_watch inline-block mid"></div></div>       
                     {% if video.author_subscribed == false %}
                         <a href="/request/subscribe?u={{ video.video_author }}&v={{ video.video_id }}">
-                            <button class="ut-button mid">Subscribe</button>
+                            <button class="ut-button ut-tooltip mid" aria-label="Click to be notified of new videos from this channel">Subscribe</button>
                         </a>
                     {% else %}
                         <a href="/request/subscribe?u={{ video.video_author }}&v={{ video.video_id }}">
