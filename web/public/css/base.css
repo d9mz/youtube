@@ -373,7 +373,12 @@ button.ut-blue-button {
 
 .header .logo {
     vertical-align: middle;
-    padding-right: 12px;
+    display: inline-block;
+    background-image: url('/img/utue-logo.svg');
+    height: 40px;
+    background-repeat: no-repeat;
+    width: 65px;
+    background-size: 100% 100%;
 }
 
 .header form input[type=text] {
